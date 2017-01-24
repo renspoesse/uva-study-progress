@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,4 +13,25 @@
 |
 */
 
-Route::get('/', function () { return view('index'); });
+Route::any('/lti/launch', 'LTIController@index');
+
+Route::get('/logout', function (Request $request) {
+
+    $request->session()->flush();
+});
+
+Route::get('/me', function (Request $request) {
+
+   // if (!$request->session()->get('authenticated'))
+   //     abort(401, 'No authenticated LTI session.');
+
+    return $request->session()->get('user');
+});
+
+Route::get('/', function (Request $request) {
+
+    if (!$request->session()->get('authenticated'))
+        abort(401, 'No authenticated LTI session.');
+
+    return view('index');
+});
