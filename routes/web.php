@@ -35,3 +35,25 @@ Route::get('/', function (Request $request) {
 
     return view('index');
 });
+
+function someLibraryFunction() {
+
+    $request = request();
+    $request->session()->put('foo', 'bar');
+
+    // This does work: echo redirect('/get');
+
+    header('Location: /get');
+    exit;
+};
+
+Route::get('/set', function (Request $request) {
+
+    someLibraryFunction();
+});
+
+Route::get('/get', function (Request $request) {
+
+    print_r($request->session()->all());
+    $request->session()->flush();
+});
