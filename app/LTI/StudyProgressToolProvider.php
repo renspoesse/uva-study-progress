@@ -9,7 +9,8 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
 {
     protected $redirectUrl = '/'; // Redirects the user here on successful completion.
 
-    function __construct(DataConnector $dataConnector) {
+    function __construct(DataConnector $dataConnector)
+    {
 
         parent::__construct($dataConnector);
 
