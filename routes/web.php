@@ -22,8 +22,8 @@ Route::get('/logout', function (Request $request) {
 
 Route::get('/me', function (Request $request) {
 
-   // if (!$request->session()->get('authenticated'))
-   //     abort(401, 'No authenticated LTI session.');
+    if (!$request->session()->get('authenticated'))
+        abort(401, 'No authenticated LTI session.');
 
     return $request->session()->get('user');
 });
