@@ -47,6 +47,8 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
 
         $request->session()->put('user', $userInfo);
         $request->session()->put('authenticated', true);
+
+        $request->session()->save();
     }
 
     function onContentItem()
