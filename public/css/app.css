@@ -1,0 +1,83 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  body {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+}
+
+a {
+  cursor: pointer;
+}
+
+.img-size-mini {
+  width: 3rem;
+  height: 3rem;
+}
+
+.img-size-small {
+  width: 6rem;
+  height: 6rem;
+}
+
+.img-size-medium {
+  width: 10rem;
+  height: 10rem;
+}
+
+.img-size-large {
+  width: 25rem;
+  height: 25rem;
+}
+
+.img-max-size-mini {
+  max-width: 3rem;
+}
+
+.img-max-size-small {
+  max-width: 6rem;
+}
+
+.img-max-size-medium {
+  max-width: 10rem;
+}
+
+.img-max-size-large {
+  max-width: 25rem;
+}
+
+.img-wrapper {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.fade-enter-active {
+  -webkit-transition: opacity .5s;
+  transition: opacity .5s;
+}
+
+.fade-enter, .fade-leave-active {
+  opacity: 0;
+}
+
+.fade-fast-enter-active {
+  -webkit-transition: opacity .2s;
+  transition: opacity .2s;
+}
+
+.fade-fast-enter, .fade-fast-leave-active {
+  opacity: 0;
+}
+
+/*# sourceMappingURL=app.css.map */

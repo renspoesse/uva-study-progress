@@ -1,0 +1,25 @@
+{
+  "private": true,
+  "scripts": {
+    "prod": "gulp --production",
+    "dev": "gulp watch"
+  },
+  "devDependencies": {
+    "chart.js": "^2.4.0",
+    "gulp": "^3.9.1",
+    "install": "^0.8.4",
+    "jquery": "^3.1.1",
+    "laravel-elixir": "^6.0.0-15",
+    "laravel-elixir-vue-2": "^0.3.0",
+    "laravel-elixir-webpack-official": "^1.0.10",
+    "lodash": "^4.17.4",
+    "moment": "^2.17.1",
+    "numeral": "^2.0.4",
+    "sortablejs": "^1.5.0-rc1",
+    "vue": "^2.1.8",
+    "vue-resource": "^1.0.3",
+    "vue-router": "^2.1.1",
+    "vuex": "^2.1.1",
+    "vuex-router-sync": "^4.0.2"
+  }
+}

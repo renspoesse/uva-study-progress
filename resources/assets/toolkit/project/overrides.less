@@ -1,0 +1,30 @@
+// Feedback states.
+
+.form-control-feedback {
+  line-height: @input-height-base !important; // Font Awesome overrides this.
+}
+
+.has-success {
+  .form-control-validation(@state-success-text; @state-success-text; @state-success-bg); // Overriden by dashboard theme.
+}
+
+.has-warning {
+  .form-control-validation(@state-warning-text; @state-warning-text; @state-warning-bg); // Overriden by dashboard theme.
+}
+
+.has-error {
+  .form-control-validation(@state-danger-text; @state-danger-text; @state-danger-bg); // Overriden by dashboard theme.
+}
+
+// Tables.
+
+.table td {
+  vertical-align: middle !important;;
+}
+
+// Modals.
+
+.modal {
+  display: block;
+  background-color: rgba(0, 0, 0, @modal-backdrop-opacity);
+}
