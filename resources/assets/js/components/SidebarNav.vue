@@ -14,11 +14,6 @@
 
         <div class="nav-toggleable-sm collapse" id="nav-toggleable-sm" aria-expanded="false">
 
-            <form class="sidebar-form">
-                <input class="form-control" type="text" placeholder="Search...">
-                <a class="btn btn-link"><i class="fa fa-search"></i></a>
-            </form>
-
             <ul class="nav nav-pills nav-stacked">
 
                 <template v-if="isAuthenticated">
