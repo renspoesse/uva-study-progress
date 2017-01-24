@@ -1,3 +1,7 @@
+import Vue from 'vue'
+
+import * as json from '../../helpers/json'
+
 const state = {
 
     user: null
@@ -9,7 +13,7 @@ const getters = {
 
         if (!state.user) return '';
 
-        return 'Student number?';
+        return state.user.fullname;
     },
     isAuthenticated: (state) => { return !!state.user; }
 };
@@ -26,9 +30,6 @@ const actions = {
 
         return new Promise((resolve, reject) => {
 
-            resolve(); // TODO RENS: login.
-
-            /*
             Vue.http.get('me').then((response) => {
 
                     response.json().then((obj) => {
@@ -51,17 +52,13 @@ const actions = {
                     commit('UNSET_USER');
                     resolve();
                 });
-                */
         });
     },
     logout ({commit}) {
 
         return new Promise((resolve, reject) => {
 
-            resolve(); // TODO RENS: logout.
-
-            /*
-            Vue.http.post(Kinder.web + '/logout').then(() => {
+            Vue.http.post('logout').then(() => {
 
                     commit('UNSET_USER');
                     resolve();
@@ -71,7 +68,6 @@ const actions = {
                     console.log(response);
                     reject({});
                 });
-                */
         });
     }
 };

@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 Route::any('/lti/launch', 'LTIController@index');
 
-Route::get('/logout', function (Request $request) {
+Route::any('/logout', function (Request $request) {
 
     $request->session()->flush();
 });
@@ -29,9 +29,6 @@ Route::get('/me', function (Request $request) {
 });
 
 Route::get('/', function (Request $request) {
-
-    if (!$request->session()->get('authenticated'))
-        abort(401, 'No authenticated LTI session.');
 
     return view('index');
 });
