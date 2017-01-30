@@ -27,7 +27,6 @@
 
 <script type="text/javascript" src="/js/libs/datepicker.js"></script>
 <script type="text/javascript" src="/js/libs/demo.js"></script>
-<script type="text/javascript" src="/js/libs/typeahead.bundle.min.js"></script>
 
 <script type="text/javascript" src="/js/app.js"></script>
 

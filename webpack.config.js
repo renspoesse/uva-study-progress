@@ -11,6 +11,7 @@ module.exports = {
             // By grouping all vendor dependencies in a single file, we can utilize browser caching for them.
 
             'chart.js',
+            'corejs-typeahead',
             'jquery',
             'moment',
             'numeral',

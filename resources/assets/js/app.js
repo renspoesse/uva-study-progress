@@ -29,7 +29,7 @@ store.dispatch('auth/getSession').then(() => {
 
     // Create the app.
 
-    const app = new Vue(Vue.util.extend({
+    window.app = new Vue(Vue.util.extend({
 
         el: '#app',
         router: router,
