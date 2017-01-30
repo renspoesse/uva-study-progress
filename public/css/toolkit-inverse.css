@@ -9928,6 +9928,9 @@ span.twitter-typeahead {
   margin-top: 10px !important;
   margin-bottom: 10px !important;
 }
+.alert {
+  font-weight: 400;
+}
 .border-primary {
   border: 2px solid #1997c6;
 }

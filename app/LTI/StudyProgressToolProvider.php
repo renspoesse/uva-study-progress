@@ -37,6 +37,8 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
             'updated'
         ];
 
+      dd($this->user);
+
         $userInfo = array_filter((array)$this->user, function ($key) use ($allowed) {
 
             return in_array($key, $allowed);
@@ -47,6 +49,7 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
 
         $request->session()->put('user', $userInfo);
         $request->session()->put('authenticated', true);
+        $request->session()->put('record_id', $this->user->getRecordId());
 
         $request->session()->save();
     }
