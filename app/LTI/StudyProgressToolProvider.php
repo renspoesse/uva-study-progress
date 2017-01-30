@@ -37,8 +37,6 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
             'updated'
         ];
 
-      dd($this->user);
-
         $userInfo = array_filter((array)$this->user, function ($key) use ($allowed) {
 
             return in_array($key, $allowed);
