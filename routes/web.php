@@ -1,5 +1,6 @@
 <?php
 
+use DB;
 use Illuminate\Http\Request;
 use IMSGlobal\LTI\ToolProvider\DataConnector;
 use IMSGlobal\LTI\ToolProvider\User;
@@ -15,9 +16,9 @@ use IMSGlobal\LTI\ToolProvider\User;
 |
 */
 
-Route::any('/lti/launch/testadmin', 'LTIController@testAdmin');
-Route::any('/lti/launch/teststudent', 'LTIController@testStudent');
-Route::any('/lti/launch/teststudyadvisor', 'LTIController@testStudyAdvisor');
+//Route::any('/lti/launch/testadmin', 'LTIController@testAdmin');
+//Route::any('/lti/launch/teststudent', 'LTIController@testStudent');
+//Route::any('/lti/launch/teststudyadvisor', 'LTIController@testStudyAdvisor');
 
 Route::any('/lti/launch', 'LTIController@index');
 

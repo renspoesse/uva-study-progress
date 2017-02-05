@@ -13,7 +13,7 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
     {
         parent::__construct($dataConnector);
 
-        $this->debugMode = config('debug');
+        $this->debugMode = config('app.debug');
     }
 
     function onLaunch()
