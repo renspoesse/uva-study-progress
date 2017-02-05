@@ -16,7 +16,7 @@ require('laravel-elixir-vue-2');
 elixir(function(mix) {
 
     mix.sass('app.scss')
-        .less('./resources/assets/toolkit/toolkit-inverse.less', 'public/css/toolkit-inverse.css')
-        //.less('./resources/assets/toolkit/toolkit-light.less', 'public/css/toolkit-light.css')
+        //.less('./resources/assets/toolkit/toolkit-inverse.less', 'public/css/toolkit.css')
+        .less('./resources/assets/toolkit/toolkit-light.less', 'public/css/toolkit.css')
         .webpack('app.js');
 });

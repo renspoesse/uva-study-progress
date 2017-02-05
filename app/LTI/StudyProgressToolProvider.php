@@ -11,7 +11,6 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
 
     function __construct(DataConnector $dataConnector)
     {
-
         parent::__construct($dataConnector);
 
         $this->debugMode = config('debug');

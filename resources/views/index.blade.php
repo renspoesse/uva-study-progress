@@ -11,7 +11,7 @@
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
 
-    <link rel="stylesheet" href="/css/toolkit-inverse.css">
+    <link rel="stylesheet" href="/css/toolkit.css">
     <link rel="stylesheet" href="/css/app.css">
 </head>
 <body>
