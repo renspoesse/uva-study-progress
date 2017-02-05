@@ -2,6 +2,8 @@ import {sync} from 'vuex-router-sync'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import Roles from './enums/Roles'
+
 import store from './store'
 
 Vue.use(VueRouter);
@@ -13,6 +15,10 @@ const components = {
         Login: require('./components/pages/Login.vue'),
         NotFound: require('./components/pages/NotFound.vue'),
         Overview: require('./components/pages/Overview.vue')
+    },
+    students: {
+
+        List: require('./components/students/List.vue')
     }
 };
 
@@ -42,6 +48,7 @@ const router = new VueRouter({
         },
 
         {path: '/', component: components.pages.Overview, meta: {requiresAuth: true}},
+        {path: '/students', component: components.students.List, meta: {requiresAuth: true, role: Roles.Administrator}},
 
         {path: '*', component: components.pages.NotFound}
     ]
@@ -59,8 +66,21 @@ router.beforeEach((to, from, next) => {
                 query: {redirect: to.fullPath}
             });
         }
-        else
-            next();
+        else {
+
+            const requiredRoles = _.without(_.map(to.matched, 'meta.role'), undefined);
+            const userRoles = store.getters['auth/roles'];
+
+            const mismatch = _.without(requiredRoles, ...userRoles);
+
+            if (mismatch.length > 0) {
+
+                console.log('User has insufficient permissions for this route.');
+                next(false);
+            }
+            else
+                next();
+        }
     }
     else if (to.matched.some(record => record.meta.guestsOnly)) {
 

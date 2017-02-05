@@ -10,6 +10,9 @@
                 <!--<span class="icon icon-leaf sidebar-brand-icon"></span>-->
                 <img src="images/logo.png">
             </a>
+            <a class="sidebar-brand img-responsive m-l" v-if="avatarUrl">
+                <img v-bind:src="avatarUrl" class="img-circle" ref="avatar">
+            </a>
         </div>
 
         <div class="nav-toggleable-sm collapse" id="nav-toggleable-sm" aria-expanded="false">
@@ -22,6 +25,28 @@
 
                     <router-link tag="li" to="/" exact>
                         <a><i class="fa fa-fw fa-home m-r" aria-hidden="true"></i>Overview</a>
+                    </router-link>
+
+                    <router-link tag="li" to="/courses">
+                        <a><i class="fa fa-fw fa-graduation-cap m-r" aria-hidden="true"></i>Per course</a>
+                    </router-link>
+
+                    <router-link tag="li" to="/advice" exact>
+                        <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Tips and advice</a>
+                    </router-link>
+
+                    <li class="nav-header" v-if="hasRole(roles.Administrator) || hasRole(roles.Mentor)">Manage</li>
+
+                    <router-link tag="li" to="/students" v-if="hasRole(roles.Administrator)">
+                        <a><i class="fa fa-fw fa-database m-r" aria-hidden="true"></i>Student data</a>
+                    </router-link>
+
+                    <router-link tag="li" to="/advice/edit" v-if="hasRole(roles.Mentor)">
+                        <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Tips and advice</a>
+                    </router-link>
+
+                    <router-link tag="li" to="/news/edit" v-if="hasRole(roles.Mentor)">
+                        <a><i class="fa fa-fw fa-newspaper-o m-r" aria-hidden="true"></i>News</a>
                     </router-link>
 
                     <li class="nav-header">{{ displayName }}</li>
@@ -51,7 +76,10 @@
 
 <script>
 
+    import _ from 'lodash'
     import {mapGetters, mapState} from 'vuex'
+
+    import Roles from '../enums/Roles'
 
     export default {
 
@@ -59,13 +87,20 @@
 
             ...mapGetters({
 
+                avatarUrl: 'auth/avatarUrl',
                 displayName: 'auth/displayName',
-                isAuthenticated: 'auth/isAuthenticated'
+                isAuthenticated: 'auth/isAuthenticated',
+                userRoles: 'auth/roles'
             }),
             ...mapState({
 
                 user: (state) => state.auth.user
-            })
+            }),
+            roles() { return Roles; }
+        },
+        methods: {
+
+            hasRole: function(role) {return _.indexOf(this.userRoles, role) > -1;}
         }
     }
 

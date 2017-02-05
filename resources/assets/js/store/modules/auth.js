@@ -9,13 +9,22 @@ const state = {
 
 const getters = {
 
+    avatarUrl: (state) => {
+
+        if (!state.user) return '';
+        return state.user.image;
+    },
     displayName: (state) => {
 
         if (!state.user) return '';
-
         return state.user.fullname;
     },
-    isAuthenticated: (state) => { return !!state.user; }
+    isAuthenticated: (state) => { return !!state.user; },
+    roles: (state) => {
+
+        if (!state.user) return [];
+        return state.user.roles;
+    }
 };
 
 const mutations = {

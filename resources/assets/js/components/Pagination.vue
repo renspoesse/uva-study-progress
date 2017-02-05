@@ -42,18 +42,9 @@
         },
         methods: {
 
-            raiseGoTo: function(page) {
-
-                this.$emit('goToPage', {page: page});
-            },
-            raiseNext: function() {
-
-                this.$emit('goToPage', {page: this.pagination.currentPage + 1});
-            },
-            raisePrevious: function() {
-
-                this.$emit('goToPage', {page: this.pagination.currentPage - 1});
-            }
+            raiseGoTo: function(page) {this.$emit('goToPage', {page: page});},
+            raiseNext: function() {this.$emit('goToPage', {page: this.pagination.currentPage + 1});},
+            raisePrevious: function() {this.$emit('goToPage', {page: this.pagination.currentPage - 1});}
         },
         props: [
 

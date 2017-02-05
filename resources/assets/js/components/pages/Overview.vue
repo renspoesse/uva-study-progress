@@ -5,14 +5,7 @@
         <div class="dashhead">
             <div class="dashhead-titles">
                 <h6 class="dashhead-subtitle">Dashboards</h6>
-                <h2 class="dashhead-title">Overview</h2>
-            </div>
-
-            <div class="btn-toolbar dashhead-toolbar">
-                <div class="btn-toolbar-item input-with-icon">
-                    <input type="text" value="01/01/16 - 01/08/16" class="form-control" data-provide="datepicker">
-                    <span class="icon icon-calendar"></span>
-                </div>
+                <h2 class="dashhead-title">Overview for {{ displayName }}</h2>
             </div>
         </div>
 
@@ -237,75 +230,25 @@
             </div>
         </div>
 
-        <div class="list-group">
-            <h4 class="list-group-header">
-                Devices and resolutions
-            </h4>
-
-            <a class="list-group-item" href="#">
-                <span class="pull-right text-muted">3,929,481</span>
-                Desktop (1920x1080)
-            </a>
-
-            <a class="list-group-item" href="#">
-                <span class="pull-right text-muted">1,143,393</span>
-                Desktop (1366x768)
-            </a>
-
-            <a class="list-group-item" href="#">
-                <span class="pull-right text-muted">938,287</span>
-                Desktop (1440x900)
-            </a>
-
-            <a class="list-group-item" href="#">
-                <span class="pull-right text-muted">749,393</span>
-                Desktop (1280x800)
-            </a>
-
-            <a class="list-group-item" href="#">
-                <span class="pull-right text-muted">695,912</span>
-                Tablet (1024x768)
-            </a>
-
-            <a class="list-group-item" href="#">
-                <span class="pull-right text-muted">501,938</span>
-                Tablet (768x1024)
-            </a>
-
-            <a class="list-group-item" href="#">
-                <span class="pull-right text-muted">392,842</span>
-                Phone (320x480)
-            </a>
-
-            <a class="list-group-item" href="#">
-                <span class="pull-right text-muted">298,183</span>
-                Phone (720x450)
-            </a>
-
-            <a class="list-group-item" href="#">
-                <span class="pull-right text-muted">193,129</span>
-                Desktop (2560x1080)
-            </a>
-
-            <a class="list-group-item" href="#">
-                <span class="pull-right text-muted">93,382</span>
-                Desktop (2560x1600)
-            </a>
-
-        </div>
-
-        <a href="#" class="btn btn-primary-outline p-x">View all devices</a>
-
     </div>
 
 </template>
 
 <script>
 
+    import {mapGetters} from 'vuex'
+
     import * as images from '../../helpers/images'
 
     export default {
 
+        computed: {
+
+            ...mapGetters({
+
+                displayName: 'auth/displayName'
+            })
+        },
         mounted: function() {
 
             $(document).trigger('redraw.bs.charts');
