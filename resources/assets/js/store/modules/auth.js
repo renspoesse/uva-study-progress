@@ -11,19 +11,16 @@ const getters = {
 
     avatarUrl: (state) => {
 
-        if (!state.user) return '';
-        return state.user.image;
+        return _.has(state, 'user') ? state.user.image : '';
     },
     displayName: (state) => {
 
-        if (!state.user) return '';
-        return state.user.fullname;
+        return _.has(state, 'user') ? state.user.fullname : '';
     },
     isAuthenticated: (state) => { return !!state.user; },
     roles: (state) => {
 
-        if (!state.user) return [];
-        return state.user.roles;
+        return _.has(state, 'user.roles') ? state.user.roles : [];
     }
 };
 

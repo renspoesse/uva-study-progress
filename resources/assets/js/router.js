@@ -1,3 +1,4 @@
+import * as _ from 'lodash'
 import {sync} from 'vuex-router-sync'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -48,7 +49,7 @@ const router = new VueRouter({
         },
 
         {path: '/', component: components.pages.Overview, meta: {requiresAuth: true}},
-        {path: '/students', component: components.students.List, meta: {requiresAuth: true, role: Roles.Administrator}},
+        {path: '/students', component: components.students.List, meta: {requiresAuth: true, requiresRole: Roles.Administrator}},
 
         {path: '*', component: components.pages.NotFound}
     ]
@@ -68,10 +69,8 @@ router.beforeEach((to, from, next) => {
         }
         else {
 
-            const requiredRoles = _.without(_.map(to.matched, 'meta.role'), undefined);
-            const userRoles = store.getters['auth/roles'];
-
-            const mismatch = _.without(requiredRoles, ...userRoles);
+            const requiredRoles = _.without(_.map(to.matched, 'meta.requiresRole'), undefined);
+            const mismatch = _.without(requiredRoles, ...store.getters['auth/roles']);
 
             if (mismatch.length > 0) {
 

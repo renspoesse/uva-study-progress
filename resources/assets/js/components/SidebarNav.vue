@@ -35,19 +35,23 @@
                         <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Tips and advice</a>
                     </router-link>
 
-                    <li class="nav-header" v-if="hasRole(roles.Administrator) || hasRole(roles.Mentor)">Manage</li>
+                    <template v-if="hasRole(roles.Administrator) || hasRole(roles.Mentor)">
 
-                    <router-link tag="li" to="/students" v-if="hasRole(roles.Administrator)">
-                        <a><i class="fa fa-fw fa-database m-r" aria-hidden="true"></i>Student data</a>
-                    </router-link>
+                        <li class="nav-header">Manage</li>
 
-                    <router-link tag="li" to="/advice/edit" v-if="hasRole(roles.Mentor)">
-                        <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Tips and advice</a>
-                    </router-link>
+                        <router-link tag="li" to="/students" v-if="hasRole(roles.Administrator)">
+                            <a><i class="fa fa-fw fa-database m-r" aria-hidden="true"></i>Student data</a>
+                        </router-link>
 
-                    <router-link tag="li" to="/news/edit" v-if="hasRole(roles.Mentor)">
-                        <a><i class="fa fa-fw fa-newspaper-o m-r" aria-hidden="true"></i>News</a>
-                    </router-link>
+                        <router-link tag="li" to="/advice/edit">
+                            <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Tips and advice</a>
+                        </router-link>
+
+                        <router-link tag="li" to="/news/edit">
+                            <a><i class="fa fa-fw fa-newspaper-o m-r" aria-hidden="true"></i>News</a>
+                        </router-link>
+
+                    </template>
 
                     <li class="nav-header">{{ displayName }}</li>
 
@@ -76,7 +80,7 @@
 
 <script>
 
-    import _ from 'lodash'
+    import * as _ from 'lodash'
     import {mapGetters, mapState} from 'vuex'
 
     import Roles from '../enums/Roles'
