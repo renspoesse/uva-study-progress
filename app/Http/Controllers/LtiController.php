@@ -14,7 +14,7 @@ use App\LTI\StudyProgressToolProvider;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 
-class LTIController extends Controller
+class LtiController extends BaseController
 {
     public function index()
     {

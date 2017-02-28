@@ -1,9 +1,7 @@
 <?php
 
-use DB;
 use Illuminate\Http\Request;
-use IMSGlobal\LTI\ToolProvider\DataConnector;
-use IMSGlobal\LTI\ToolProvider\User;
+use App\Enums\Roles;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,32 +14,19 @@ use IMSGlobal\LTI\ToolProvider\User;
 |
 */
 
-//Route::any('/lti/launch/testadmin', 'LTIController@testAdmin');
-//Route::any('/lti/launch/teststudent', 'LTIController@testStudent');
-//Route::any('/lti/launch/teststudyadvisor', 'LTIController@testStudyAdvisor');
+//Route::any('/lti/launch/testadmin', 'LtiController@testAdmin');
+//Route::any('/lti/launch/teststudent', 'LtiController@testStudent');
+//Route::any('/lti/launch/teststudyadvisor', 'LtiController@testStudyAdvisor');
 
-Route::any('/lti/launch', 'LTIController@index');
+Route::get('/', function () { return view('index'); });
+Route::any('/lti/launch', 'LtiController@index');
 
-Route::any('/logout', function (Request $request) {
+Route::group(['middleware' => 'auth'], function () {
 
-    $request->session()->flush();
-});
+    Route::any('/logout', 'UserController@logout');
+    Route::get('/me', 'UserController@getByAuthenticated');
 
-Route::get('/me', function (Request $request) {
+    Route::get('/students', 'StudentController@index')->middleware('role:' . Roles::Administrator);
 
-    if (!$request->session()->get('authenticated'))
-        abort(401, 'No authenticated LTI session.');
-
-    $connector = DataConnector\DataConnector::getDataConnector('', DB::connection()->getPdo());
-    $user = User::fromRecordId($request->session()->get('record_id'), $connector);
-
-    return array_merge($request->session()->get('user'), [
-
-        'userId' => $user->getId()
-    ]);
-});
-
-Route::get('/', function (Request $request) {
-
-    return view('index');
+    Route::post('/import/students', 'StudentController@createByImport')->middleware('permission:' . Roles::Administrator);
 });
