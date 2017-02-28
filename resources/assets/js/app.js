@@ -19,17 +19,27 @@ require('./bootstrap');
 // Register app components.
 
 Vue.component('alert', require('./components/Alert.vue'));
+Vue.component('loading-overlay', require('./components/LoadingOverlay.vue'));
 Vue.component('pagination', require('./components/Pagination.vue'));
 Vue.component('sidebar-nav', require('./components/SidebarNav.vue'));
 
+
+// Create a global event bus.
+
+const eventBus = new Vue();
+
 // Try using an existing session on the server. The getSession action guarantees a resolved promise,
 // so the app is created whether there's a session or not.
+
+let app;
+
+
 
 store.dispatch('auth/getSession').then(() => {
 
     // Create the app.
 
-    window.app = new Vue(Vue.util.extend({
+    window.app = app = new Vue(Vue.util.extend({
 
         el: '#app',
         router: router,
@@ -37,3 +47,9 @@ store.dispatch('auth/getSession').then(() => {
 
     }, App));
 });
+
+export {
+
+    app,
+    eventBus
+}

@@ -1,15 +1,29 @@
-.fade-enter-active {
+// FADE transition
+
+.fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
 }
 
-.fade-enter, .fade-leave-active {
+.fade-enter, .fade-leave-to {
   opacity: 0;
 }
+
+// FADE transition, allow custom initial opacity.
+
+.fade-custom-enter-active, .fade-custom-leave-active {
+  transition: opacity .5s;
+}
+
+.fade-custom-leave-to {
+  opacity: 0;
+}
+
+// FADE transition, fast version
 
 .fade-fast-enter-active {
   transition: opacity .2s;
 }
 
-.fade-fast-enter, .fade-fast-leave-active {
+.fade-fast-enter, .fade-fast-leave-to {
   opacity: 0;
 }

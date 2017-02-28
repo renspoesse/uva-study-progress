@@ -23,9 +23,13 @@ const removeDataWrappers = function(obj) {
 
         if (obj['data']) {
 
-            if ((length === 1 || obj['meta'] && length === 2)) {
+            if (length === 1) {
 
                 obj = obj['data'];
+            }
+            else if (length === 2 && obj['meta']) {
+
+                obj = zipMetaData(obj['data'], obj['meta']); // Zip any meta properties into the data values, if applicable.
             }
         }
 
@@ -55,9 +59,29 @@ const removeEmptyObjects = function(obj) {
     return obj;
 };
 
+const zipMetaData = function(data, metaArray) {
+
+    _.forEach(metaArray, (meta) => {
+
+        _.forEach(meta, (value) => {
+
+            if (value.id) {
+
+                const match = _.find(data, {id: value.id});
+
+                if (match)
+                    match.meta = _.extend(match.meta, value);
+            }
+        });
+    });
+
+    return data;
+};
+
 export {
 
     getFormData,
     removeDataWrappers,
-    removeEmptyObjects
+    removeEmptyObjects,
+    zipMetaData
 }

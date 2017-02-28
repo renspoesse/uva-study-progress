@@ -28,5 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/students', 'StudentController@index')->middleware('role:' . Roles::Administrator);
 
+    Route::delete('/students/{id}', 'StudentController@deleteById')->middleware('role:' . Roles::Administrator);
+
     Route::post('/import/students', 'StudentController@createByImport')->middleware('permission:' . Roles::Administrator);
 });

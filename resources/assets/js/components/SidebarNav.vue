@@ -35,7 +35,7 @@
                         <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Tips and advice</a>
                     </router-link>
 
-                    <template v-if="hasRole(roles.Administrator) || hasRole(roles.Mentor)">
+                    <template v-if="hasRole(roles.Administrator) || hasRole(roles.Instructor)">
 
                         <li class="nav-header">Manage</li>
 

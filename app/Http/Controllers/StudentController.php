@@ -6,12 +6,80 @@ use App\Helpers\PaginationHelpers;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Validator;
+use DB;
 
 class StudentController extends BaseController
 {
     public function createByImport(Request $request)
     {
-        // TODO RENS: import csv
+        // TODO RENS: upload csv
+
+        /*
+        $this->validate($request, [
+
+            'file' => 'required|file'
+        ]);
+
+        $file = $request->file('file');
+
+        if (!$file->isValid())
+            throw new \Exception('The file was not uploaded successfully.');
+        */
+
+        $file = 'https://studyprogress.rens.amsterdam/TB_RensTest.csv';
+
+        $rows = [];
+
+        if (($handle = fopen($file, 'r')) !== false) {
+
+            while (($data = fgetcsv($handle, 0, ';')) !== false)
+                array_push($rows, $data);
+
+            fclose($handle);
+        }
+
+        $headers = array_splice($rows, 0, 1)[0];
+        $parsed = [];
+
+        foreach ($rows as $row) {
+
+            $record = [];
+
+            foreach ($headers as $index => $header)
+                $record[$header] = $row[$index];
+
+            array_push($parsed, $record);
+        }
+
+        DB::transaction(function () use ($parsed) {
+
+            foreach ($parsed as $record) {
+
+                $obj = new Student();
+
+                $obj->student_number = $record['nummer'];
+                $obj->program_code = $record['opl'];
+                $obj->program_name = $record['omschrijving'];
+                $obj->cohort = $record['cohort'];
+                $obj->bsa_credits = $record['BSA-crd'];
+                $obj->bsa = $record['bsa'];
+                $obj->second_year = $record['2ndY'];
+                $obj->second_year_b1_credits = $record['2ndY-B1'];
+                $obj->second_year_b1_subjects = $record['Nvakken-B1'];
+                $obj->second_year_credits = $record['2ndY-crd'];
+                $obj->dip_category = $record['DipCategory'];
+                $obj->gpa_current = floatval($record['GPA actueel']);
+
+                $obj->save();
+            }
+        });
+
+        return response('', 201);
+    }
+
+    public function deleteById($id)
+    {
+        Student::where('id', $id)->delete();
     }
 
     public function index(Request $request)
@@ -27,6 +95,8 @@ class StudentController extends BaseController
         if ($request->has('query')) {
 
             $query = $query->where('student_number', 'LIKE', '%' . $request->input('query') . '%');
+            $query = $query->orWhere('program_code', 'LIKE', '%' . $request->input('query') . '%');
+            $query = $query->orWhere('program_name', 'LIKE', '%' . $request->input('query') . '%');
         }
 
         $orderBy = 'updated_at';
