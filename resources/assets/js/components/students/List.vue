@@ -72,6 +72,8 @@
     import moment from 'moment'
 
     import errorAlerts from '../../mixins/error_alerts'
+    import listActions from '../../mixins/list_actions'
+    import loadingOverlay from '../../mixins/loading_overlay'
 
     import * as images from '../../helpers/images'
     import * as students from '../../services/students'
@@ -83,51 +85,14 @@
             _() { return _; },
             moment() { return moment; }
         },
-        created () {
-
-            if (_.has(this.$route, 'query.order')) {
-
-                const values = this.$route.query.order.split('|');
-                this.order = {field: values[0], direction: values[1] || 'asc'};
-            }
-
-            if (_.has(this.$route, 'query.page'))
-                this.pagination.currentPage = parseInt(this.$route.query.page);
-
-            if (_.has(this.$route, 'query.query'))
-                this.query = this.$route.query.query;
-
-            this.fetchData(this.pagination.currentPage);
-        },
-        data: function() {
-
-            return {
-
-                items: [],
-                loading: false,
-                order: {field: 'updated_at', direction: 'desc'},
-                pagination: {currentPage: 1, totalPages: 1},
-                query: ''
-            };
-        },
         methods: {
 
             fetchData: function(page) {
 
-                this.loading = true;
+                this.showLoading(true);
                 this.displayErrors(false);
 
-                // Change the route and call any hooks, but without re-rendering the component.
-
-                this.$router.replace({
-
-                    query: {
-
-                        order: this.order.field + '|' + this.order.direction,
-                        page: page,
-                        query: this.query.trim()
-                    }
-                });
+                this.updateRoute(page);
 
                 students.getByParameters({
 
@@ -140,38 +105,21 @@
                         this.items = result.items;
                         this.pagination = result.meta.pagination;
 
-                        this.loading = false;
+                        this.showLoading(false);
                     })
                     .catch((ex) => {
 
                         this.displayErrors(true, ex.message);
-                        this.loading = false;
+                        this.showLoading(false);
                     });
-            },
-            handleGoToPage: function(e) {
-
-                this.fetchData(e.page);
-            },
-            handleOrder: function(field) {
-
-                if (this.order.field === field)
-                    this.order.direction = this.order.direction === 'asc' ? 'desc' : 'asc';
-                else
-                    this.order.field = field;
-
-                this.fetchData(this.pagination.currentPage);
             },
             handleRemove: function() {
 
                 this.displayErrors(false);
 
-                // TODO RENS: dit kan meer reactive.
-
-                const selected = $(this.$el).find('.select-row:checked').closest('[data-id]');
-
                 // TODO RENS: confirmation.
 
-                _.forEach(selected, (el) => {
+                _.forEach(this.getSelectedItems(), (el) => {
 
                     const id = parseInt($(el).attr('data-id'));
 
@@ -179,29 +127,13 @@
                         .then(() => {this.fetchData(this.pagination.currentPage);})
                         .catch((ex) => {this.addError(ex.message);});
                 });
-            },
-            handleSearch: function() {
-
-                this.fetchData(1)
-            },
-            handleSelectAll: function() {
-
-                const checked = $(this.$refs.selectAll).prop('checked');
-                $(this.$el).find('.select-row').prop('checked', checked);
-            },
-            headerClass: function(field) {
-
-                let result = 'header';
-
-                if (this.order.field === field)
-                    result += this.order.direction === 'asc' ? ' headerSortUp' : ' headerSortDown';
-
-                return result;
             }
         },
         mixins: [
 
-            errorAlerts
+            errorAlerts,
+            listActions,
+            loadingOverlay
         ],
         updated () {
 
