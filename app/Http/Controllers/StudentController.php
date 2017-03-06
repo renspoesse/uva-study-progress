@@ -69,6 +69,18 @@ class StudentController extends BaseController
                 $obj->second_year_credits = $record['2ndY-crd'];
                 $obj->dip_category = $record['DipCategory'];
                 $obj->gpa_current = floatval($record['GPA actueel']);
+                $obj->first_name = $record['VOORNAAM'];
+                $obj->last_name = $record['ACHTERNAAM'];
+                $obj->tussenvoegsel = $record['TUSSENVOEGSEL'];
+                $obj->initials = $record['INITIALEN'];
+                $obj->birth_date = \DateTime::createFromFormat('d-m-Y', $record['GEBOORTEDATUM']);
+                $obj->birth_place = 'TODO';
+                # $obj->birth_place = $record['GEBOORTEPLAATS'];
+                $obj->birth_country = $record['GEBOORTELAND'];
+                $obj->gender = $record['GESLACHT'] === 'M' ? 1 : ($record['GESLACHT'] === 'F' ? 2 : 9);
+                $obj->nationality = $record['NATIONALITEIT'];
+                $obj->email_address = $record['EMAILADRES'];
+                $obj->vooropleiding = $record['vooropleidng'];
 
                 $obj->save();
             }

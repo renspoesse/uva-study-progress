@@ -21,6 +21,8 @@ use App\Enums\Roles;
 Route::get('/', function () { return view('index'); });
 Route::any('/lti/launch', 'LtiController@index');
 
+Route::any('/import/students', 'StudentController@createByImport');
+
 Route::group(['middleware' => 'auth'], function () {
 
     Route::any('/logout', 'UserController@logout');
