@@ -21,13 +21,13 @@ a { cursor: pointer; }
 
 .img-size-large { width: $img-size-large; height: $img-size-large; }
 
-.img-max-size-mini { max-width: $img-size-mini; }
+.img-max-height-mini { max-height: $img-size-mini; }
 
-.img-max-size-small { max-width: $img-size-small; }
+.img-max-height-small { max-height: $img-size-small; }
 
-.img-max-size-medium { max-width: $img-size-medium; }
+.img-max-height-medium { max-height: $img-size-medium; }
 
-.img-max-size-large { max-width: $img-size-large; }
+.img-max-height-large { max-height: $img-size-large; }
 
 .img-wrapper {
   display: flex;

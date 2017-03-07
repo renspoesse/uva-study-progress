@@ -18,9 +18,10 @@ require('./bootstrap');
 
 // Register app components.
 
-Vue.component('alert', require('./components/Alert.vue'));
-Vue.component('loading-overlay', require('./components/LoadingOverlay.vue'));
-Vue.component('pagination', require('./components/Pagination.vue'));
+Vue.component('alert', require('./components/_controls/Alert.vue'));
+Vue.component('loading-overlay', require('./components/_controls/LoadingOverlay.vue'));
+Vue.component('pagination', require('./components/_controls/Pagination.vue'));
+
 Vue.component('sidebar-nav', require('./components/SidebarNav.vue'));
 
 
