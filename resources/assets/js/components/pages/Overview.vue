@@ -39,194 +39,35 @@
         </div>
 
         <div class="hr-divider m-t-md m-b">
-            <h3 class="hr-divider-content hr-divider-heading">Quick stats</h3>
+            <h3 class="hr-divider-content hr-divider-heading">Latest news, tips and advice</h3>
         </div>
-
-        <div class="row statcards">
-            <div class="col-sm-6 col-lg-3 m-b">
-                <div class="statcard statcard-success">
-                    <div class="p-a">
-                        <span class="statcard-desc">Page views</span>
-                        <h2 class="statcard-number">
-                            12,938
-                            <small class="delta-indicator delta-positive">5%</small>
-                        </h2>
-                        <hr class="statcard-hr m-b-0">
-                    </div>
-                    <canvas id="sparkline1" width="334" height="83" class="sparkline" data-chart="spark-line" data-value="[{data:[28,68,41,43,96,45,100]}]" data-labels="['a','b','c','d','e','f','g']" style="width: 334px; height: 83px;"></canvas>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-3 m-b">
-                <div class="statcard statcard-danger">
-                    <div class="p-a">
-                        <span class="statcard-desc">Downloads</span>
-                        <h2 class="statcard-number">
-                            758
-                            <small class="delta-indicator delta-negative">1.3%</small>
-                        </h2>
-                        <hr class="statcard-hr m-b-0">
-                    </div>
-                    <canvas id="sparkline1" width="334" height="83" class="sparkline" data-chart="spark-line" data-value="[{data:[4,34,64,27,96,50,80]}]" data-labels="['a', 'b','c','d','e','f','g']" style="width: 334px; height: 83px;"></canvas>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-3 m-b">
-                <div class="statcard statcard-info">
-                    <div class="p-a">
-                        <span class="statcard-desc">Sign-ups</span>
-                        <h2 class="statcard-number">
-                            1,293
-                            <small class="delta-indicator delta-positive">6.75%</small>
-                        </h2>
-                        <hr class="statcard-hr m-b-0">
-                    </div>
-                    <canvas id="sparkline1" width="334" height="83" class="sparkline" data-chart="spark-line" data-value="[{data:[12,38,32,60,36,54,68]}]" data-labels="['a', 'b','c','d','e','f','g']" style="width: 334px; height: 83px;"></canvas>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-3 m-b">
-                <div class="statcard statcard-warning">
-                    <div class="p-a">
-                        <span class="statcard-desc">Downloads</span>
-                        <h2 class="statcard-number">
-                            758
-                            <small class="delta-indicator delta-negative">1.3%</small>
-                        </h2>
-                        <hr class="statcard-hr m-b-0">
-                    </div>
-                    <canvas id="sparkline1" width="334" height="83" class="sparkline" data-chart="spark-line" data-value="[{data:[43,48,52,58,50,95,100]}]" data-labels="['a', 'b','c','d','e','f','g']" style="width: 334px; height: 83px;"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <hr class="m-t">
 
         <div class="row">
-            <div class="col-md-6 m-b-md">
-                <div class="list-group">
-                    <h4 class="list-group-header">
-                        Countries
-                    </h4>
+            <div class="col-md-6">
 
-                    <a class="list-group-item" href="#">
-                        <span class="list-group-progress" style="width: 62.4%;"></span>
-                        <span class="pull-right text-muted">62.4%</span>
-                        United States
-                    </a>
-
-                    <a class="list-group-item" href="#">
-                        <span class="list-group-progress" style="width: 15.0%;"></span>
-                        <span class="pull-right text-muted">15.0%</span>
-                        India
-                    </a>
-
-                    <a class="list-group-item" href="#">
-                        <span class="list-group-progress" style="width: 5.0%;"></span>
-                        <span class="pull-right text-muted">5.0%</span>
-                        United Kingdom
-                    </a>
-
-                    <a class="list-group-item" href="#">
-                        <span class="list-group-progress" style="width: 5.0%;"></span>
-                        <span class="pull-right text-muted">5.0%</span>
-                        Canada
-                    </a>
-
-                    <a class="list-group-item" href="#">
-                        <span class="list-group-progress" style="width: 4.5%;"></span>
-                        <span class="pull-right text-muted">4.5%</span>
-                        Russia
-                    </a>
-
-                    <a class="list-group-item" href="#">
-                        <span class="list-group-progress" style="width: 2.3%;"></span>
-                        <span class="pull-right text-muted">2.3%</span>
-                        Mexico
-                    </a>
-
-                    <a class="list-group-item" href="#">
-                        <span class="list-group-progress" style="width: 1.7%;"></span>
-                        <span class="pull-right text-muted">1.7%</span>
-                        Spain
-                    </a>
-
-                    <a class="list-group-item" href="#">
-                        <span class="list-group-progress" style="width: 1.5%;"></span>
-                        <span class="pull-right text-muted">1.5%</span>
-                        France
-                    </a>
-
-                    <a class="list-group-item" href="#">
-                        <span class="list-group-progress" style="width: 1.4%;"></span>
-                        <span class="pull-right text-muted">1.4%</span>
-                        South Africa
-                    </a>
-
-                    <a class="list-group-item" href="#">
-                        <span class="list-group-progress" style="width: 1.2%;"></span>
-                        <span class="pull-right text-muted">1.2%</span>
-                        Japan
-                    </a>
-
+                <div class="panel panel-default" v-for="item in news">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ item.title }}</h3>
+                    </div>
+                    <div class="panel-body" v-html="item.text"></div>
+                    <div class="panel-footer">
+                        updated {{ moment.utc(item.updated_at).local().fromNow() }}
+                    </div>
                 </div>
-                <a href="#" class="btn btn-primary-outline p-x">All countries</a>
+
             </div>
-            <div class="col-md-6 m-b-md">
-                <div class="list-group">
-                    <h4 class="list-group-header">
-                        Most visited pages
-                    </h4>
+            <div class="col-md-6">
 
-                    <a class="list-group-item" href="#">
-                        <span class="pull-right text-muted">3,929,481</span>
-                        / (Logged out)
-                    </a>
-
-                    <a class="list-group-item" href="#">
-                        <span class="pull-right text-muted">1,143,393</span>
-                        / (Logged in)
-                    </a>
-
-                    <a class="list-group-item" href="#">
-                        <span class="pull-right text-muted">938,287</span>
-                        /tour
-                    </a>
-
-                    <a class="list-group-item" href="#">
-                        <span class="pull-right text-muted">749,393</span>
-                        /features/something
-                    </a>
-
-                    <a class="list-group-item" href="#">
-                        <span class="pull-right text-muted">695,912</span>
-                        /features/another-thing
-                    </a>
-
-                    <a class="list-group-item" href="#">
-                        <span class="pull-right text-muted">501,938</span>
-                        /users/username
-                    </a>
-
-                    <a class="list-group-item" href="#">
-                        <span class="pull-right text-muted">392,842</span>
-                        /page-title
-                    </a>
-
-                    <a class="list-group-item" href="#">
-                        <span class="pull-right text-muted">298,183</span>
-                        /some/page-slug
-                    </a>
-
-                    <a class="list-group-item" href="#">
-                        <span class="pull-right text-muted">193,129</span>
-                        /another/directory/and/page-title
-                    </a>
-
-                    <a class="list-group-item" href="#">
-                        <span class="pull-right text-muted">93,382</span>
-                        /one-more/page/directory/file-name
-                    </a>
-
+                <div class="panel panel-default" v-for="item in advice">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ item.title }}</h3>
+                    </div>
+                    <div class="panel-body" v-html="item.text"></div>
+                    <div class="panel-footer">
+                        updated {{ moment.utc(item.updated_at).local().fromNow() }}
+                    </div>
                 </div>
-                <a href="#" class="btn btn-primary-outline p-x">View all pages</a>
+
             </div>
         </div>
 
@@ -236,9 +77,16 @@
 
 <script>
 
+    import * as _ from 'lodash'
+    import moment from 'moment'
     import {mapGetters} from 'vuex'
 
+    import errorAlerts from '../../mixins/error_alerts'
+    import loadingOverlay from '../../mixins/loading_overlay'
+
+    import * as advice from '../../services/advice'
     import * as images from '../../helpers/images'
+    import * as news from '../../services/news'
 
     export default {
 
@@ -247,8 +95,64 @@
             ...mapGetters({
 
                 displayName: 'auth/displayName'
-            })
+            }),
+            _() { return _; },
+            moment() { return moment; }
         },
+        created() {
+
+            this.fetchData();
+        },
+        data: function() {
+
+            return {
+
+                advice: [],
+                news: []
+            }
+        },
+        methods: {
+
+            fetchData: function() {
+
+                this.displayErrors(false);
+
+                advice.getByParameters({
+
+                        order: 'updated_at|desc',
+                        limit: 2,
+                        publishedOnly: true
+                    })
+                    .then((result) => {
+
+                        this.advice = result.items;
+                    })
+                    .catch((ex) => {
+
+                        this.displayErrors(true, ex.message);
+                    });
+
+                news.getByParameters({
+
+                        order: 'updated_at|desc',
+                        limit: 2,
+                        publishedOnly: true
+                    })
+                    .then((result) => {
+
+                        this.news = result.items;
+                    })
+                    .catch((ex) => {
+
+                        this.displayErrors(true, ex.message);
+                    });
+            }
+        },
+        mixins: [
+
+            errorAlerts,
+            loadingOverlay
+        ],
         mounted: function() {
 
             $(document).trigger('redraw.bs.charts');

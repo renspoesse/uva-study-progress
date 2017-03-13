@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Roles;
+use App\Helpers\LtiHelpers;
 use App\Helpers\PaginationHelpers;
 use App\Models\Advice;
 use Illuminate\Http\Request;
@@ -51,11 +53,15 @@ class AdviceController extends BaseController
     {
         $this->validate($request, [
 
-            'order' => 'string|nullable',
-            'query' => 'string|nullable'
+            'order'         => 'string|nullable',
+            'publishedOnly' => 'nullable',
+            'query'         => 'string|nullable'
         ]);
 
         $query = Advice::query();
+
+        if (filter_var($request->input('publishedOnly'), FILTER_VALIDATE_BOOLEAN) === true || !LtiHelpers::hasRole($request, Roles::Instructor))
+            $query = $query->where('is_published', true);
 
         if ($request->has('query')) {
 
@@ -95,7 +101,7 @@ class AdviceController extends BaseController
 
             if ($request->exists('title')) $advice->title = $request->input('title');
             if ($request->exists('text')) $advice->text = $request->input('text');
-            if ($request->exists('is_published')) $advice->is_published->input('is_published');
+            if ($request->exists('is_published')) $advice->is_published = $request->input('is_published');
 
             $advice->save();
         });

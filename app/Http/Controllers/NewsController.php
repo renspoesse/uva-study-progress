@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Roles;
+use App\Helpers\LtiHelpers;
 use App\Helpers\PaginationHelpers;
 use App\Models\News;
 use Illuminate\Http\Request;
@@ -51,11 +53,15 @@ class NewsController extends BaseController
     {
         $this->validate($request, [
 
-            'order' => 'string|nullable',
-            'query' => 'string|nullable'
+            'order'         => 'string|nullable',
+            'publishedOnly' => 'nullable',
+            'query'         => 'string|nullable'
         ]);
 
         $query = News::query();
+
+        if (filter_var($request->input('publishedOnly'), FILTER_VALIDATE_BOOLEAN) === true || !LtiHelpers::hasRole($request, Roles::Instructor))
+            $query = $query->where('is_published', true);
 
         if ($request->has('query')) {
 
@@ -95,7 +101,7 @@ class NewsController extends BaseController
 
             if ($request->exists('title')) $news->title = $request->input('title');
             if ($request->exists('text')) $news->text = $request->input('text');
-            if ($request->exists('is_published')) $news->is_published->input('is_published');
+            if ($request->exists('is_published')) $news->is_published = $request->input('is_published');
 
             $news->save();
         });

@@ -11,27 +11,32 @@ Vue.use(VueRouter);
 
 const components = {
 
-    advice: {
+    manage: {
 
-        Edit: require('./components/advice/Edit.vue'),
-        List: require('./components/advice/List.vue')
-    },
-    news: {
+        advice: {
 
-        Edit: require('./components/news/Edit.vue'),
-        List: require('./components/news/List.vue')
+            Edit: require('./components/manage/advice/Edit.vue'),
+            List: require('./components/manage/advice/List.vue')
+        },
+        news: {
+
+            Edit: require('./components/manage/news/Edit.vue'),
+            List: require('./components/manage/news/List.vue')
+        },
+        students: {
+
+            Import: require('./components/manage/students/Import.vue'),
+            List: require('./components/manage/students/List.vue'),
+            View: require('./components/manage/students/View.vue')
+        }
     },
     pages: {
 
+        Advice: require('./components/pages/Advice.vue'),
         Login: require('./components/pages/Login.vue'),
+        News: require('./components/pages/News.vue'),
         NotFound: require('./components/pages/NotFound.vue'),
         Overview: require('./components/pages/Overview.vue')
-    },
-    students: {
-
-        Import: require('./components/students/Import.vue'),
-        List: require('./components/students/List.vue'),
-        View: require('./components/students/View.vue')
     }
 };
 
@@ -58,15 +63,18 @@ const router = new VueRouter({
         },
 
         {path: '/', component: components.pages.Overview, meta: {requiresAuth: true}},
-        {path: '/advice', component: components.advice.List, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
-        {path: '/advice/new', component: components.advice.Edit, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
-        {path: '/advice/:id/edit', component: components.advice.Edit, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
-        {path: '/news', component: components.news.List, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
-        {path: '/news/new', component: components.news.Edit, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
-        {path: '/news/:id/edit', component: components.news.Edit, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
-        {path: '/students', component: components.students.List, meta: {requiresAuth: true, requiresRole: Roles.Administrator}},
-        {path: '/students/import', component: components.students.Import, meta: {requiresAuth: true, requiresRole: Roles.Administrator}},
-        {path: '/students/:id', component: components.students.View, meta: {requiresAuth: true, requiresRole: Roles.Administrator}},
+        {path: '/advice', component: components.pages.Advice, meta: {requiresAuth: true}},
+        {path: '/news', component: components.pages.News, meta: {requiresAuth: true}},
+
+        {path: '/manage/advice', component: components.manage.advice.List, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
+        {path: '/manage/advice/new', component: components.manage.advice.Edit, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
+        {path: '/manage/advice/:id/edit', component: components.manage.advice.Edit, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
+        {path: '/manage/news', component: components.manage.news.List, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
+        {path: '/manage/news/new', component: components.manage.news.Edit, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
+        {path: '/manage/news/:id/edit', component: components.manage.news.Edit, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
+        {path: '/manage/students', component: components.manage.students.List, meta: {requiresAuth: true, requiresRole: Roles.Administrator}},
+        {path: '/manage/students/import', component: components.manage.students.Import, meta: {requiresAuth: true, requiresRole: Roles.Administrator}},
+        {path: '/manage/students/:id', component: components.manage.students.View, meta: {requiresAuth: true, requiresRole: Roles.Administrator}},
 
         {path: '*', component: components.pages.NotFound}
     ]
