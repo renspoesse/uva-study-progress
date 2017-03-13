@@ -11,11 +11,11 @@ const getters = {
 
     avatarUrl: (state) => {
 
-        return _.has(state, 'user') ? state.user.image : '';
+        return _.has(state, 'user.image') ? state.user.image : '';
     },
     displayName: (state) => {
 
-        return _.has(state, 'user') ? state.user.fullname : '';
+        return _.has(state, 'user.fullname') ? state.user.fullname : '';
     },
     isAuthenticated: (state) => { return !!state.user; },
     roles: (state) => {

@@ -36,8 +36,10 @@
                     <tr>
                         <th class="header"><input type="checkbox" ref="selectAll" v-on:change="handleSelectAll"></th>
                         <th v-bind:class="headerClass('student_number')" v-on:click.prevent="handleOrder('student_number')">Student number</th>
-                        <th v-bind:class="headerClass('program_code')" v-on:click.prevent="handleOrder('program_code')">Program code</th>
-                        <th v-bind:class="headerClass('program_name')" v-on:click.prevent="handleOrder('program_name')">Description</th>
+                        <th v-bind:class="headerClass('display_name')" v-on:click.prevent="handleOrder('display_name')">Name</th>
+                        <th v-bind:class="headerClass('program_name')" v-on:click.prevent="handleOrder('program_name')">Program</th>
+                        <th v-bind:class="headerClass('cohort')" v-on:click.prevent="handleOrder('cohort')">Cohort</th>
+                        <th v-bind:class="headerClass('is_published')" v-on:click.prevent="handleOrder('is_published')">Published</th>
                         <th v-bind:class="headerClass('updated_at')" v-on:click.prevent="handleOrder('updated_at')">Updated at</th>
                     </tr>
                     </thead>
@@ -45,14 +47,18 @@
 
                     <tr v-for="item in items" v-bind:key="item.id" v-bind:data-id="item.id">
                         <td><input type="checkbox" class="select-row"></td>
-                        <td>{{ item.student_number }}</td>
-                        <td>{{ item.program_code }}</td>
+                        <td><a v-bind:href="'#/students/' + item.id">{{ item.student_number }}</a></td>
+                        <td>{{ _.truncate(item.display_name, {length: 30}) }}</td>
                         <td>{{ _.truncate(item.program_name, {length: 30}) }}</td>
+                        <td>{{ item.cohort }}</td>
+                        <td>
+                            <i class="fa fa-check" v-if="item.is_published"></i>
+                        </td>
                         <td>{{ moment.utc(item.updated_at).local().format('YYYY-MM-DD HH:mm:ss') }}</td>
                     </tr>
 
                     <tr v-if="items.length === 0">
-                        <td colspan="5">No results</td>
+                        <td colspan="7">No results</td>
                     </tr>
 
                     </tbody>

@@ -40,15 +40,15 @@
                         <li class="nav-header">Manage</li>
 
                         <router-link tag="li" to="/students" v-if="hasRole(roles.Administrator)">
-                            <a><i class="fa fa-fw fa-database m-r" aria-hidden="true"></i>Student data</a>
+                            <a><i class="fa fa-fw fa-database m-r" aria-hidden="true"></i>Students</a>
                         </router-link>
 
-                        <router-link tag="li" to="/advice/edit">
-                            <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Tips and advice</a>
-                        </router-link>
-
-                        <router-link tag="li" to="/news/edit">
+                        <router-link tag="li" to="/news">
                             <a><i class="fa fa-fw fa-newspaper-o m-r" aria-hidden="true"></i>News</a>
+                        </router-link>
+
+                        <router-link tag="li" to="/advice">
+                            <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Tips and advice</a>
                         </router-link>
 
                     </template>

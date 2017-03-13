@@ -35,20 +35,20 @@ a {
   height: 25rem;
 }
 
-.img-max-size-mini {
-  max-width: 3rem;
+.img-max-height-mini {
+  max-height: 3rem;
 }
 
-.img-max-size-small {
-  max-width: 6rem;
+.img-max-height-small {
+  max-height: 6rem;
 }
 
-.img-max-size-medium {
-  max-width: 10rem;
+.img-max-height-medium {
+  max-height: 10rem;
 }
 
-.img-max-size-large {
-  max-width: 25rem;
+.img-max-height-large {
+  max-height: 25rem;
 }
 
 .img-wrapper {

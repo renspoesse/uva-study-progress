@@ -11,6 +11,16 @@ Vue.use(VueRouter);
 
 const components = {
 
+    advice: {
+
+        Edit: require('./components/advice/Edit.vue'),
+        List: require('./components/advice/List.vue')
+    },
+    news: {
+
+        Edit: require('./components/news/Edit.vue'),
+        List: require('./components/news/List.vue')
+    },
     pages: {
 
         Login: require('./components/pages/Login.vue'),
@@ -19,7 +29,8 @@ const components = {
     },
     students: {
 
-        List: require('./components/students/List.vue')
+        List: require('./components/students/List.vue'),
+        View: require('./components/students/View.vue')
     }
 };
 
@@ -34,22 +45,26 @@ const router = new VueRouter({
             path: '/logout',
             beforeEnter: (to, from, next) => {
 
-                if (store.getters['auth/isAuthenticated']) {
+                store.dispatch('auth/logout').then(() => {
 
-                    store.dispatch('auth/logout').then(() => {
+                        next('/login');
+                    })
+                    .catch((ex) => {
 
-                            next('/login');
-                        })
-                        .catch((ex) => {
-
-                            next(false);
-                        });
-                }
+                        next(false);
+                    });
             }
         },
 
         {path: '/', component: components.pages.Overview, meta: {requiresAuth: true}},
+        {path: '/advice', component: components.advice.List, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
+        {path: '/advice/new', component: components.advice.Edit, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
+        {path: '/advice/:id/edit', component: components.advice.Edit, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
+        {path: '/news', component: components.news.List, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
+        {path: '/news/new', component: components.news.Edit, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
+        {path: '/news/:id/edit', component: components.news.Edit, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
         {path: '/students', component: components.students.List, meta: {requiresAuth: true, requiresRole: Roles.Administrator}},
+        {path: '/students/:id', component: components.students.View, meta: {requiresAuth: true, requiresRole: Roles.Administrator}},
 
         {path: '*', component: components.pages.NotFound}
     ]
