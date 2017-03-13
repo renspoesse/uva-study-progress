@@ -57,14 +57,17 @@ const getByParameters = function(params) {
                         const meta = _.clone(obj);
                         delete meta.data;
 
-                        resolve({items: obj.data, meta: {
+                        resolve({
 
-                            pagination: {
+                            items: obj.data, meta: {
 
-                                currentPage: obj.current_page,
-                                totalPages: obj.last_page
+                                pagination: {
+
+                                    currentPage: obj.current_page,
+                                    totalPages: obj.last_page
+                                }
                             }
-                        }});
+                        });
                     })
                     .catch((parseError) => {
 
@@ -80,9 +83,47 @@ const getByParameters = function(params) {
     });
 };
 
+const importFromFile = function(payload, file) {
+
+    return new Promise((resolve, reject) => {
+
+        payload = json.removeEmptyObjects(_.clone(payload));
+        const data = json.getFormData(payload, file);
+
+        Vue.http.post('import/students', data).then((response) => {
+
+                resolve({});
+            })
+            .catch((response) => {
+
+                console.log(response);
+
+                if (response.status === 422) {
+
+                    response.json().then((obj) => {
+
+                            reject({
+
+                                message: "It seems like you didn't provide a valid file.",
+                                errors: obj
+                            });
+                        })
+                        .catch((parseError) => {
+
+                            console.log(parseError);
+                            reject({message: 'Failed to parse error data.'});
+                        });
+                }
+                else
+                    reject({message: 'Oops. Something went wrong.'});
+            });
+    });
+};
+
 export {
 
     deleteById,
     getById,
-    getByParameters
+    getByParameters,
+    importFromFile
 }

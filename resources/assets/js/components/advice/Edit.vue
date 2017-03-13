@@ -172,11 +172,7 @@
             backgroundProcesses,
             errorAlerts,
             loadingOverlay
-        ],
-        updated () {
-
-            images.fadeWhenLoaded($(this.$el).find('img'));
-        }
+        ]
     }
 
 </script>

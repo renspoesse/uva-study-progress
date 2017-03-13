@@ -12,22 +12,17 @@ class StudentController extends BaseController
 {
     public function createByImport(Request $request)
     {
-        // TODO RENS: upload csv
+        ini_set('auto_detect_line_endings', true);
 
-        /*
         $this->validate($request, [
 
-            'file' => 'required|file'
+            'data' => 'required|file'
         ]);
 
-        $file = $request->file('file');
+        $file = $request->file('data');
 
         if (!$file->isValid())
             throw new \Exception('The file was not uploaded successfully.');
-        */
-
-        $file = 'https://studyprogress.rens.amsterdam/TB_RensTest.csv';
-        ini_set('auto_detect_line_endings', true);
 
         $rows = [];
 
@@ -107,7 +102,7 @@ class StudentController extends BaseController
             }
         });
 
-        return response('Created', 201);
+        return response('', 201);
     }
 
     public function getById($id)

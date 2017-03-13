@@ -135,11 +135,7 @@
             errorAlerts,
             listActions,
             loadingOverlay
-        ],
-        updated () {
-
-            images.fadeWhenLoaded($(this.$el).find('img'));
-        }
+        ]
     }
 
 </script>

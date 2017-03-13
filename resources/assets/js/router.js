@@ -29,6 +29,7 @@ const components = {
     },
     students: {
 
+        Import: require('./components/students/Import.vue'),
         List: require('./components/students/List.vue'),
         View: require('./components/students/View.vue')
     }
@@ -64,6 +65,7 @@ const router = new VueRouter({
         {path: '/news/new', component: components.news.Edit, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
         {path: '/news/:id/edit', component: components.news.Edit, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
         {path: '/students', component: components.students.List, meta: {requiresAuth: true, requiresRole: Roles.Administrator}},
+        {path: '/students/import', component: components.students.Import, meta: {requiresAuth: true, requiresRole: Roles.Administrator}},
         {path: '/students/:id', component: components.students.View, meta: {requiresAuth: true, requiresRole: Roles.Administrator}},
 
         {path: '*', component: components.pages.NotFound}

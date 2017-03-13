@@ -24,6 +24,7 @@
             </div>
             <div class="flextable-item">
                 <div class="btn-group">
+                    <a href="#/students/import" class="btn btn-primary-outline"><i class="fa fa-plus m-r-s"></i>Import from .csv</a>
                     <a class="btn btn-primary-outline" v-on:click.prevent="handleRemove"><i class="fa fa-trash"></i></a>
                 </div>
             </div>
@@ -140,11 +141,7 @@
             errorAlerts,
             listActions,
             loadingOverlay
-        ],
-        updated () {
-
-            images.fadeWhenLoaded($(this.$el).find('img'));
-        }
+        ]
     }
 
 </script>
