@@ -13,6 +13,7 @@ module.exports = {
             'chart.js',
             'corejs-typeahead',
             'jquery',
+            'medium-editor',
             'moment',
             'numeral',
             'sortablejs',

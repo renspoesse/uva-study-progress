@@ -13,6 +13,9 @@
 
     <link rel="stylesheet" href="/css/toolkit.css">
     <link rel="stylesheet" href="/css/app.css">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/medium-editor/latest/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/medium-editor/latest/css/themes/bootstrap.min.css" type="text/css" media="screen" charset="utf-8">
 </head>
 <body>
 

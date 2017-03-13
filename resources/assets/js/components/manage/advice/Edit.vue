@@ -43,7 +43,7 @@
             <div v-bind:class="['form-group', hasError('text') ? 'has-feedback has-error' : '']">
                 <label class="col-sm-3 control-label">Text</label>
                 <div class="col-sm-9">
-                    <textarea class="form-control" v-model="advice.text" rows="20"></textarea>
+                     <div class="form-control editable" v-html="news.text" v-on:input="handleTextInput"></div>
                 </div>
             </div>
 
@@ -79,6 +79,7 @@
 <script>
 
     import * as _ from 'lodash'
+    import MediumEditor from 'medium-editor'
 
     import backgroundProcesses from '../../../mixins/background_processes'
     import errorAlerts from '../../../mixins/error_alerts'
@@ -89,6 +90,10 @@
 
     export default {
 
+        beforeDestroy() {
+
+            if (this.editor) this.editor.destroy();
+        },
         computed: {
 
             isNew: function() {return !this.advice.id;}
@@ -141,6 +146,11 @@
 
                 this.saveOrUpdate(this.advice);
             },
+            handleTextInput: function() {
+
+                if (this.editor)
+                    this.news.text = this.editor.getContent();
+            },
             saveOrUpdate: function(payload) {
 
                 this.displayErrors(false);
@@ -172,7 +182,25 @@
             backgroundProcesses,
             errorAlerts,
             loadingOverlay
-        ]
+        ],
+        mounted() {
+
+            this.editor = new MediumEditor('.editable', {
+
+                linkValidation: true,
+                placeholder: false,
+                targetBlank: true
+            });
+        }
     }
 
 </script>
+
+<style>
+
+    .editable {
+        height: auto !important;
+        min-height: 20rem;
+    }
+
+</style>
