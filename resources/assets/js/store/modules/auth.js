@@ -4,21 +4,40 @@ import * as json from '../../helpers/json'
 
 const state = {
 
-    user: null
+    user: null,
+    viewAs: null
 };
 
 const getters = {
 
     avatarUrl: (state) => {
 
+        if (state.viewAs) {
+
+            return _.has(state, 'viewAs.image') ? state.viewAs.image : '';
+        }
+
         return _.has(state, 'user.image') ? state.user.image : '';
     },
     displayName: (state) => {
 
+        if (state.viewAs) {
+
+            return _.has(state, 'viewAs.fullname') ? state.viewAs.fullname : '';
+        }
+
         return _.has(state, 'user.fullname') ? state.user.fullname : '';
     },
-    isAuthenticated: (state) => { return !!state.user; },
+    isAuthenticated: (state) => {
+
+        return !!state.user;
+    },
     roles: (state) => {
+
+        if (state.viewAs) {
+
+            return _.has(state, 'viewAs.roles') ? state.viewAs.roles : '';
+        }
 
         return _.has(state, 'user.roles') ? state.user.roles : [];
     }
@@ -27,7 +46,9 @@ const getters = {
 const mutations = {
 
     SET_USER (state, payload) {state.user = payload;},
-    UNSET_USER (state) {state.user = null;}
+    SET_VIEW_AS (state, payload) {state.viewAs = payload;},
+    UNSET_USER (state) {state.user = null;},
+    UNSET_VIEW_AS (state) {state.viewAs = null;}
 };
 
 const actions = {
@@ -50,12 +71,14 @@ const actions = {
                             console.log(parseError);
 
                             commit('UNSET_USER');
+                            commit('UNSET_VIEW_AS');
                             resolve();
                         });
                 })
                 .catch(() => {
 
                     commit('UNSET_USER');
+                    commit('UNSET_VIEW_AS');
                     resolve();
                 });
         });
@@ -67,6 +90,7 @@ const actions = {
             Vue.http.post('logout').then(() => {
 
                     commit('UNSET_USER');
+                    commit('UNSET_VIEW_AS');
                     resolve();
                 })
                 .catch((response) => {

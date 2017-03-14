@@ -21,6 +21,19 @@
 
                 <template v-if="isAuthenticated">
 
+                    <template v-if="hasAnyRole(user, [roles.Instructor, roles.Administrator])">
+
+                        <li class="nav-header">View as</li>
+
+                        <li>
+                            <select class="form-control" v-model="viewAsNumber">
+                                <option></option>
+                                <option v-for="item in viewAsStudents">{{ item.student_number }}</option>
+                            </select>
+                        </li>
+
+                    </template>
+
                     <li class="nav-header">Dashboards</li>
 
                     <router-link tag="li" to="/" exact>
@@ -39,11 +52,11 @@
                         <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Tips and advice</a>
                     </router-link>
 
-                    <template v-if="hasAnyRole(user, [roles.Instructor, roles.Administrator])">
+                    <template v-if="hasAnyRole(viewAs, [roles.Instructor, roles.Administrator])">
 
                         <li class="nav-header">Manage</li>
 
-                        <router-link tag="li" to="/manage/students" v-if="hasAnyRole(user, roles.Administrator)">
+                        <router-link tag="li" to="/manage/students" v-if="hasAnyRole(viewAs, roles.Administrator)">
                             <a><i class="fa fa-fw fa-database m-r" aria-hidden="true"></i>Students</a>
                         </router-link>
 
@@ -90,6 +103,7 @@
     import Roles from '../enums/Roles'
 
     import * as roles from '../helpers/roles'
+    import * as students from '../services/students'
 
     export default {
 
@@ -103,13 +117,55 @@
             }),
             ...mapState({
 
-                user: (state) => state.auth.user
+                user: (state) => state.auth.user,
+                viewAs: (state) => { return state.auth.viewAs ? state.auth.viewAs : state.auth.user; }
             }),
             roles() { return Roles; }
         },
+        created() {
+
+            this.fetchData();
+        },
+        data: function() {
+
+            return {
+
+                viewAsNumber: '',
+                viewAsStudents: []
+            }
+        },
         methods: {
 
+            fetchData: function() {
+
+                students.getByParameters({
+
+                        limit: 5,
+                        publishedOnly: true
+                    })
+                    .then((result) => {
+
+                        this.viewAsStudents = result.items;
+                    });
+            },
             hasAnyRole: roles.hasAnyRole
+        },
+        watch: {
+
+            viewAsNumber: function(newValue) {
+
+                if (!_.isEmpty(newValue)) {
+
+                    this.$store.commit('auth/SET_VIEW_AS', {
+
+                        fullname: newValue,
+                        roles: [Roles.Learner],
+                        userId: newValue
+                    });
+                }
+                else
+                    this.$store.commit('auth/UNSET_VIEW_AS');
+            }
         }
     }
 

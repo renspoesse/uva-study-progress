@@ -22,16 +22,20 @@ const fadeWhenLoaded = function(selector) {
     });
 };
 
-const getMediaImageOriginalUrl = function(mediaImage) {
+const getMediaImageOriginal = function(mediaImage) {
 
     if (!mediaImage || !_.has(mediaImage, 'files'))
         return '';
 
-    const file = _.find(mediaImage.files, (file) => {
+    return _.find(mediaImage.files, (file) => {
 
         return file.type === 'original';
     });
+};
 
+const getMediaImageOriginalUrl = function(mediaImage) {
+
+    const file = getMediaImageOriginal(mediaImage);
     return file ? file.url : '';
 };
 
@@ -43,6 +47,7 @@ const isEmpty = function(mediaImage) {
 export {
 
     fadeWhenLoaded,
+    getMediaImageOriginal,
     getMediaImageOriginalUrl,
     isEmpty
 }
