@@ -21,12 +21,12 @@
 
                 <template v-if="isAuthenticated">
 
-                    <template v-if="hasAnyRole(user, [roles.Instructor, roles.Administrator])">
+                    <template v-if="hasAnyRole(user, roles.Administrator)">
 
                         <li class="nav-header">View as</li>
 
                         <li>
-                            <select class="form-control" v-model="viewAsNumber">
+                            <select class="form-control" v-model="viewAsId">
                                 <option></option>
                                 <option v-for="item in viewAsStudents">{{ item.student_number }}</option>
                             </select>
@@ -130,7 +130,7 @@
 
             return {
 
-                viewAsNumber: '',
+                viewAsId: '',
                 viewAsStudents: []
             }
         },
@@ -152,16 +152,23 @@
         },
         watch: {
 
-            viewAsNumber: function(newValue) {
+            viewAsId: function(newValue) {
 
                 if (!_.isEmpty(newValue)) {
 
-                    this.$store.commit('auth/SET_VIEW_AS', {
+                    const student = _.find(this.viewAsStudents, (obj) => {
 
-                        fullname: newValue,
-                        roles: [Roles.Learner],
-                        userId: newValue
+                        return obj.student_number === parseInt(newValue);
                     });
+
+                    if (student)
+                        this.$store.commit('auth/SET_VIEW_AS', {
+
+                            fullname: student.display_name,
+                            id: student.id,
+                            roles: [Roles.Learner],
+                            userId: student.student_number
+                        });
                 }
                 else
                     this.$store.commit('auth/UNSET_VIEW_AS');

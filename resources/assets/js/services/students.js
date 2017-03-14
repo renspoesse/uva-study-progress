@@ -18,6 +18,30 @@ const deleteById = function(id) {
     });
 };
 
+const getByAuthenticated = function() {
+
+    return new Promise((resolve, reject) => {
+
+        Vue.http.get('me/student').then((response) => {
+
+                response.json().then((obj) => {
+
+                        resolve({item: obj});
+                    })
+                    .catch((parseError) => {
+
+                        console.log(parseError);
+                        reject({message: 'Failed to parse student.'});
+                    });
+            })
+            .catch((response) => {
+
+                console.log(response);
+                reject({message: 'Oops. Something went wrong.'});
+            });
+    });
+};
+
 const getById = function(id) {
 
     return new Promise((resolve, reject) => {
@@ -123,6 +147,7 @@ const importFromFile = function(payload, file) {
 export {
 
     deleteById,
+    getByAuthenticated,
     getById,
     getByParameters,
     importFromFile

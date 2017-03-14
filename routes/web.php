@@ -24,7 +24,9 @@ Route::any('/lti/launch', 'LtiController@index');
 Route::group(['middleware' => 'auth'], function () {
 
     Route::any('/logout', 'UserController@logout');
+
     Route::get('/me', 'UserController@getByAuthenticated');
+    Route::get('/me/student', 'StudentController@getByAuthenticated');
 
     Route::get('/advice', 'AdviceController@index');
     Route::get('/news', 'NewsController@index');

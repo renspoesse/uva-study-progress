@@ -38,6 +38,35 @@
             </div>
         </div>
 
+        <hr class="m-t">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="table-full">
+                    <div class="table-responsive">
+                        <table class="table" data-sort="table">
+                            <thead>
+                            <tr>
+                                <th class="header">Field</th>
+                                <th class="header">Value</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr v-for="field in _.keys(student)">
+                                <td>{{ field }}</td>
+                                <td>{{ student[field] }}</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
         <div class="hr-divider m-t-md m-b">
             <h3 class="hr-divider-content hr-divider-heading">Latest news, tips and advice</h3>
         </div>
@@ -79,7 +108,7 @@
 
     import * as _ from 'lodash'
     import moment from 'moment'
-    import {mapGetters} from 'vuex'
+    import {mapGetters, mapState} from 'vuex'
 
     import errorAlerts from '../../mixins/error_alerts'
     import loadingOverlay from '../../mixins/loading_overlay'
@@ -87,6 +116,7 @@
     import * as advice from '../../services/advice'
     import * as images from '../../helpers/images'
     import * as news from '../../services/news'
+    import * as students from '../../services/students'
 
     export default {
 
@@ -95,6 +125,11 @@
             ...mapGetters({
 
                 displayName: 'auth/displayName'
+            }),
+            ...mapState({
+
+                user: (state) => state.auth.user,
+                viewAs: (state) => state.auth.viewAs
             }),
             _() { return _; },
             moment() { return moment; }
@@ -108,7 +143,8 @@
             return {
 
                 advice: [],
-                news: []
+                news: [],
+                student: {}
             }
         },
         methods: {
@@ -146,6 +182,31 @@
 
                         this.displayErrors(true, ex.message);
                     });
+
+                if (this.viewAs) {
+
+                    students.getById(this.viewAs.id)
+                        .then((result) => {
+
+                            this.student = result.item;
+                        })
+                        .catch((ex) => {
+
+                            this.displayErrors(true, ex.message);
+                        });
+                }
+                else {
+
+                    students.getByAuthenticated()
+                        .then((result) => {
+
+                            this.student = result.item;
+                        })
+                        .catch((ex) => {
+
+                            this.displayErrors(true, ex.message);
+                        });
+                }
             }
         },
         mixins: [

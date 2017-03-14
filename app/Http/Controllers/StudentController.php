@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Roles;
+use App\Helpers\LtiHelpers;
 use App\Helpers\RoleHelpers;
 use App\Helpers\PaginationHelpers;
 use App\Models\Student;
@@ -105,6 +106,11 @@ class StudentController extends BaseController
         });
 
         return response('', 201);
+    }
+
+    public function getByAuthenticated(Request $request)
+    {
+        return response(Student::where('student_number', LtiHelpers::getUser($request)['userId'])->firstOrFail());
     }
 
     public function getById($id)
