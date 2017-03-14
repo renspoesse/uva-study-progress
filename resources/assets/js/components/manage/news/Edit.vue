@@ -43,7 +43,7 @@
             <div v-bind:class="['form-group', hasError('text') ? 'has-feedback has-error' : '']">
                 <label class="col-sm-3 control-label">Text</label>
                 <div class="col-sm-9">
-                    <div class="form-control editable" v-html="news.text" v-on:input="handleTextInput"></div>
+                    <div class="form-control editable" v-html="news.text"></div>
                 </div>
             </div>
 
@@ -144,12 +144,9 @@
             },
             handleSubmit: function() {
 
-                this.saveOrUpdate(this.news);
-            },
-            handleTextInput: function() {
+                this.news.text = this.editor.getContent();
 
-                if (this.editor)
-                    this.news.text = this.editor.getContent();
+                this.saveOrUpdate(this.news);
             },
             saveOrUpdate: function(payload) {
 

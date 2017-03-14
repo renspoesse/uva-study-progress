@@ -39,11 +39,11 @@
                         <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Tips and advice</a>
                     </router-link>
 
-                    <template v-if="hasRole(roles.Administrator) || hasRole(roles.Instructor)">
+                    <template v-if="hasAnyRole(user, [roles.Instructor, roles.Administrator])">
 
                         <li class="nav-header">Manage</li>
 
-                        <router-link tag="li" to="/manage/students" v-if="hasRole(roles.Administrator)">
+                        <router-link tag="li" to="/manage/students" v-if="hasAnyRole(user, roles.Administrator)">
                             <a><i class="fa fa-fw fa-database m-r" aria-hidden="true"></i>Students</a>
                         </router-link>
 
@@ -89,6 +89,8 @@
 
     import Roles from '../enums/Roles'
 
+    import * as roles from '../helpers/roles'
+
     export default {
 
         computed: {
@@ -97,8 +99,7 @@
 
                 avatarUrl: 'auth/avatarUrl',
                 displayName: 'auth/displayName',
-                isAuthenticated: 'auth/isAuthenticated',
-                userRoles: 'auth/roles'
+                isAuthenticated: 'auth/isAuthenticated'
             }),
             ...mapState({
 
@@ -108,7 +109,7 @@
         },
         methods: {
 
-            hasRole: function(role) {return _.indexOf(this.userRoles, role) > -1;}
+            hasAnyRole: roles.hasAnyRole
         }
     }
 

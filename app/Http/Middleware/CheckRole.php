@@ -12,7 +12,7 @@ class CheckRole
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \Closure                 $next
-     * @param  string                   $role
+     * @param  array                    $roles
      *
      * @return mixed
      */
