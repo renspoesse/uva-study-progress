@@ -26,24 +26,31 @@ Route::group(['middleware' => 'auth'], function () {
     Route::any('/logout', 'UserController@logout');
     Route::get('/me', 'UserController@getByAuthenticated');
 
-    Route::get('/advice', 'AdviceController@index')->middleware('role:' . Roles::Instructor);
-    Route::post('/advice', 'AdviceController@create')->middleware('role:' . Roles::Instructor);
+    Route::get('/advice', 'AdviceController@index');
+    Route::get('/news', 'NewsController@index');
 
-    Route::get('/advice/{id}', 'AdviceController@getById')->middleware('role:' . Roles::Instructor);
-    Route::patch('/advice/{id}', 'AdviceController@updatePartialById')->middleware('role:' . Roles::Instructor);
-    Route::delete('/advice/{id}', 'AdviceController@deleteById')->middleware('role:' . Roles::Instructor);
+    Route::group(['middleware' => 'role:' . Roles::Instructor . ',' . Roles::Administrator], function () {
 
-    Route::get('/news', 'NewsController@index')->middleware('role:' . Roles::Instructor);
-    Route::post('/news', 'NewsController@create')->middleware('role:' . Roles::Instructor);
+        Route::post('/advice', 'AdviceController@create');
 
-    Route::get('/news/{id}', 'NewsController@getById')->middleware('role:' . Roles::Instructor);
-    Route::patch('/news/{id}', 'NewsController@updatePartialById')->middleware('role:' . Roles::Instructor);
-    Route::delete('/news/{id}', 'NewsController@deleteById')->middleware('role:' . Roles::Instructor);
+        Route::get('/advice/{id}', 'AdviceController@getById');
+        Route::patch('/advice/{id}', 'AdviceController@updatePartialById');
+        Route::delete('/advice/{id}', 'AdviceController@deleteById');
 
-    Route::get('/students', 'StudentController@index')->middleware('role:' . Roles::Administrator);
+        Route::post('/news', 'NewsController@create');
 
-    Route::get('/students/{id}', 'StudentController@getById')->middleware('role:' . Roles::Administrator);
-    Route::delete('/students/{id}', 'StudentController@deleteById')->middleware('role:' . Roles::Administrator);
+        Route::get('/news/{id}', 'NewsController@getById');
+        Route::patch('/news/{id}', 'NewsController@updatePartialById');
+        Route::delete('/news/{id}', 'NewsController@deleteById');
+    });
 
-    Route::post('/import/students', 'StudentController@createByImport')->middleware('role:' . Roles::Administrator);
+    Route::group(['middleware' => 'role:' . Roles::Administrator], function () {
+
+        Route::get('/students', 'StudentController@index');
+
+        Route::get('/students/{id}', 'StudentController@getById');
+        Route::delete('/students/{id}', 'StudentController@deleteById');
+
+        Route::post('/import/students', 'StudentController@createByImport');
+    });
 });

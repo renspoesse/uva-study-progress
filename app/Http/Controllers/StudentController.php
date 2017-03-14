@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Roles;
-use App\Helpers\LtiHelpers;
+use App\Helpers\RoleHelpers;
 use App\Helpers\PaginationHelpers;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -128,7 +128,7 @@ class StudentController extends BaseController
 
         $query = Student::query();
 
-        if (filter_var($request->input('publishedOnly'), FILTER_VALIDATE_BOOLEAN) === true || !LtiHelpers::hasRole($request, Roles::Administrator))
+        if (filter_var($request->input('publishedOnly'), FILTER_VALIDATE_BOOLEAN) === true || !RoleHelpers::hasAnyRole($request, Roles::Administrator))
             $query = $query->where('is_published', true);
 
         if ($request->has('query')) {

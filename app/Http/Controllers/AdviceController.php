@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Roles;
-use App\Helpers\LtiHelpers;
+use App\Helpers\RoleHelpers;
 use App\Helpers\PaginationHelpers;
 use App\Models\Advice;
 use Illuminate\Http\Request;
@@ -60,7 +60,7 @@ class AdviceController extends BaseController
 
         $query = Advice::query();
 
-        if (filter_var($request->input('publishedOnly'), FILTER_VALIDATE_BOOLEAN) === true || !LtiHelpers::hasRole($request, Roles::Instructor))
+        if (filter_var($request->input('publishedOnly'), FILTER_VALIDATE_BOOLEAN) === true || !RoleHelpers::hasAnyRole($request, [Roles::Instructor, Roles::Administrator]))
             $query = $query->where('is_published', true);
 
         if ($request->has('query')) {

@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Helpers\LtiHelpers;
+use App\Helpers\RoleHelpers;
 use Closure;
 
 class CheckRole
@@ -16,9 +16,9 @@ class CheckRole
      *
      * @return mixed
      */
-    public function handle($request, Closure $next, $role)
+    public function handle($request, Closure $next, ...$roles)
     {
-        if (!LtiHelpers::hasRole($request, $role))
+        if (!RoleHelpers::hasAnyRole($request, $roles))
             abort(403, 'User has insufficient permissions.');
 
         return $next($request);

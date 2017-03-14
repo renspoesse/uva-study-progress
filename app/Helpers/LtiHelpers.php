@@ -9,12 +9,6 @@ use DB;
 
 class LtiHelpers
 {
-    public static function getRoles(Request $request)
-    {
-        $user = LtiHelpers::getUser($request);
-        return $user ? $user['roles'] : [];
-    }
-
     public static function getUser(Request $request)
     {
         $connector = DataConnector\DataConnector::getDataConnector('', DB::connection()->getPdo());
@@ -24,10 +18,5 @@ class LtiHelpers
 
             'userId' => $user->getId()
         ]);
-    }
-
-    public static function hasRole(Request $request, $role)
-    {
-        return in_array($role, LtiHelpers::getRoles($request));
     }
 }
