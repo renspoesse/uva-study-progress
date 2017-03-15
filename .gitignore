@@ -6,3 +6,4 @@ Homestead.json
 Homestead.yaml
 .env
 /public/TB_RensTest.csv
+.DS_Store

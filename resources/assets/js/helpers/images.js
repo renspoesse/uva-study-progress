@@ -24,19 +24,34 @@ const fadeWhenLoaded = function(selector) {
 
 const getMediaImageOriginal = function(mediaImage) {
 
-    if (!mediaImage || !_.has(mediaImage, 'files'))
-        return '';
+    return getMediaImageType(mediaImage, 'original');
+};
 
-    return _.find(mediaImage.files, (file) => {
+const getMediaImageFocusOrOriginalUrl = function(mediaImage) {
 
-        return file.type === 'original';
-    });
+    let file = getMediaImageType(mediaImage, 'region');
+
+    if (!file)
+        file = getMediaImageOriginal(mediaImage);
+
+    return file ? file.url : '';
 };
 
 const getMediaImageOriginalUrl = function(mediaImage) {
 
     const file = getMediaImageOriginal(mediaImage);
     return file ? file.url : '';
+};
+
+const getMediaImageType = function(mediaImage, type) {
+
+    if (!mediaImage || !_.has(mediaImage, 'files'))
+        return '';
+
+    return _.find(mediaImage.files, (file) => {
+
+        return file.type === type;
+    });
 };
 
 const isEmpty = function(mediaImage) {
@@ -48,6 +63,8 @@ export {
 
     fadeWhenLoaded,
     getMediaImageOriginal,
+    getMediaImageFocusOrOriginalUrl,
     getMediaImageOriginalUrl,
+    getMediaImageType,
     isEmpty
 }
