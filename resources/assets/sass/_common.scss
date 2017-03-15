@@ -13,13 +13,11 @@ body {
 
 a { cursor: pointer; }
 
-.img-size-mini { width: $img-size-mini; height: $img-size-mini; }
-
-.img-size-small { width: $img-size-small; height: $img-size-small; }
-
-.img-size-medium { width: $img-size-medium; height: $img-size-medium; }
-
-.img-size-large { width: $img-size-large; height: $img-size-large; }
+.img-fit-cover {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
 
 .img-max-height-mini { max-height: $img-size-mini; }
 
@@ -28,6 +26,14 @@ a { cursor: pointer; }
 .img-max-height-medium { max-height: $img-size-medium; }
 
 .img-max-height-large { max-height: $img-size-large; }
+
+.img-size-mini { width: $img-size-mini; height: $img-size-mini; }
+
+.img-size-small { width: $img-size-small; height: $img-size-small; }
+
+.img-size-medium { width: $img-size-medium; height: $img-size-medium; }
+
+.img-size-large { width: $img-size-large; height: $img-size-large; }
 
 .img-wrapper {
   display: flex;

@@ -6,12 +6,11 @@
             <button class="nav-toggler nav-toggler-sm sidebar-toggler collapsed" type="button" data-toggle="collapse" data-target="#nav-toggleable-sm" aria-expanded="false">
                 <span class="sr-only">Toggle nav</span>
             </button>
-            <a class="sidebar-brand img-responsive">
-                <!--<span class="icon icon-leaf sidebar-brand-icon"></span>-->
-                <img src="images/logo.png">
+            <a href="/#/" class="img-wrapper img-size-small pull-left">
+                <img src="images/logo.png" class="img-responsive">
             </a>
-            <a class="sidebar-brand img-responsive m-l" v-if="avatarUrl">
-                <img v-bind:src="avatarUrl" class="img-circle" ref="avatar">
+            <a class="img-wrapper img-size-small pull-left m-l-s" v-if="avatarUrl">
+                <img v-bind:src="avatarUrl" class="img-circle img-fit-cover" ref="avatar">
             </a>
         </div>
 

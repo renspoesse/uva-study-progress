@@ -137,6 +137,7 @@
         created() {
 
             this.fetchData();
+            this.fetchStudent();
         },
         data: function() {
 
@@ -182,6 +183,10 @@
 
                         this.displayErrors(true, ex.message);
                     });
+            },
+            fetchStudent: function() {
+
+                this.displayErrors(false);
 
                 if (this.viewAs) {
 
@@ -221,6 +226,13 @@
         updated () {
 
             images.fadeWhenLoaded($(this.$el).find('img'));
+        },
+        watch: {
+
+            viewAs: function(newValue) {
+
+                this.fetchStudent();
+            }
         }
     }
 
