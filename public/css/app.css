@@ -15,6 +15,29 @@ a {
   cursor: pointer;
 }
 
+.img-fit-cover {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+.img-max-height-mini {
+  max-height: 3rem;
+}
+
+.img-max-height-small {
+  max-height: 6rem;
+}
+
+.img-max-height-medium {
+  max-height: 10rem;
+}
+
+.img-max-height-large {
+  max-height: 25rem;
+}
+
 .img-size-mini {
   width: 3rem;
   height: 3rem;
@@ -33,22 +56,6 @@ a {
 .img-size-large {
   width: 25rem;
   height: 25rem;
-}
-
-.img-max-height-mini {
-  max-height: 3rem;
-}
-
-.img-max-height-small {
-  max-height: 6rem;
-}
-
-.img-max-height-medium {
-  max-height: 10rem;
-}
-
-.img-max-height-large {
-  max-height: 25rem;
 }
 
 .img-wrapper {

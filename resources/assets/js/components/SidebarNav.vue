@@ -20,15 +20,12 @@
 
                 <template v-if="isAuthenticated">
 
-                    <template v-if="hasAnyRole(user, roles.Administrator)">
+                    <template v-if="viewAs !== user">
 
                         <li class="nav-header">View as</li>
 
                         <li>
-                            <select class="form-control" v-model="viewAsId">
-                                <option></option>
-                                <option v-for="item in viewAsStudents">{{ item.student_number }}</option>
-                            </select>
+                            <a class="btn btn-primary-outline" v-on:click.prevent="handleViewAsYourself">View as yourself again</a>
                         </li>
 
                     </template>
@@ -121,58 +118,72 @@
             }),
             roles() { return Roles; }
         },
-        created() {
+        /*
+         created() {
 
-            this.fetchData();
-        },
-        data: function() {
+         this.fetchData();
+         },
+         data: function() {
 
-            return {
+         return {
 
-                viewAsId: '',
-                viewAsStudents: []
-            }
-        },
+         viewAsId: '',
+         viewAsStudents: []
+         }
+         },
+         */
         methods: {
 
-            fetchData: function() {
+            /*
+             fetchData: function() {
 
-                students.getByParameters({
+             students.getByParameters({
 
-                        limit: 5,
-                        publishedOnly: true
-                    })
-                    .then((result) => {
+             limit: 5,
+             publishedOnly: true
+             })
+             .then((result) => {
 
-                        this.viewAsStudents = result.items;
-                    });
+             this.viewAsStudents = result.items;
+             });
+             },
+             */
+            handleViewAsYourself: function() {
+
+                this.$store.commit('auth/UNSET_VIEW_AS');
             },
             hasAnyRole: roles.hasAnyRole
-        },
-        watch: {
-
-            viewAsId: function(newValue) {
-
-                if (!_.isEmpty(newValue)) {
-
-                    const student = _.find(this.viewAsStudents, (obj) => {
-
-                        return obj.student_number === parseInt(newValue);
-                    });
-
-                    if (student)
-                        this.$store.commit('auth/SET_VIEW_AS', {
-
-                            fullname: student.display_name,
-                            id: student.id,
-                            roles: [Roles.Learner],
-                            userId: student.student_number
-                        });
-                }
-                else
-                    this.$store.commit('auth/UNSET_VIEW_AS');
-            }
         }
+        /*
+         watch: {
+
+         viewAsId: function(newValue) {
+
+         if (!_.isEmpty(newValue)) {
+
+         const student = _.find(this.viewAsStudents, (obj) => {
+
+         return obj.student_number === parseInt(newValue);
+         });
+
+         if (student) {
+
+         this.$store.commit('auth/SET_VIEW_AS', {
+
+         fullname: student.display_name,
+         id: student.id,
+         roles: [Roles.Learner],
+         userId: student.student_number
+         });
+
+         this.$router.push('/');
+         }
+         }
+         else
+         this.$store.commit('auth/UNSET_VIEW_AS');
+         }
+         }
+         */
     }
 
 </script>

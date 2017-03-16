@@ -42,6 +42,7 @@
                         <th v-bind:class="headerClass('cohort')" v-on:click.prevent="handleOrder('cohort')">Cohort</th>
                         <th v-bind:class="headerClass('is_published')" v-on:click.prevent="handleOrder('is_published')">Published</th>
                         <th v-bind:class="headerClass('updated_at')" v-on:click.prevent="handleOrder('updated_at')">Updated at</th>
+                        <th class="header">View as</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -56,10 +57,11 @@
                             <i class="fa fa-check" v-if="item.is_published"></i>
                         </td>
                         <td>{{ moment.utc(item.updated_at).local().format('YYYY-MM-DD HH:mm:ss') }}</td>
+                        <td><a class="btn btn-default-outline" v-on:click.prevent="handleViewAs(item)"><i class="fa fa-eye"></i></a></td>
                     </tr>
 
                     <tr v-if="items.length === 0">
-                        <td colspan="7">No results</td>
+                        <td colspan="8">No results</td>
                     </tr>
 
                     </tbody>
@@ -77,6 +79,8 @@
 
     import * as _ from 'lodash'
     import moment from 'moment'
+
+    import Roles from '../../../enums/Roles'
 
     import errorAlerts from '../../../mixins/error_alerts'
     import listActions from '../../../mixins/list_actions'
@@ -134,6 +138,18 @@
                         .then(() => {this.fetchData(this.pagination.currentPage);})
                         .catch((ex) => {this.addError(ex.message);});
                 });
+            },
+            handleViewAs: function(item) {
+
+                this.$store.commit('auth/SET_VIEW_AS', {
+
+                    fullname: item.display_name,
+                    id: item.id,
+                    roles: [Roles.Learner],
+                    userId: item.student_number
+                });
+
+                this.$router.push('/');
             }
         },
         mixins: [
