@@ -14,19 +14,19 @@ const getters = {
 
         if (state.viewAs) {
 
-            return _.has(state, 'viewAs.image') ? state.viewAs.image : '';
+            return _.get(state, 'viewAs.image');
         }
 
-        return _.has(state, 'user.image') ? state.user.image : '';
+        return _.get(state, 'user.image');
     },
     displayName: (state) => {
 
         if (state.viewAs) {
 
-            return _.has(state, 'viewAs.fullname') ? state.viewAs.fullname : '';
+            return _.get(state, 'viewAs.fullname');
         }
 
-        return _.has(state, 'user.fullname') ? state.user.fullname : '';
+        return _.get(state, 'user.fullname');
     },
     isAuthenticated: (state) => {
 
@@ -36,10 +36,10 @@ const getters = {
 
         if (state.viewAs) {
 
-            return _.has(state, 'viewAs.roles') ? state.viewAs.roles : '';
+            return _.get(state, 'viewAs.roles', []);
         }
 
-        return _.has(state, 'user.roles') ? state.user.roles : [];
+        return _.get(state, 'user.roles', []);
     }
 };
 

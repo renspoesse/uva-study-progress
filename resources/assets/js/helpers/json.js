@@ -61,19 +61,26 @@ const removeEmptyObjects = function(obj) {
 
 const zipMetaData = function(data, metaArray) {
 
-    _.forEach(metaArray, (meta) => {
+    if (_.isArray(data)) {
 
-        _.forEach(meta, (value) => {
+        _.forEach(metaArray, (meta) => {
 
-            if (value.id) {
+            _.forEach(meta, (value) => {
 
-                const match = _.find(data, {id: value.id});
+                if (value.id) {
 
-                if (match)
-                    match.meta = _.extend(match.meta, value);
-            }
+                    const match = _.find(data, {id: value.id});
+
+                    if (match)
+                        match.meta = _.extend(match.meta, value);
+                }
+            });
         });
-    });
+    }
+    else {
+
+        data.meta = metaArray.object;
+    }
 
     return data;
 };
