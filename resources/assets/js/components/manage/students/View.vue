@@ -99,7 +99,15 @@
 
             errorAlerts,
             loadingOverlay
-        ]
+        ],
+        watch: {
+
+            '$route' (to, from) {
+
+                if (this.$route.params.id)
+                    this.fetchData(this.$route.params.id);
+            }
+        }
     }
 
 </script>
