@@ -43,17 +43,17 @@
                             </tr>
                             <tr>
                                 <td>Credits in 1st year</td>
-                                <td>{{ student.bsa_credits }}</td>
+                                <td>{{ student.bsa_credits }} credits</td>
                             </tr>
                             <tr>
                                 <td>Credits in block 1, 2nd year</td>
-                                <td>{{ student.second_year_b1_credits }}</td>
+                                <td>{{ student.second_year_b1_credits }} credits</td>
                             </tr>
                             <tr>
                                 <td>Prognosis total credits 2nd year</td>
-                                <td>{{ student.second_year_credits }}</td>
+                                <td>{{ student.second_year_credits_expected }} credits</td>
                             </tr>
-                            <tr class="bg-info">
+                            <tr class="bg-info hidden">
                                 <td>Expected graduation semester</td>
                                 <td>(Data not yet available)</td>
                             </tr>
@@ -62,6 +62,8 @@
                         </table>
                     </div>
                 </div>
+
+                <a class="btn btn-primary-outline" href="http://student.uva.nl/ecb/az/content/studieadviseurs/online-afsprakensysteem/afspraak-studieadviseur-economie-bedrijfskunde.html" target="_blank">Contact a study advisor</a>
 
             </div>
         </div>
@@ -218,43 +220,21 @@
                 switch (student.bsa) {
 
                     case 'MX':
-                        return 'Max';
+                        return 'Maximal (60 credits)';
                     case 'PS':
-                        return 'Positive';
+                        return 'Positive (48 or more credits)';
                     case 'NE':
                         return 'Negative';
+                    case 'Di':
+                        return 'Dispensation';
+                    case 'HC':
+                        return 'Hardness clause';
                     default:
                         return student.bsa;
                 }
             },
-            getCreditPrognosis: function(bsaCredits, courses) {
+            getCreditsExpected: function(bsaCredits, block1Courses) {
 
-                // TODO RENS: met Fred bespreken.
-
-                if (bsaCredits === 42) {
-
-                    if (courses === 0) return 30;
-                    if (courses === 1) return 40;
-                    if (courses === 2) return 52;
-                }
-                else if (bsaCredits === 48) {
-
-                    if (courses === 0) return 30;
-                    if (courses === 1) return 44;
-                    if (courses === 2) return 52;
-                }
-                else if (bsaCredits === 54) {
-
-                    if (courses === 0) return 36;
-                    if (courses === 1) return 48;
-                    if (courses === 2) return 56;
-                }
-                else if (bsaCredits === 60) {
-
-                    if (courses === 0) return 32;
-                    if (courses === 1) return 50;
-                    if (courses === 2) return 60;
-                }
             },
             isStudentBsaPositive: function(student) {
 
@@ -262,116 +242,125 @@
             },
             renderCharts: function() {
 
-                const primaryColor = '#1CA8DD';
+                // TODO RENS: cachen.
 
-                let dipCategory = this.student.dip_category.split('~');
+                students.getCreditsExpected().then((result) => {
 
-                dipCategory = {
+                    const creditsExpected0 = _.find(result.items, (value) => {return value.bsa_credits === this.student.bsa_credits && value.second_year_b1_subjects === 0});
+                    const creditsExpected1 = _.find(result.items, (value) => {return value.bsa_credits === this.student.bsa_credits && value.second_year_b1_subjects === 1});
+                    const creditsExpected2 = _.find(result.items, (value) => {return value.bsa_credits === this.student.bsa_credits && value.second_year_b1_subjects === 2});
 
-                    bsaCredits: parseInt(dipCategory[0]),
-                    courses: parseInt(dipCategory[1])
-                };
+                    const primaryColor = '#1CA8DD';
 
-                const chart = new Chart(this.$refs.chartCreditPrognosis, {
+                    let dipCategory = this.student.dip_category.split('~');
 
-                    type: 'line',
-                    data: {
+                    dipCategory = {
 
-                        labels: [0, 1, 2],
-                        datasets: [{
+                        bsaCredits: parseInt(dipCategory[0]),
+                        block1Courses: parseInt(dipCategory[1])
+                    };
 
-                            fill: false,
-                            lineTension: 0,
-                            //backgroundColor: "rgba(75,192,192,0.4)",
-                            //borderColor: "rgba(75,192,192,1)",
-                            //borderCapStyle: 'butt',
-                            //borderDash: [],
-                            //borderDashOffset: 0.0,
-                            //borderJoinStyle: 'miter',
-                            pointBorderColor: [
+                    const chart = new Chart(this.$refs.chartCreditPrognosis, {
 
-                                dipCategory.courses === 0 ? primaryColor : 'red',
-                                dipCategory.courses === 1 ? primaryColor : 'yellow',
-                                dipCategory.courses === 2 ? primaryColor : 'green'
-                            ],
-                            pointBackgroundColor: ['red', 'yellow', 'green'],
-                            //pointBorderWidth: 1,
-                            pointHoverRadius: [
+                        type: 'line',
+                        data: {
 
-                                dipCategory.courses === 0 ? 20 : 5,
-                                dipCategory.courses === 1 ? 20 : 5,
-                                dipCategory.courses === 2 ? 20 : 5
-                            ],
-                            //pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                            //pointHoverBorderColor: "rgba(220,220,220,1)",
-                            //pointHoverBorderWidth: 1,
-                            pointRadius: [
+                            labels: [0, 1, 2],
+                            datasets: [{
 
-                                dipCategory.courses === 0 ? 10 : 2,
-                                dipCategory.courses === 1 ? 10 : 2,
-                                dipCategory.courses === 2 ? 10 : 2
-                            ],
-                            data: [
+                                fill: false,
+                                lineTension: 0,
+                                //backgroundColor: "rgba(75,192,192,0.4)",
+                                //borderColor: "rgba(75,192,192,1)",
+                                //borderCapStyle: 'butt',
+                                //borderDash: [],
+                                //borderDashOffset: 0.0,
+                                //borderJoinStyle: 'miter',
+                                pointBorderColor: [
 
-                                dipCategory.courses === 0 ? this.student.second_year_credits : this.getCreditPrognosis(dipCategory.bsaCredits, 0),
-                                dipCategory.courses === 1 ? this.student.second_year_credits : this.getCreditPrognosis(dipCategory.bsaCredits, 1),
-                                dipCategory.courses === 2 ? this.student.second_year_credits : this.getCreditPrognosis(dipCategory.bsaCredits, 2)
-                            ],
-                            //spanGaps: false,
-                        }]
-                    },
-                    options: {
+                                    dipCategory.block1Courses === 0 ? primaryColor : 'red',
+                                    dipCategory.block1Courses === 1 ? primaryColor : 'yellow',
+                                    dipCategory.block1Courses === 2 ? primaryColor : 'green'
+                                ],
+                                pointBackgroundColor: ['red', 'yellow', 'green'],
+                                //pointBorderWidth: 1,
+                                pointHoverRadius: [
 
-                        legend: {
+                                    dipCategory.block1Courses === 0 ? 20 : 5,
+                                    dipCategory.block1Courses === 1 ? 20 : 5,
+                                    dipCategory.block1Courses === 2 ? 20 : 5
+                                ],
+                                //pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                                //pointHoverBorderColor: "rgba(220,220,220,1)",
+                                //pointHoverBorderWidth: 1,
+                                pointRadius: [
 
-                            display: false
-                        },
-                        maintainAspectRatio: false,
-                        scales: {
+                                    dipCategory.block1Courses === 0 ? 10 : 2,
+                                    dipCategory.block1Courses === 1 ? 10 : 2,
+                                    dipCategory.block1Courses === 2 ? 10 : 2
+                                ],
+                                data: [
 
-                            xAxes: [{
-
-                                scaleLabel: {
-
-                                    display: true,
-                                    labelString: 'Courses passed in 1st block'
-                                }
-                            }],
-                            yAxes: [{
-
-                                ticks: {
-
-                                    max: 70,
-                                    min: 0,
-                                    stepSize: 10
-                                }
+                                    dipCategory.block1Courses === 0 ? this.student.second_year_credits_expected : creditsExpected0.second_year_credits_expected || 0,
+                                    dipCategory.block1Courses === 1 ? this.student.second_year_credits_expected : creditsExpected1.second_year_credits_expected || 0,
+                                    dipCategory.block1Courses === 2 ? this.student.second_year_credits_expected : creditsExpected2.second_year_credits_expected || 0
+                                ],
+                                //spanGaps: false,
                             }]
                         },
-                        title: {
+                        options: {
 
-                            display: true,
-                            text: 'Credit prognosis 2nd year - ' + this.student.bsa_credits + ' credit BSA group'
-                        },
-                        tooltips: {
+                            legend: {
 
-                            callbacks: {
-
-                                title: function(tooltipItem, data) {
-
-                                    const passed = tooltipItem[0].xLabel;
-
-                                    if (passed === 0)
-                                        return passed + ' courses passed in block 1';
-                                    else if (passed === 1)
-                                        return passed + ' course passed in block 1';
-                                    else
-                                        return 'At least ' + passed + ' courses passed in block 1';
-                                },
-                                label: function(tooltipItem, data) { return 'Your prognosis for the 2nd year is ' + tooltipItem.yLabel + ' credits.'; }
+                                display: false
                             },
-                            displayColors: false
+                            maintainAspectRatio: false,
+                            scales: {
+
+                                xAxes: [{
+
+                                    scaleLabel: {
+
+                                        display: true,
+                                        labelString: 'Courses passed in 1st block'
+                                    }
+                                }],
+                                yAxes: [{
+
+                                    ticks: {
+
+                                        max: 70,
+                                        min: 0,
+                                        stepSize: 10
+                                    }
+                                }]
+                            },
+                            title: {
+
+                                display: true,
+                                text: 'Credit prognosis 2nd year - ' + this.student.bsa_credits + ' credit BSA group'
+                            },
+                            tooltips: {
+
+                                callbacks: {
+
+                                    title: function(tooltipItem, data) {
+
+                                        const passed = tooltipItem[0].xLabel;
+
+                                        if (passed === 0)
+                                            return passed + ' courses passed in block 1';
+                                        else if (passed === 1)
+                                            return passed + ' course passed in block 1';
+                                        else
+                                            return 'At least ' + passed + ' courses passed in block 1';
+                                    },
+                                    label: function(tooltipItem, data) { return 'Your prognosis for the 2nd year is ' + tooltipItem.yLabel + ' credits.'; }
+                                },
+                                displayColors: false
+                            }
                         }
-                    }
+                    });
                 });
             }
         },

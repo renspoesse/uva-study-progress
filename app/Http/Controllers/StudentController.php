@@ -70,6 +70,7 @@ class StudentController extends BaseController
                     $obj->second_year_b1_credits = $record['2ndY-B1'];
                     $obj->second_year_b1_subjects = $record['Nvakken-B1'];
                     $obj->second_year_credits = $record['2ndY-crd'];
+                    $obj->second_year_credits_expected = $record['2ndY-crd Prognose'];
                     $obj->dip_category = $record['DipCategory'];
                     $obj->gpa_current = floatval($record['GPA actueel']);
                     $obj->first_name = $record['VOORNAAM'];
@@ -116,6 +117,18 @@ class StudentController extends BaseController
     public function getById($id)
     {
         return response(Student::where('id', $id)->firstOrFail());
+    }
+
+    public function getCreditsExpected()
+    {
+        $result = DB::table('students')->select('bsa_credits', 'second_year_b1_subjects', DB::raw('AVG(second_year_credits) AS second_year_credits_expected'))->whereNotNull('second_year_credits')->groupBy('bsa_credits', 'second_year_b1_subjects')->get();
+
+        $result->each(function($record) {
+
+            $record->second_year_credits_expected = (int)round((double)$record->second_year_credits_expected);
+        });
+
+        return response($result);
     }
 
     public function deleteById($id)

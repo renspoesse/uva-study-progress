@@ -21,11 +21,13 @@ use App\Enums\Roles;
 Route::get('/', function () { return view('index'); });
 Route::any('/lti/launch', 'LtiController@index');
 
+
 Route::group(['middleware' => 'auth'], function () {
 
     Route::any('/logout', 'UserController@logout');
 
     Route::get('/me', 'UserController@getByAuthenticated');
+    Route::get('/me/creditsexpected', 'StudentController@getCreditsExpected');
     Route::get('/me/student', 'StudentController@getByAuthenticated');
 
     Route::get('/advice', 'AdviceController@index');
