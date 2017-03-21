@@ -1,5 +1,13 @@
 import * as _ from 'lodash'
 
+const getDefaultParameters = function(params) {
+
+    return _.defaults(params, {
+
+        limit: 15
+    });
+};
+
 const getFormData = function(payload, file) {
 
     const formData = new FormData();
@@ -52,7 +60,10 @@ const removeEmptyObjects = function(obj) {
         }
         else if (_.isObject(value) && value._isEmpty) {
 
-            delete obj[key];
+            // We need to set the key to null to allow removing a value from a model by patching / updating.
+            // We need to delete the key because of ... ?
+
+            obj[key] = null; // Was: delete obj[key];
         }
     });
 
@@ -87,6 +98,7 @@ const zipMetaData = function(data, metaArray) {
 
 export {
 
+    getDefaultParameters,
     getFormData,
     removeDataWrappers,
     removeEmptyObjects,
