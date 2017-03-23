@@ -73,12 +73,13 @@ export default {
 
             this.$router.replace({
 
-                query: {
+                query: _.omitBy({
 
-                    order: this.order.field + '|' + this.order.direction,
-                    page: page,
+                    order: this.order.field ? this.order.field + '|' + this.order.direction : '',
+                    page: page > 1 ? page : '',
                     query: this.query.trim()
-                }
+
+                }, (value) => {return !value})
             });
         }
     }
