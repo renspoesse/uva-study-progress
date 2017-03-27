@@ -48,11 +48,11 @@
                         <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Tips and advice</a>
                     </router-link>
 
-                    <template v-if="hasAnyRole(viewAs, [roles.Instructor, roles.Administrator])">
+                    <template v-if="hasAnyRole(viewAs, [roles.StudyAdvisor, roles.Administrator])">
 
                         <li class="nav-header">Manage</li>
 
-                        <router-link tag="li" to="/manage/students" v-if="hasAnyRole(viewAs, roles.Administrator)">
+                        <router-link tag="li" to="/manage/students">
                             <a><i class="fa fa-fw fa-database m-r" aria-hidden="true"></i>Students</a>
                         </router-link>
 
@@ -172,8 +172,8 @@
 
          fullname: student.display_name,
          id: student.id,
-         roles: [Roles.Learner],
-         userId: student.student_number
+         roles: [Roles.Student],
+         ltiUserId: student.student_number
          });
 
          this.$router.push('/');

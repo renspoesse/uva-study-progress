@@ -22,7 +22,7 @@
                     <i class="icon icon-magnifying-glass"></i>
                 </div>
             </div>
-            <div class="flextable-item">
+            <div class="flextable-item" v-if="hasAnyRole(user, roles.Administrator)">
                 <div class="btn-group">
                     <a href="#/manage/students/import" class="btn btn-primary-outline"><i class="fa fa-plus m-r-s"></i>Import from .csv</a>
                     <a class="btn btn-primary-outline" v-on:click.prevent="handleRemove"><i class="fa fa-trash"></i></a>
@@ -79,6 +79,7 @@
 
     import * as _ from 'lodash'
     import moment from 'moment'
+    import {mapState} from 'vuex'
 
     import Roles from '../../../enums/Roles'
 
@@ -87,14 +88,20 @@
     import loadingOverlay from '../../../mixins/loading_overlay'
 
     import * as images from '../../../helpers/images'
+    import * as roles from '../../../helpers/roles'
     import * as students from '../../../services/students'
 
     export default {
 
         computed: {
 
+            ...mapState({
+
+                user: (state) => state.auth.user
+            }),
             _() { return _; },
-            moment() { return moment; }
+            moment() { return moment; },
+            roles() { return Roles; }
         },
         methods: {
 
@@ -145,12 +152,13 @@
 
                     fullname: item.display_name,
                     id: item.id,
-                    roles: [Roles.Learner],
-                    userId: item.student_number
+                    roles: [Roles.Student],
+                    ltiUserId: item.student_number
                 });
 
                 this.$router.push('/');
-            }
+            },
+            hasAnyRole: roles.hasAnyRole
         },
         mixins: [
 

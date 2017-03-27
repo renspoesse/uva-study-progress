@@ -31,7 +31,7 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
             'image',
             'roles',
             'groups',
-            'ltiResultSourcedId',
+            'ltiResultSourcedId', // Only provided when authenticating in as student.
             'created',
             'updated'
         ];

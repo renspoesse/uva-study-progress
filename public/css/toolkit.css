@@ -9821,6 +9821,10 @@ span.twitter-typeahead {
 .border-primary {
   border: 2px solid #1997c6;
 }
+.img-size-baseline {
+  width: 1.5em;
+  height: 1.5em;
+}
 .loading-overlay {
   position: absolute;
   width: 100%;

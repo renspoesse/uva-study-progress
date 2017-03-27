@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-md-12">
 
-                <p>This page is only meant to give some insight in the raw student data. To edit the data, please use the import functionality.</p>
+                <p>This page is only meant to give some insight in the raw student data. To edit the data, please use the import functionality if you're an Administrator.</p>
 
                 <div class="table-full">
                     <div class="table-responsive">

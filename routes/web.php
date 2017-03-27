@@ -21,19 +21,25 @@ use App\Enums\Roles;
 Route::get('/', function () { return view('index'); });
 Route::any('/lti/launch', 'LtiController@index');
 
-
 Route::group(['middleware' => 'auth'], function () {
 
     Route::any('/logout', 'UserController@logout');
 
     Route::get('/me', 'UserController@getByAuthenticated');
-    Route::get('/me/creditsexpected', 'StudentController@getCreditsExpected');
-    Route::get('/me/student', 'StudentController@getByAuthenticated');
 
     Route::get('/advice', 'AdviceController@index');
     Route::get('/news', 'NewsController@index');
 
-    Route::group(['middleware' => 'role:' . Roles::Instructor . ',' . Roles::Administrator], function () {
+    Route::get('/students/creditsexpected', 'StudentController@getCreditsExpected');
+
+    Route::group(['middleware' => 'role:' . Roles::Student], function () {
+
+        // These routes are only available to students, as they would fail to return anything for other roles.
+
+        Route::get('/me/student', 'StudentController@getByAuthenticated');
+    });
+
+    Route::group(['middleware' => 'role:' . Roles::StudyAdvisor . ',' . Roles::Administrator], function () {
 
         Route::post('/advice', 'AdviceController@create');
 
@@ -46,13 +52,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/news/{id}', 'NewsController@getById');
         Route::patch('/news/{id}', 'NewsController@updatePartialById');
         Route::delete('/news/{id}', 'NewsController@deleteById');
-    });
-
-    Route::group(['middleware' => 'role:' . Roles::Administrator], function () {
 
         Route::get('/students', 'StudentController@index');
 
         Route::get('/students/{id}', 'StudentController@getById');
+    });
+
+    Route::group(['middleware' => 'role:' . Roles::Administrator], function () {
+
         Route::delete('/students/{id}', 'StudentController@deleteById');
 
         Route::post('/import/students', 'StudentController@createByImport');

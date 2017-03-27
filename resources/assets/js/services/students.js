@@ -111,7 +111,7 @@ const getCreditsExpected = function() {
 
     return new Promise((resolve, reject) => {
 
-        Vue.http.get('me/creditsexpected').then((response) => {
+        Vue.http.get('students/creditsexpected').then((response) => {
 
                 response.json().then((obj) => {
 

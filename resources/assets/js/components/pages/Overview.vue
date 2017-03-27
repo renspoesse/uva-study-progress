@@ -1,6 +1,12 @@
 <template>
 
-    <div>
+    <div v-if="!hasAnyRole(user, roles.Student) && !viewAs">
+
+        <alert type="info" message="This page is currently only available to students. Try viewing it as a student instead." show="true" v-bind:closeable="false"></alert>
+        <a class="btn btn-primary-outline" href="#/manage/students" v-if="hasAnyRole(user, [roles.StudyAdvisor, roles.Administrator])">Go to Students</a>
+
+    </div>
+    <div v-else>
 
         <div class="dashhead">
             <div class="dashhead-titles">
@@ -82,6 +88,7 @@
                     <div class="panel-body" v-html="item.text"></div>
                     <div class="panel-footer">
                         updated {{ moment.utc(item.updated_at).local().fromNow() }}
+
                     </div>
                 </div>
 
@@ -95,6 +102,7 @@
                     <div class="panel-body" v-html="item.text"></div>
                     <div class="panel-footer">
                         updated {{ moment.utc(item.updated_at).local().fromNow() }}
+
                     </div>
                 </div>
 
@@ -115,9 +123,12 @@
     import errorAlerts from '../../mixins/error_alerts'
     import loadingOverlay from '../../mixins/loading_overlay'
 
+    import Roles from '../../enums/Roles'
+
     import * as advice from '../../services/advice'
     import * as images from '../../helpers/images'
     import * as news from '../../services/news'
+    import * as roles from '../../helpers/roles'
     import * as students from '../../services/students'
 
     export default {
@@ -134,7 +145,8 @@
                 viewAs: (state) => state.auth.viewAs
             }),
             _() { return _; },
-            moment() { return moment; }
+            moment() { return moment; },
+            roles() { return Roles; }
         },
         created() {
 
@@ -233,13 +245,11 @@
                         return student.bsa;
                 }
             },
-            getCreditsExpected: function(bsaCredits, block1Courses) {
-
-            },
             isStudentBsaPositive: function(student) {
 
                 return (student.bsa === 'MX' || student.bsa === 'PS');
             },
+            hasAnyRole: roles.hasAnyRole,
             renderCharts: function() {
 
                 // TODO RENS: cachen.

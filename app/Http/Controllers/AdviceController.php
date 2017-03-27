@@ -60,7 +60,7 @@ class AdviceController extends BaseController
 
         $query = Advice::query();
 
-        if (filter_var($request->input('publishedOnly'), FILTER_VALIDATE_BOOLEAN) === true || !RoleHelpers::hasAnyRole($request, [Roles::Instructor, Roles::Administrator]))
+        if (filter_var($request->input('publishedOnly'), FILTER_VALIDATE_BOOLEAN) === true || !RoleHelpers::hasAnyRole($request, [Roles::StudyAdvisor, Roles::Administrator]))
             $query = $query->where('is_published', true);
 
         if ($request->has('query')) {

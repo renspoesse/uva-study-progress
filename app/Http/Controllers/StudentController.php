@@ -111,7 +111,7 @@ class StudentController extends BaseController
 
     public function getByAuthenticated(Request $request)
     {
-        return response(Student::where('student_number', LtiHelpers::getUser($request)['userId'])->firstOrFail());
+        return response(Student::where('student_number', array_get(LtiHelpers::getUser($request), 'ltiUserId'))->firstOrFail());
     }
 
     public function getById($id)
@@ -147,7 +147,7 @@ class StudentController extends BaseController
 
         $query = Student::query();
 
-        if (filter_var($request->input('publishedOnly'), FILTER_VALIDATE_BOOLEAN) === true || !RoleHelpers::hasAnyRole($request, Roles::Administrator))
+        if (filter_var($request->input('publishedOnly'), FILTER_VALIDATE_BOOLEAN) === true || !RoleHelpers::hasAnyRole($request, [Roles::StudyAdvisor, Roles::Administrator]))
             $query = $query->where('is_published', true);
 
         if ($request->has('query')) {

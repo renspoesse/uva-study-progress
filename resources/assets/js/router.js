@@ -66,15 +66,15 @@ const router = new VueRouter({
         {path: '/advice', component: components.pages.Advice, meta: {requiresAuth: true}},
         {path: '/news', component: components.pages.News, meta: {requiresAuth: true}},
 
-        {path: '/manage/advice', component: components.manage.advice.List, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
-        {path: '/manage/advice/new', component: components.manage.advice.Edit, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
-        {path: '/manage/advice/:id/edit', component: components.manage.advice.Edit, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
-        {path: '/manage/news', component: components.manage.news.List, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
-        {path: '/manage/news/new', component: components.manage.news.Edit, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
-        {path: '/manage/news/:id/edit', component: components.manage.news.Edit, meta: {requiresAuth: true, requiresRole: Roles.Instructor}},
-        {path: '/manage/students', component: components.manage.students.List, meta: {requiresAuth: true, requiresRole: Roles.Administrator}},
+        {path: '/manage/advice', component: components.manage.advice.List, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdvisor, Roles.Administrator]}},
+        {path: '/manage/advice/new', component: components.manage.advice.Edit, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdvisor, Roles.Administrator]}},
+        {path: '/manage/advice/:id/edit', component: components.manage.advice.Edit, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdvisor, Roles.Administrator]}},
+        {path: '/manage/news', component: components.manage.news.List, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdvisor, Roles.Administrator]}},
+        {path: '/manage/news/new', component: components.manage.news.Edit, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdvisor, Roles.Administrator]}},
+        {path: '/manage/news/:id/edit', component: components.manage.news.Edit, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdvisor, Roles.Administrator]}},
+        {path: '/manage/students', component: components.manage.students.List, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdvisor, Roles.Administrator]}},
         {path: '/manage/students/import', component: components.manage.students.Import, meta: {requiresAuth: true, requiresRole: Roles.Administrator}},
-        {path: '/manage/students/:id', component: components.manage.students.View, meta: {requiresAuth: true, requiresRole: Roles.Administrator}},
+        {path: '/manage/students/:id', component: components.manage.students.View, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdvisor, Roles.Administrator]}},
 
         {path: '*', component: components.pages.NotFound}
     ]
@@ -94,10 +94,10 @@ router.beforeEach((to, from, next) => {
         }
         else {
 
-            const requiredRoles = _.without(_.map(to.matched, 'meta.requiresRole'), undefined);
+            const requiredRoles = _.flattenDeep(_.without(_.map(to.matched, 'meta.requiresRole'), undefined));
             const mismatch = _.without(requiredRoles, ...store.getters['auth/roles']);
 
-            if (mismatch.length > 0) {
+            if (requiredRoles.length > 0 && mismatch.length >= requiredRoles.length) {
 
                 console.log('User has insufficient permissions for this route.');
                 next(false);
