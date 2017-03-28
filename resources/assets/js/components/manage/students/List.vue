@@ -25,6 +25,21 @@
             <div class="flextable-item" v-if="hasAnyRole(user, roles.Administrator)">
                 <div class="btn-group">
                     <a href="#/manage/students/import" class="btn btn-primary-outline"><i class="fa fa-plus m-r-s"></i>Import from .csv</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="flextable table-actions">
+            <div class="flextable-item flextable-primary">
+            </div>
+            <div class="flextable-item" v-if="hasAnyRole(user, roles.Administrator)">
+                <select v-model="actionMode">
+                    <option v-bind:value="1">With selected items only:</option>
+                    <option v-bind:value="2">With all matching items:</option>
+                </select>
+                <div class="btn-group">
+                    <a class="btn btn-primary-outline" v-on:click.prevent="handlePublish"><i class="fa fa-eye m-r-s"></i>Publish</a>
+                    <a class="btn btn-primary-outline" v-on:click.prevent="handleUnpublish"><i class="fa fa-eye-slash m-r-s"></i>Unpublish</a>
                     <a class="btn btn-primary-outline" v-on:click.prevent="handleRemove"><i class="fa fa-trash"></i></a>
                 </div>
             </div>
@@ -36,10 +51,11 @@
                     <thead>
                     <tr>
                         <th class="header"><input type="checkbox" ref="selectAll" v-on:change="handleSelectAll"></th>
-                        <th v-bind:class="headerClass('student_number')" v-on:click.prevent="handleOrder('student_number')">Student number</th>
+                        <th v-bind:class="headerClass('student_number')" v-on:click.prevent="handleOrder('student_number')">#</th>
                         <th v-bind:class="headerClass('display_name')" v-on:click.prevent="handleOrder('display_name')">Name</th>
                         <th v-bind:class="headerClass('program_name')" v-on:click.prevent="handleOrder('program_name')">Program</th>
                         <th v-bind:class="headerClass('cohort')" v-on:click.prevent="handleOrder('cohort')">Cohort</th>
+                        <th v-bind:class="headerClass('second_year_b1_subjects')" v-on:click.prevent="handleOrder('second_year_b1_subjects')" class="header">Prog.</th>
                         <th v-bind:class="headerClass('is_published')" v-on:click.prevent="handleOrder('is_published')">Published</th>
                         <th v-bind:class="headerClass('updated_at')" v-on:click.prevent="handleOrder('updated_at')">Updated at</th>
                         <th class="header">View as</th>
@@ -50,9 +66,14 @@
                     <tr v-for="item in items" v-bind:key="item.id" v-bind:data-id="item.id">
                         <td><input type="checkbox" class="select-row"></td>
                         <td><a v-bind:href="'#/manage/students/' + item.id">{{ item.student_number }}</a></td>
-                        <td>{{ _.truncate(item.display_name, {length: 30}) }}</td>
-                        <td>{{ _.truncate(item.program_name, {length: 30}) }}</td>
+                        <td v-bind:title="item.display_name">{{ _.truncate(item.display_name, {length: 30}) }}</td>
+                        <td v-bind:title="item.program_name">{{ _.truncate(item.program_name, {length: 30}) }}</td>
                         <td>{{ item.cohort }}</td>
+                        <td>
+                            <i class="fa fa-circle" style="color: red;" v-if="item.second_year_b1_subjects === 0"></i>
+                            <i class="fa fa-circle" style="color: yellow;" v-else-if="item.second_year_b1_subjects === 1"></i>
+                            <i class="fa fa-circle" style="color: green;" v-else-if="item.second_year_b1_subjects > 1"></i>
+                        </td>
                         <td>
                             <i class="fa fa-check" v-if="item.is_published"></i>
                         </td>
@@ -103,6 +124,13 @@
             moment() { return moment; },
             roles() { return Roles; }
         },
+        data: function() {
+
+            return {
+
+                actionMode: 1
+            };
+        },
         methods: {
 
             fetchData: function(page) {
@@ -131,20 +159,67 @@
                         this.showLoading(false);
                     });
             },
+            handlePublish: function() {
+
+                this.displayErrors(false);
+
+                if (this.actionMode === 1) {
+
+                    _.forEach(this.getSelectedItems(), (el) => {
+
+                        const id = parseInt($(el).attr('data-id'));
+
+                        students.updateById(id, {is_published: true})
+                            .then(() => {this.fetchData(this.pagination.currentPage);})
+                            .catch((ex) => {this.addError(ex.message);});
+                    });
+                }
+                else if (this.actionMode === 2) {
+
+                    // TODO RENS
+                }
+            },
             handleRemove: function() {
 
                 this.displayErrors(false);
 
                 // TODO RENS: confirmation.
 
-                _.forEach(this.getSelectedItems(), (el) => {
+                if (this.actionMode === 1) {
 
-                    const id = parseInt($(el).attr('data-id'));
+                    _.forEach(this.getSelectedItems(), (el) => {
 
-                    students.deleteById(id)
-                        .then(() => {this.fetchData(this.pagination.currentPage);})
-                        .catch((ex) => {this.addError(ex.message);});
-                });
+                        const id = parseInt($(el).attr('data-id'));
+
+                        students.deleteById(id)
+                            .then(() => {this.fetchData(this.pagination.currentPage);})
+                            .catch((ex) => {this.addError(ex.message);});
+                    });
+                }
+                else if (this.actionMode === 2) {
+
+                    // TODO RENS
+                }
+            },
+            handleUnpublish: function() {
+
+                this.displayErrors(false);
+
+                if (this.actionMode === 1) {
+
+                    _.forEach(this.getSelectedItems(), (el) => {
+
+                        const id = parseInt($(el).attr('data-id'));
+
+                        students.updateById(id, {is_published: false})
+                            .then(() => {this.fetchData(this.pagination.currentPage);})
+                            .catch((ex) => {this.addError(ex.message);});
+                    });
+                }
+                else if (this.actionMode === 2) {
+
+                    // TODO RENS
+                }
             },
             handleViewAs: function(item) {
 

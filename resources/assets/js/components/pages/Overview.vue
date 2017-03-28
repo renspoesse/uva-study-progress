@@ -2,7 +2,7 @@
 
     <div v-if="!hasAnyRole(user, roles.Student) && !viewAs">
 
-        <alert type="info" message="This page is currently only available to students. Try viewing it as a student instead." show="true" v-bind:closeable="false"></alert>
+        <alert type="info" message="This page is only available to students. Try viewing it as a student instead." show="true" v-bind:closeable="false"></alert>
         <a class="btn btn-primary-outline" href="#/manage/students" v-if="hasAnyRole(user, [roles.StudyAdvisor, roles.Administrator])">Go to Students</a>
 
     </div>
@@ -17,66 +17,74 @@
 
         <hr class="m-t">
 
-        <div class="row text-center m-t-md">
-            <div class="col-md-12 m-b-md">
-                <div class="w-lg m-x-auto" style="height: 30rem;">
-                    <canvas ref="chartCreditPrognosis"></canvas>
-                </div>
-            </div>
-        </div>
+        <template v-if="student.id">
 
-        <div class="hr-divider m-t-md m-b">
-            <h3 class="hr-divider-content hr-divider-heading">Study progress indicators</h3>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-
-                <div class="table-full">
-                    <div class="table-responsive">
-                        <table class="table" data-sort="table">
-                            <thead>
-                            <tr>
-                                <th class="header">Indicator</th>
-                                <th class="header">Value</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            <tr>
-                                <td>BSA</td>
-                                <td>{{ getStudentBsaText(student) }}<i class="fa fa-check m-l-s" v-if="isStudentBsaPositive(student)"></i></td>
-                            </tr>
-                            <tr>
-                                <td>Credits in 1st year</td>
-                                <td>{{ student.bsa_credits }} credits</td>
-                            </tr>
-                            <tr>
-                                <td>Credits in block 1, 2nd year</td>
-                                <td>{{ student.second_year_b1_credits }} credits</td>
-                            </tr>
-                            <tr>
-                                <td>Prognosis total credits 2nd year</td>
-                                <td>{{ student.second_year_credits_expected }} credits</td>
-                            </tr>
-                            <tr class="bg-info hidden">
-                                <td>Expected graduation semester</td>
-                                <td>(Data not yet available)</td>
-                            </tr>
-
-                            </tbody>
-                        </table>
+            <div class="row text-center m-t-md">
+                <div class="col-md-12 m-b-md">
+                    <div class="w-lg m-x-auto" style="height: 30rem;">
+                        <canvas ref="chartCreditPrognosis"></canvas>
                     </div>
                 </div>
-
-                <a class="btn btn-primary-outline" href="http://student.uva.nl/ecb/az/content/studieadviseurs/online-afsprakensysteem/afspraak-studieadviseur-economie-bedrijfskunde.html" target="_blank">Contact a study advisor</a>
-
             </div>
-        </div>
 
-        <div class="hr-divider m-t-md m-b">
-            <h3 class="hr-divider-content hr-divider-heading">Latest news, tips and advice</h3>
-        </div>
+            <div class="hr-divider m-t-md m-b">
+                <h3 class="hr-divider-content hr-divider-heading">Study progress indicators</h3>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="table-full">
+                        <div class="table-responsive">
+                            <table class="table" data-sort="table">
+                                <thead>
+                                <tr>
+                                    <th class="header">Indicator</th>
+                                    <th class="header">Value</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr>
+                                    <td>BSA</td>
+                                    <td>{{ getStudentBsaText(student) }}<i class="fa fa-check m-l-s" v-if="isStudentBsaPositive(student)"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>Credits in 1st year</td>
+                                    <td>{{ student.bsa_credits }} credits</td>
+                                </tr>
+                                <tr>
+                                    <td>Courses passed in block 1, 2nd year</td>
+                                    <td>{{ student.second_year_b1_subjects }} course(s)</td>
+                                </tr>
+                                <tr>
+                                    <td>Credits in block 1, 2nd year</td>
+                                    <td>{{ student.second_year_b1_credits }} credits</td>
+                                </tr>
+                                <tr>
+                                    <td>Prognosis total credits 2nd year</td>
+                                    <td>{{ student.second_year_credits_expected }} credits</td>
+                                </tr>
+                                <tr class="bg-info hidden">
+                                    <td>Expected graduation semester</td>
+                                    <td>(Data not yet available)</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <a class="btn btn-primary-outline" href="http://student.uva.nl/ecb/az/content/studieadviseurs/online-afsprakensysteem/afspraak-studieadviseur-economie-bedrijfskunde.html" target="_blank">Contact a study advisor</a>
+
+                </div>
+            </div>
+
+            <div class="hr-divider m-t-md m-b">
+                <h3 class="hr-divider-content hr-divider-heading">Latest news, tips and advice</h3>
+            </div>
+
+        </template>
 
         <div class="row">
             <div class="col-md-6">
@@ -88,7 +96,6 @@
                     <div class="panel-body" v-html="item.text"></div>
                     <div class="panel-footer">
                         updated {{ moment.utc(item.updated_at).local().fromNow() }}
-
                     </div>
                 </div>
 
@@ -102,7 +109,6 @@
                     <div class="panel-body" v-html="item.text"></div>
                     <div class="panel-footer">
                         updated {{ moment.utc(item.updated_at).local().fromNow() }}
-
                     </div>
                 </div>
 
@@ -252,13 +258,11 @@
             hasAnyRole: roles.hasAnyRole,
             renderCharts: function() {
 
-                // TODO RENS: cachen.
-
                 students.getCreditsExpected().then((result) => {
 
                     const creditsExpected0 = _.find(result.items, (value) => {return value.bsa_credits === this.student.bsa_credits && value.second_year_b1_subjects === 0});
                     const creditsExpected1 = _.find(result.items, (value) => {return value.bsa_credits === this.student.bsa_credits && value.second_year_b1_subjects === 1});
-                    const creditsExpected2 = _.find(result.items, (value) => {return value.bsa_credits === this.student.bsa_credits && value.second_year_b1_subjects === 2});
+                    const creditsExpected2 = _.find(result.items, (value) => {return value.bsa_credits === this.student.bsa_credits && value.second_year_b1_subjects > 1});
 
                     const primaryColor = '#1CA8DD';
 
@@ -290,7 +294,7 @@
 
                                     dipCategory.block1Courses === 0 ? primaryColor : 'red',
                                     dipCategory.block1Courses === 1 ? primaryColor : 'yellow',
-                                    dipCategory.block1Courses === 2 ? primaryColor : 'green'
+                                    dipCategory.block1Courses > 1 ? primaryColor : 'green'
                                 ],
                                 pointBackgroundColor: ['red', 'yellow', 'green'],
                                 //pointBorderWidth: 1,
@@ -298,7 +302,7 @@
 
                                     dipCategory.block1Courses === 0 ? 20 : 5,
                                     dipCategory.block1Courses === 1 ? 20 : 5,
-                                    dipCategory.block1Courses === 2 ? 20 : 5
+                                    dipCategory.block1Courses > 1 ? 20 : 5
                                 ],
                                 //pointHoverBackgroundColor: "rgba(75,192,192,1)",
                                 //pointHoverBorderColor: "rgba(220,220,220,1)",
@@ -307,13 +311,13 @@
 
                                     dipCategory.block1Courses === 0 ? 10 : 2,
                                     dipCategory.block1Courses === 1 ? 10 : 2,
-                                    dipCategory.block1Courses === 2 ? 10 : 2
+                                    dipCategory.block1Courses > 1 ? 10 : 2
                                 ],
                                 data: [
 
                                     dipCategory.block1Courses === 0 ? this.student.second_year_credits_expected : creditsExpected0.second_year_credits_expected || 0,
                                     dipCategory.block1Courses === 1 ? this.student.second_year_credits_expected : creditsExpected1.second_year_credits_expected || 0,
-                                    dipCategory.block1Courses === 2 ? this.student.second_year_credits_expected : creditsExpected2.second_year_credits_expected || 0
+                                    dipCategory.block1Courses > 1 ? this.student.second_year_credits_expected : creditsExpected2.second_year_credits_expected || 0
                                 ],
                                 //spanGaps: false,
                             }]
@@ -356,13 +360,13 @@
 
                                     title: function(tooltipItem, data) {
 
-                                        const passed = tooltipItem[0].xLabel;
+                                        const passed = parseInt(tooltipItem[0].xLabel);
 
                                         if (passed === 0)
                                             return passed + ' courses passed in block 1';
                                         else if (passed === 1)
                                             return passed + ' course passed in block 1';
-                                        else
+                                        else if (passed > 1)
                                             return 'At least ' + passed + ' courses passed in block 1';
                                     },
                                     label: function(tooltipItem, data) { return 'Your prognosis for the 2nd year is ' + tooltipItem.yLabel + ' credits.'; }

@@ -111,19 +111,27 @@ class StudentController extends BaseController
 
     public function getByAuthenticated(Request $request)
     {
-        return response(Student::where('student_number', array_get(LtiHelpers::getUser($request), 'ltiUserId'))->firstOrFail());
+        if (!RoleHelpers::hasAnyRole($request, [Roles::StudyAdvisor, Roles::Administrator]))
+            return response(Student::where('student_number', array_get(LtiHelpers::getUser($request), 'ltiUserId'))->where('is_published', true)->firstOrFail());
+        else
+            return response(Student::where('student_number', array_get(LtiHelpers::getUser($request), 'ltiUserId'))->firstOrFail());
     }
 
-    public function getById($id)
+    public function getById($id, Request $request)
     {
-        return response(Student::where('id', $id)->firstOrFail());
+        if (!RoleHelpers::hasAnyRole($request, [Roles::StudyAdvisor, Roles::Administrator]))
+            return response(Student::where('id', $id)->where('is_published', true)->firstOrFail());
+        else
+            return response(Student::where('id', $id)->firstOrFail());
     }
 
     public function getCreditsExpected()
     {
+        // TODO RENS: cachen.
+
         $result = DB::table('students')->select('bsa_credits', 'second_year_b1_subjects', DB::raw('AVG(second_year_credits) AS second_year_credits_expected'))->whereNotNull('second_year_credits')->groupBy('bsa_credits', 'second_year_b1_subjects')->get();
 
-        $result->each(function($record) {
+        $result->each(function ($record) {
 
             $record->second_year_credits_expected = (int)round((double)$record->second_year_credits_expected);
         });
@@ -178,5 +186,37 @@ class StudentController extends BaseController
         $paginator->appends(PaginationHelpers::getOtherQueryParameters($request));
 
         return $paginator;
+    }
+
+    public function updatePartialById($id, Request $request)
+    {
+        $this->validate($request, $this->getValidatorPartial($request));
+
+        $student = Student::findOrFail($id);
+
+        DB::transaction(function () use ($id, $request, $student) {
+
+            if ($request->exists('is_published')) $student->is_published = $request->input('is_published');
+
+            $student->save();
+        });
+
+        return response(Student::find($student->id));
+    }
+
+    protected function getValidatorComplete(Request $request)
+    {
+        return [
+
+            'is_published' => 'required|boolean'
+        ];
+    }
+
+    protected function getValidatorPartial(Request $request)
+    {
+        return [
+
+            'is_published' => 'boolean'
+        ];
     }
 }

@@ -15,6 +15,15 @@
 
         <alert type="danger" v-bind:message="errorMessage" v-bind:show="errorMessage" v-on:close="errorMessage = ''"></alert>
 
+        <div class="row m-b" v-if="hasAnyRole(user, roles.Administrator)">
+            <div class="col-md-12">
+                <div class="btn-group pull-right">
+                    <a class="btn btn-primary-outline" v-on:click.prevent="handlePublish" v-if="!student.is_published"><i class="fa fa-eye m-r-s"></i>Publish</a>
+                    <a class="btn btn-default-outline" v-on:click.prevent="handleUnpublish" v-else><i class="fa fa-eye-slash m-r-s"></i>Unpublish</a>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
 
@@ -51,17 +60,27 @@
 <script>
 
     import * as _ from 'lodash'
+    import {mapState} from 'vuex'
+
+    import Roles from '../../../enums/Roles'
+
     import errorAlerts from '../../../mixins/error_alerts'
     import loadingOverlay from '../../../mixins/loading_overlay'
 
     import * as images from '../../../helpers/images'
+    import * as roles from '../../../helpers/roles'
     import * as students from '../../../services/students'
 
     export default {
 
         computed: {
 
-            _() { return _; }
+            ...mapState({
+
+                user: (state) => state.auth.user
+            }),
+            _() { return _; },
+            roles() { return Roles; }
         },
         created: function() {
 
@@ -93,7 +112,42 @@
                         this.displayErrors(true, ex.message);
                         this.showLoading(false);
                     });
-            }
+            },
+            handlePublish: function() {
+
+                this.showLoading(true);
+                this.displayErrors(false);
+
+                students.updateById(this.student.id, {is_published: true})
+                    .then((result) => {
+
+                        this.student = result.item;
+                        this.showLoading(false);
+                    })
+                    .catch((ex) => {
+
+                        this.displayErrors(true, ex.message);
+                        this.showLoading(false);
+                    });
+            },
+            handleUnpublish: function() {
+
+                this.showLoading(true);
+                this.displayErrors(false);
+
+                students.updateById(this.student.id, {is_published: false})
+                    .then((result) => {
+
+                        this.student = result.item;
+                        this.showLoading(false);
+                    })
+                    .catch((ex) => {
+
+                        this.displayErrors(true, ex.message);
+                        this.showLoading(false);
+                    });
+            },
+            hasAnyRole: roles.hasAnyRole
         },
         mixins: [
 

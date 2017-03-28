@@ -94,12 +94,20 @@ router.beforeEach((to, from, next) => {
         }
         else {
 
+            const requiredPermissions = _.flattenDeep(_.without(_.map(to.matched, 'meta.requiresPermission'), undefined));
             const requiredRoles = _.flattenDeep(_.without(_.map(to.matched, 'meta.requiresRole'), undefined));
-            const mismatch = _.without(requiredRoles, ...store.getters['auth/roles']);
 
-            if (requiredRoles.length > 0 && mismatch.length >= requiredRoles.length) {
+            const mismatchPermissions = _.without(requiredPermissions, ...store.getters['auth/permissions']);
+            const mismatchRoles = _.without(requiredRoles, ...store.getters['auth/roles']);
+
+            if (requiredPermissions.length > 0 && mismatchPermissions.length >= requiredPermissions.length) {
 
                 console.log('User has insufficient permissions for this route.');
+                next(false);
+            }
+            else if (requiredRoles.length > 0 && mismatchRoles.length >= requiredRoles.length) {
+
+                console.log('User has insufficient roles for this route.');
                 next(false);
             }
             else

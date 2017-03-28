@@ -60,6 +60,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['middleware' => 'role:' . Roles::Administrator], function () {
 
+        Route::patch('/students/{id}', 'StudentController@updatePartialById');
         Route::delete('/students/{id}', 'StudentController@deleteById');
 
         Route::post('/import/students', 'StudentController@createByImport');

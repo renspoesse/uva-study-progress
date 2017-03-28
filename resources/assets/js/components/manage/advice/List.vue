@@ -45,7 +45,7 @@
 
                     <tr v-for="item in items" v-bind:key="item.id" v-bind:data-id="item.id">
                         <td><input type="checkbox" class="select-row"></td>
-                        <td><a v-bind:href="'#/manage/advice/' + item.id + '/edit'">{{ _.truncate(item.title, {length: 30}) }}</a></td>
+                        <td v-bind:title="item.title"><a v-bind:href="'#/manage/advice/' + item.id + '/edit'">{{ _.truncate(item.title, {length: 30}) }}</a></td>
                         <td>
                             <i class="fa fa-check" v-if="item.is_published"></i>
                         </td>
