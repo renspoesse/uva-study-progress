@@ -34,7 +34,17 @@ export default {
 
             // TODO RENS: dit kan meer reactive.
 
-            return $(this.$el).find('.select-row:checked').closest('[data-id]');
+            const items = [];
+
+            _.forEach($(this.$el).find('.select-row:checked').closest('[data-id]'), (el) => {
+
+                const id = parseInt($(el).attr('data-id'));
+                const item = _.find(this.items, (item) => {return item.id === id;});
+
+                if (item) items.push(item);
+            });
+
+            return items;
         },
         handleGoToPage: function(e) {
 

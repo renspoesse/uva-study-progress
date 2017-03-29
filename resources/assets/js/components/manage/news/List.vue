@@ -120,11 +120,9 @@
 
                 // TODO RENS: confirmation.
 
-                _.forEach(this.getSelectedItems(), (el) => {
+                _.forEach(this.getSelectedItems(), (item) => {
 
-                    const id = parseInt($(el).attr('data-id'));
-
-                    news.deleteById(id)
+                    news.deleteById(item.id)
                         .then(() => {this.fetchData(this.pagination.currentPage);})
                         .catch((ex) => {this.addError(ex.message);});
                 });

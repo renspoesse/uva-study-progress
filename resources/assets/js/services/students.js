@@ -18,6 +18,26 @@ const deleteById = function(id) {
     });
 };
 
+const deleteByParameters = function(params) {
+
+    return new Promise((resolve, reject) => {
+
+        Vue.http.delete('students', {
+
+            params: params
+
+        }).then((response) => {
+
+                resolve({});
+            })
+            .catch((response) => {
+
+                console.log(response);
+                reject({message: 'Oops. Something went wrong.'});
+            });
+    });
+};
+
 const getByAuthenticated = function() {
 
     return new Promise((resolve, reject) => {
@@ -26,6 +46,7 @@ const getByAuthenticated = function() {
 
                 response.json().then((obj) => {
 
+                        obj = json.removeDataWrappers(obj);
                         resolve({item: obj});
                     })
                     .catch((parseError) => {
@@ -50,6 +71,7 @@ const getById = function(id) {
 
                 response.json().then((obj) => {
 
+                        obj = json.removeDataWrappers(obj);
                         resolve({item: obj});
                     })
                     .catch((parseError) => {
@@ -81,14 +103,16 @@ const getByParameters = function(params) {
                         const meta = _.clone(obj);
                         delete meta.data;
 
+                        obj = json.removeDataWrappers(obj.data);
+
                         resolve({
 
-                            items: obj.data, meta: {
+                            items: obj, meta: {
 
                                 pagination: {
 
-                                    currentPage: obj.current_page,
-                                    totalPages: obj.last_page
+                                    currentPage: meta.current_page,
+                                    totalPages: meta.last_page
                                 }
                             }
                         });
@@ -115,6 +139,7 @@ const getCreditsExpected = function() {
 
                 response.json().then((obj) => {
 
+                        obj = json.removeDataWrappers(obj);
                         resolve({items: obj});
                     })
                     .catch((parseError) => {
@@ -213,13 +238,64 @@ const updateById = function(id, payload) {
     });
 };
 
+const updateByParameters = function(params, payload) {
+
+    return new Promise((resolve, reject) => {
+
+        payload = json.removeEmptyObjects(_.clone(payload));
+
+        Vue.http.patch('students', payload, {
+
+            params: params
+
+        }).then((response) => {
+
+                response.json().then((obj) => {
+
+                        obj = json.removeDataWrappers(obj);
+                        resolve({items: obj});
+                    })
+                    .catch((parseError) => {
+
+                        console.log(parseError);
+                        reject({message: 'Failed to parse students.'});
+                    });
+            })
+            .catch((response) => {
+
+                console.log(response);
+
+                if (response.status === 422) {
+
+                    response.json().then((obj) => {
+
+                            reject({
+
+                                message: "It seems like you didn't provide a valid student.",
+                                errors: obj
+                            });
+                        })
+                        .catch((parseError) => {
+
+                            console.log(parseError);
+                            reject({message: 'Failed to parse error data.'});
+                        });
+                }
+                else
+                    reject({message: 'Oops. Something went wrong.'});
+            });
+    });
+};
+
 export {
 
     deleteById,
+    deleteByParameters,
     getByAuthenticated,
     getById,
     getByParameters,
     getCreditsExpected,
     importFromFile,
-    updateById
+    updateById,
+    updateByParameters
 }

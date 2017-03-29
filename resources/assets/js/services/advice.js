@@ -26,6 +26,7 @@ const getById = function(id) {
 
                 response.json().then((obj) => {
 
+                        obj = json.removeDataWrappers(obj);
                         resolve({item: obj});
                     })
                     .catch((parseError) => {
@@ -57,13 +58,16 @@ const getByParameters = function(params) {
                         const meta = _.clone(obj);
                         delete meta.data;
 
+                        obj = json.removeDataWrappers(obj.data);
+
                         resolve({
-                            items: obj.data, meta: {
+
+                            items: obj, meta: {
 
                                 pagination: {
 
-                                    currentPage: obj.current_page,
-                                    totalPages: obj.last_page
+                                    currentPage: meta.current_page,
+                                    totalPages: meta.last_page
                                 }
                             }
                         });

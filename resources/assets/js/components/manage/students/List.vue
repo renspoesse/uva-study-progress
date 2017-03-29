@@ -165,18 +165,18 @@
 
                 if (this.actionMode === 1) {
 
-                    _.forEach(this.getSelectedItems(), (el) => {
+                    _.forEach(this.getSelectedItems(), (item) => {
 
-                        const id = parseInt($(el).attr('data-id'));
-
-                        students.updateById(id, {is_published: true})
+                        students.updateById(item.id, {is_published: true})
                             .then(() => {this.fetchData(this.pagination.currentPage);})
                             .catch((ex) => {this.addError(ex.message);});
                     });
                 }
                 else if (this.actionMode === 2) {
 
-                    // TODO RENS
+                    students.updateByParameters({query: this.query.trim()}, {is_published: true})
+                        .then(() => {this.fetchData(this.pagination.currentPage);})
+                        .catch((ex) => {this.addError(ex.message);});
                 }
             },
             handleRemove: function() {
@@ -187,18 +187,18 @@
 
                 if (this.actionMode === 1) {
 
-                    _.forEach(this.getSelectedItems(), (el) => {
+                    _.forEach(this.getSelectedItems(), (item) => {
 
-                        const id = parseInt($(el).attr('data-id'));
-
-                        students.deleteById(id)
+                        students.deleteById(item.id)
                             .then(() => {this.fetchData(this.pagination.currentPage);})
                             .catch((ex) => {this.addError(ex.message);});
                     });
                 }
                 else if (this.actionMode === 2) {
 
-                    // TODO RENS
+                    students.deleteByParameters({query: this.query.trim()})
+                        .then(() => {this.fetchData(this.pagination.currentPage);})
+                        .catch((ex) => {this.addError(ex.message);});
                 }
             },
             handleUnpublish: function() {
@@ -207,18 +207,18 @@
 
                 if (this.actionMode === 1) {
 
-                    _.forEach(this.getSelectedItems(), (el) => {
+                    _.forEach(this.getSelectedItems(), (item) => {
 
-                        const id = parseInt($(el).attr('data-id'));
-
-                        students.updateById(id, {is_published: false})
+                        students.updateById(item.id, {is_published: false})
                             .then(() => {this.fetchData(this.pagination.currentPage);})
                             .catch((ex) => {this.addError(ex.message);});
                     });
                 }
                 else if (this.actionMode === 2) {
 
-                    // TODO RENS
+                    students.updateByParameters({query: this.query.trim()}, {is_published: false})
+                        .then(() => {this.fetchData(this.pagination.currentPage);})
+                        .catch((ex) => {this.addError(ex.message);});
                 }
             },
             handleViewAs: function(item) {

@@ -144,6 +144,26 @@ class StudentController extends BaseController
         Student::where('id', $id)->delete();
     }
 
+    public function deleteByParameters(Request $request)
+    {
+        $this->validate($request, [
+
+            'query' => 'string|nullable'
+        ]);
+
+        $query = Student::query();
+
+        if ($request->has('query')) {
+
+            $query = $query->where('student_number', 'LIKE', '%' . $request->input('query') . '%');
+            $query = $query->orWhere('display_name', 'LIKE', '%' . $request->input('query') . '%');
+            $query = $query->orWhere('program_name', 'LIKE', '%' . $request->input('query') . '%');
+            $query = $query->orWhere('cohort', 'LIKE', '%' . $request->input('query') . '%');
+        }
+
+        $query->delete();
+    }
+
     public function index(Request $request)
     {
         $this->validate($request, [
@@ -202,6 +222,38 @@ class StudentController extends BaseController
         });
 
         return response(Student::find($student->id));
+    }
+
+    public function updatePartialByParameters(Request $request)
+    {
+        $this->validate($request, [
+
+            'query' => 'string|nullable'
+        ]);
+
+        $this->validate($request, $this->getValidatorPartial($request));
+
+        $query = Student::query();
+
+        if ($request->has('query')) {
+
+            $query = $query->where('student_number', 'LIKE', '%' . $request->input('query') . '%');
+            $query = $query->orWhere('display_name', 'LIKE', '%' . $request->input('query') . '%');
+            $query = $query->orWhere('program_name', 'LIKE', '%' . $request->input('query') . '%');
+            $query = $query->orWhere('cohort', 'LIKE', '%' . $request->input('query') . '%');
+        }
+
+        DB::transaction(function () use ($request, $query) {
+
+            foreach($query->get() as $student) {
+
+                if ($request->exists('is_published')) $student->is_published = $request->input('is_published');
+
+                $student->save();
+            }
+        });
+
+        return response($query->get());
     }
 
     protected function getValidatorComplete(Request $request)
