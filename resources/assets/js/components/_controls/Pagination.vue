@@ -1,20 +1,28 @@
 <template>
 
     <ul class="pagination">
-        <li v-bind:class="{ disabled: (pagination.currentPage === 1) }">
+        <li v-bind:class="{ disabled: (pagination.currentPage <= 1) }">
+            <a aria-label="First" v-on:click.prevent="raiseGoTo(1)"><span aria-hidden="true">««</span></a>
+        </li>
+        <li v-bind:class="{ disabled: (pagination.currentPage <= 1) }">
             <a aria-label="Previous" v-on:click.prevent="raisePrevious"><span aria-hidden="true">«</span></a>
         </li>
         <li v-for="n in visiblePages" v-bind:class="{ active: (pagination.currentPage === n) }" v-on:click.prevent="raiseGoTo(n)">
             <a>{{ n }}</a>
         </li>
-        <li v-bind:class="{ disabled: (pagination.currentPage === pagination.totalPages) }">
+        <li v-bind:class="{ disabled: (pagination.currentPage >= pagination.totalPages) }">
             <a aria-label="Next" v-on:click.prevent="raiseNext"><span aria-hidden="true">»</span></a>
+        </li>
+        <li v-bind:class="{ disabled: (pagination.currentPage >= pagination.totalPages) }">
+            <a aria-label="Last" v-on:click.prevent="raiseGoTo(pagination.totalPages)"><span aria-hidden="true">»»</span></a>
         </li>
     </ul>
 
 </template>
 
 <script>
+
+    import * as _ from 'lodash'
 
     export default {
 

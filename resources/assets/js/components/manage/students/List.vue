@@ -21,6 +21,11 @@
                     <input type="text" class="form-control input-block" placeholder="Search students" v-model="query" v-on:keyup.enter="handleSearch">
                     <i class="icon icon-magnifying-glass"></i>
                 </div>
+                <select class="m-l-s" v-model="limit" v-on:change="handleRefresh()">
+                    <option v-bind:value="15">Show 15 items</option>
+                    <option v-bind:value="25">Show 25 items</option>
+                    <option v-bind:value="50">Show 50 items</option>
+                </select>
             </div>
             <div class="flextable-item" v-if="hasAnyRole(user, roles.Administrator)">
                 <div class="btn-group">
@@ -142,6 +147,7 @@
 
                 students.getByParameters({
 
+                        limit: this.limit,
                         order: this.order.field + '|' + this.order.direction,
                         page: page,
                         query: this.query.trim()

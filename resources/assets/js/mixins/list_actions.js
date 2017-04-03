@@ -4,6 +4,9 @@ export default {
 
     created() {
 
+        if (_.has(this.$route, 'query.limit'))
+            this.limit = parseInt(this.$route.query.limit);
+
         if (_.has(this.$route, 'query.order')) {
 
             const values = this.$route.query.order.split('|');
@@ -23,6 +26,7 @@ export default {
         return {
 
             items: [],
+            limit: 15,
             order: {field: '', direction: ''},
             pagination: {currentPage: 1, totalPages: 1},
             query: ''
@@ -59,6 +63,10 @@ export default {
 
             this.fetchData(this.pagination.currentPage);
         },
+        handleRefresh: function() {
+
+            this.fetchData(this.pagination.currentPage);
+        },
         handleSearch: function() {
 
             this.fetchData(1)
@@ -85,6 +93,7 @@ export default {
 
                 query: _.omitBy({
 
+                    limit: this.limit,
                     order: this.order.field ? this.order.field + '|' + this.order.direction : '',
                     page: page > 1 ? page : '',
                     query: this.query.trim()
