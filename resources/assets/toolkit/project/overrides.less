@@ -28,3 +28,10 @@
   display: block;
   background-color: rgba(0, 0, 0, @modal-backdrop-opacity);
 }
+
+@media (min-width: @screen-sm-min) {
+
+  .modal-dialog {
+    margin-bottom: 90px; // Add 60px for footer height.
+  }
+}

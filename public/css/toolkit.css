@@ -9775,6 +9775,11 @@ fieldset[disabled] .btn-danger-outline.active {
   display: block;
   background-color: rgba(0, 0, 0, 0.5);
 }
+@media (min-width: 768px) {
+  .modal-dialog {
+    margin-bottom: 90px;
+  }
+}
 span.twitter-typeahead {
   width: 100%;
 }

@@ -8,10 +8,20 @@ body {
   body {
     padding-top: 50px;
     padding-bottom: 50px;
+    //margin-bottom: $footer-height;
   }
 }
 
 a { cursor: pointer; }
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: $footer-height;
+  background-color: $footer-color;
+  z-index: 10000;
+}
 
 .img-fit-cover {
   height: 100%;
@@ -40,4 +50,9 @@ a { cursor: pointer; }
   align-items: center;
   justify-content: center;
   overflow: hidden;
+}
+
+.sortable-handle {
+  cursor: move;
+  cursor: -webkit-grabbing;
 }

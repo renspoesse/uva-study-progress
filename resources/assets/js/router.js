@@ -77,7 +77,14 @@ const router = new VueRouter({
         {path: '/manage/students/:id', component: components.manage.students.View, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdvisor, Roles.Administrator]}},
 
         {path: '*', component: components.pages.NotFound}
-    ]
+    ],
+    scrollBehavior (to, from, savedPosition) {
+
+        if (savedPosition)
+            return savedPosition;
+        else
+            return {x: 0, y: 0};
+    }
 });
 
 router.beforeEach((to, from, next) => {
