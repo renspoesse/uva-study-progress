@@ -4,7 +4,7 @@ namespace App\Enums;
 
 abstract class Roles
 {
-    const Administrator = 'Administrator_rens';
+    const Administrator = 'rens_1';
     const Student = 'urn:lti:instrole:ims/lis/Student';
-    const StudyAdvisor = 'studieadviseur';
+    const StudyAdvisor = 'rens_2';
 }

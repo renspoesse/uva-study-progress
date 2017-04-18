@@ -16,7 +16,7 @@ use GuzzleHttp\Client;
 
 class LtiController extends BaseController
 {
-    public function index()
+    public function index(Request $request)
     {
         $connector = $this->getConnector();
 

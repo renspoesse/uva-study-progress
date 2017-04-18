@@ -77,6 +77,11 @@ a {
   overflow: hidden;
 }
 
+.sortable-handle {
+  cursor: move;
+  cursor: -webkit-grabbing;
+}
+
 .fade-enter-active, .fade-leave-active {
   -webkit-transition: opacity .5s;
   transition: opacity .5s;

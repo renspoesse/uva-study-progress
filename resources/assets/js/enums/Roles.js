@@ -1,6 +1,6 @@
 export default {
 
-    Administrator: 'Administrator_rens',
+    Administrator: 'rens_1',
     Student: 'urn:lti:instrole:ims/lis/Student',
-    StudyAdvisor: 'studieadviseur',
+    StudyAdvisor: 'rens_2'
 }

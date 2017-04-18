@@ -22,6 +22,13 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
         // context and resourceLink properties of the class instance
         // to access the current user, context and resource link.
 
+        $request = request();
+
+        if ($request->has('custom_custom_role_membership')) {
+
+            $this->user->roles = explode(',', $request->input('custom_custom_role_membership'));
+        }
+
         $allowed = [
 
             'firstname',
@@ -41,8 +48,6 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
             return in_array($key, $allowed);
 
         }, ARRAY_FILTER_USE_KEY);
-
-        $request = request();
 
         $request->session()->put('user', $userInfo);
         $request->session()->put('authenticated', true);
