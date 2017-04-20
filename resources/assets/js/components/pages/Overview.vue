@@ -22,7 +22,15 @@
             <div class="row text-center m-t-md">
                 <div class="col-md-12 m-b-md">
                     <div class="w-lg m-x-auto" style="height: 30rem;">
-                        <canvas ref="chartCreditPrognosis"></canvas>
+                        <canvas ref="chartCredits"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row text-center m-t-md">
+                <div class="col-md-12 m-b-md">
+                    <div class="w-lg m-x-auto" style="height: 30rem;">
+                        <canvas ref="chartCreditsOverTime"></canvas>
                     </div>
                 </div>
             </div>
@@ -274,52 +282,38 @@
                         block1Courses: parseInt(dipCategory[1])
                     };
 
-                    const chart = new Chart(this.$refs.chartCreditPrognosis, {
+                    const chart1 = new Chart(this.$refs.chartCredits, {
 
-                        type: 'line',
+                        type: 'bar',
                         data: {
 
-                            labels: [0, 1, 2],
+                            labels: [
+
+                                'Prognosis (' + this.student.second_year_credits_expected + ')',
+                                'Goal (60)',
+                                'Credits this year (' + this.student.second_year_b1_credits + ')'
+                            ],
                             datasets: [{
 
-                                fill: false,
-                                lineTension: 0,
-                                //backgroundColor: "rgba(75,192,192,0.4)",
-                                //borderColor: "rgba(75,192,192,1)",
-                                //borderCapStyle: 'butt',
-                                //borderDash: [],
-                                //borderDashOffset: 0.0,
-                                //borderJoinStyle: 'miter',
-                                pointBorderColor: [
+                                backgroundColor: [
 
-                                    dipCategory.block1Courses === 0 ? primaryColor : 'red',
-                                    dipCategory.block1Courses === 1 ? primaryColor : 'yellow',
-                                    dipCategory.block1Courses > 1 ? primaryColor : 'green'
+                                    'rgba(255, 206, 86, 0.2)', // Yellow
+                                    'rgba(75, 192, 192, 0.2)', // Green
+                                    'rgba(255, 99, 132, 0.2)' // Red
                                 ],
-                                pointBackgroundColor: ['red', 'yellow', 'green'],
-                                //pointBorderWidth: 1,
-                                pointHoverRadius: [
+                                borderColor: [
 
-                                    dipCategory.block1Courses === 0 ? 20 : 5,
-                                    dipCategory.block1Courses === 1 ? 20 : 5,
-                                    dipCategory.block1Courses > 1 ? 20 : 5
+                                    'rgba(255, 206, 86, 1)', // Yellow
+                                    'rgba(75, 192, 192, 1)', // Green
+                                    'rgba(255,99,132,1)' // Red
                                 ],
-                                //pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                                //pointHoverBorderColor: "rgba(220,220,220,1)",
-                                //pointHoverBorderWidth: 1,
-                                pointRadius: [
-
-                                    dipCategory.block1Courses === 0 ? 10 : 2,
-                                    dipCategory.block1Courses === 1 ? 10 : 2,
-                                    dipCategory.block1Courses > 1 ? 10 : 2
-                                ],
+                                borderWidth: 1,
                                 data: [
 
-                                    dipCategory.block1Courses === 0 ? this.student.second_year_credits_expected : creditsExpected0.second_year_credits_expected || 0,
-                                    dipCategory.block1Courses === 1 ? this.student.second_year_credits_expected : creditsExpected1.second_year_credits_expected || 0,
-                                    dipCategory.block1Courses > 1 ? this.student.second_year_credits_expected : creditsExpected2.second_year_credits_expected || 0
-                                ],
-                                //spanGaps: false,
+                                    this.student.second_year_credits_expected,
+                                    60,
+                                    this.student.second_year_b1_credits
+                                ]
                             }]
                         },
                         options: {
@@ -331,14 +325,6 @@
                             maintainAspectRatio: false,
                             scales: {
 
-                                xAxes: [{
-
-                                    scaleLabel: {
-
-                                        display: true,
-                                        labelString: 'Courses passed in 1st block'
-                                    }
-                                }],
                                 yAxes: [{
 
                                     ticks: {
@@ -352,29 +338,218 @@
                             title: {
 
                                 display: true,
-                                text: 'Credit prognosis 2nd year - ' + this.student.bsa_credits + ' credit BSA group'
+                                text: 'Current credits 2nd year'
                             },
                             tooltips: {
 
-                                callbacks: {
-
-                                    title: function(tooltipItem, data) {
-
-                                        const passed = parseInt(tooltipItem[0].xLabel);
-
-                                        if (passed === 0)
-                                            return passed + ' courses passed in block 1';
-                                        else if (passed === 1)
-                                            return passed + ' course passed in block 1';
-                                        else if (passed > 1)
-                                            return 'At least ' + passed + ' courses passed in block 1';
-                                    },
-                                    label: function(tooltipItem, data) { return 'Your prognosis for the 2nd year is ' + tooltipItem.yLabel + ' credits.'; }
-                                },
-                                displayColors: false
+                                enabled: false
                             }
                         }
                     });
+
+                    const chart2 = new Chart(this.$refs.chartCreditsOverTime, {
+
+                        type: 'bar',
+                        data: {
+
+                            labels: [
+
+                                'Block 1',
+                                'Block 2',
+                                'Block 3',
+                                'Block 4',
+                                'Block 5',
+                                'Block 6'
+                            ],
+                            datasets: [
+
+                                {
+                                    type: 'bar',
+                                    data: [
+
+                                        12,
+                                        12 + 12,
+                                        12 + 12 + 6,
+                                        12 + 12 + 6 + 12,
+                                        12 + 12 + 6 + 12 + 12,
+                                        12 + 12 + 6 + 12 + 12 + 6
+                                    ]
+                                },
+                                {
+                                    type: 'line',
+                                    borderColor: [
+
+                                        'rgba(255, 206, 86, 1)' // Yellow
+                                    ],
+                                    fill: false,
+                                    pointRadius: 0,
+                                    data: [
+
+                                        this.student.second_year_credits_expected,
+                                        this.student.second_year_credits_expected,
+                                        this.student.second_year_credits_expected,
+                                        this.student.second_year_credits_expected,
+                                        this.student.second_year_credits_expected,
+                                        this.student.second_year_credits_expected
+                                    ]
+                                },
+                                {
+                                    type: 'line',
+                                    borderColor: [
+
+                                        'rgba(75, 192, 192, 1)' // Green
+                                    ],
+                                    fill: false,
+                                    pointRadius: 0,
+                                    data: [60, 60, 60, 60, 60, 60]
+                                },
+                                {
+                                    type: 'line',
+                                    borderColor: [
+
+                                        'rgba(255,99,132,1)' // Red
+                                    ],
+                                    fill: false,
+                                    pointBackgroundColor: [
+
+                                        'rgba(255, 99, 132, 0.2)' // Red
+                                    ],
+                                    data: [this.student.second_year_b1_credits]
+                                }
+                            ]
+                        },
+                        options: {
+
+                            legend: {
+
+                                display: false
+                            },
+                            maintainAspectRatio: false,
+                            scales: {
+
+                                yAxes: [{
+
+                                    ticks: {
+
+                                        max: 70,
+                                        min: 0,
+                                        stepSize: 10
+                                    }
+                                }]
+                            },
+                            title: {
+
+                                display: true,
+                                text: 'Credits 2nd year over time'
+                            },
+                            tooltips: {
+
+                                enabled: false
+                            }
+                        }
+                    });
+
+//                    const chart3 = new Chart(this.$refs.chartCreditsOld, {
+//
+//                        type: 'line',
+//                        data: {
+//
+//                            labels: [0, 1, 2],
+//                            datasets: [{
+//
+//                                fill: false,
+//                                lineTension: 0,
+//                                //backgroundColor: "rgba(75,192,192,0.4)",
+//                                //borderColor: "rgba(75,192,192,1)",
+//                                //borderCapStyle: 'butt',
+//                                //borderDash: [],
+//                                //borderDashOffset: 0.0,
+//                                //borderJoinStyle: 'miter',
+//                                pointBorderColor: [
+//
+//                                    dipCategory.block1Courses === 0 ? primaryColor : 'red',
+//                                    dipCategory.block1Courses === 1 ? primaryColor : 'yellow',
+//                                    dipCategory.block1Courses > 1 ? primaryColor : 'green'
+//                                ],
+//                                pointBackgroundColor: ['red', 'yellow', 'green'],
+//                                //pointBorderWidth: 1,
+//                                pointHoverRadius: [
+//
+//                                    dipCategory.block1Courses === 0 ? 20 : 5,
+//                                    dipCategory.block1Courses === 1 ? 20 : 5,
+//                                    dipCategory.block1Courses > 1 ? 20 : 5
+//                                ],
+//                                //pointHoverBackgroundColor: "rgba(75,192,192,1)",
+//                                //pointHoverBorderColor: "rgba(220,220,220,1)",
+//                                //pointHoverBorderWidth: 1,
+//                                pointRadius: [
+//
+//                                    dipCategory.block1Courses === 0 ? 10 : 2,
+//                                    dipCategory.block1Courses === 1 ? 10 : 2,
+//                                    dipCategory.block1Courses > 1 ? 10 : 2
+//                                ],
+//                                data: [
+//
+//                                    dipCategory.block1Courses === 0 ? this.student.second_year_credits_expected : creditsExpected0.second_year_credits_expected || 0,
+//                                    dipCategory.block1Courses === 1 ? this.student.second_year_credits_expected : creditsExpected1.second_year_credits_expected || 0,
+//                                    dipCategory.block1Courses > 1 ? this.student.second_year_credits_expected : creditsExpected2.second_year_credits_expected || 0
+//                                ],
+//                                //spanGaps: false,
+//                            }]
+//                        },
+//                        options: {
+//
+//                            legend: {
+//
+//                                display: false
+//                            },
+//                            maintainAspectRatio: false,
+//                            scales: {
+//
+//                                xAxes: [{
+//
+//                                    scaleLabel: {
+//
+//                                        display: true,
+//                                        labelString: 'Courses passed in 1st block'
+//                                    }
+//                                }],
+//                                yAxes: [{
+//
+//                                    ticks: {
+//
+//                                        max: 70,
+//                                        min: 0,
+//                                        stepSize: 10
+//                                    }
+//                                }]
+//                            },
+//                            title: {
+//
+//                                display: true,
+//                                text: 'Credit prognosis 2nd year - ' + this.student.bsa_credits + ' credit BSA group'
+//                            },
+//                            tooltips: {
+//
+//                                callbacks: {
+//
+//                                    title: function(tooltipItem, data) {
+//
+//                                        const passed = parseInt(tooltipItem[0].xLabel);
+//
+//                                        if (passed === 0)
+//                                            return passed + ' courses passed in block 1';
+//                                        else if (passed === 1)
+//                                            return passed + ' course passed in block 1';
+//                                        else if (passed > 1)
+//                                            return 'At least ' + passed + ' courses passed in block 1';
+//                                    },
+//                                    label: function(tooltipItem, data) { return 'Your prognosis for the 2nd year is ' + tooltipItem.yLabel + ' credits.'; }
+//                                },
+//                                displayColors: false
+//                            }
+//                        }
+//                    });
                 });
             }
         },
