@@ -53,13 +53,29 @@
                                 </thead>
                                 <tbody>
 
+                                <tr class="bg-info" v-if="student.graduation_date_expected">
+                                    <td>Expected graduation date</td>
+                                    <td>{{ moment(student.graduation_date_expected).format('YYYY-MM-DD') }}</td>
+                                </tr>
                                 <tr>
                                     <td>BSA</td>
                                     <td>{{ getStudentBsaText(student) }}<i class="fa fa-check m-l-s" v-if="isStudentBsaPositive(student)"></i></td>
                                 </tr>
                                 <tr>
                                     <td>Credits in 1st year</td>
-                                    <td>{{ student.bsa_credits }} credits</td>
+                                    <td>{{ student.bsa_credits }} ECTS</td>
+                                </tr>
+                                <tr>
+                                    <td>Credits in 2nd year</td>
+                                    <td>{{ student.second_year_credits }} ECTS</td>
+                                </tr>
+                                <tr>
+                                    <td>Total credits</td>
+                                    <td>{{ student.credits }} ECTS</td>
+                                </tr>
+                                <tr class="bg-info">
+                                    <td>Prognosis total credits 2nd year</td>
+                                    <td>{{ student.second_year_credits_expected }} ECTS</td>
                                 </tr>
                                 <tr>
                                     <td>Courses passed in block 1, 2nd year</td>
@@ -67,15 +83,27 @@
                                 </tr>
                                 <tr>
                                     <td>Credits in block 1, 2nd year</td>
-                                    <td>{{ student.second_year_b1_credits }} credits</td>
+                                    <td>{{ student.second_year_b1_credits }} ECTS</td>
                                 </tr>
-                                <tr>
-                                    <td>Prognosis total credits 2nd year</td>
-                                    <td>{{ student.second_year_credits_expected }} credits</td>
+                                <tr v-if="student.second_year_b2_credits !== null">
+                                    <td>Credits in block 2, 2nd year</td>
+                                    <td>{{ student.second_year_b2_credits }} ECTS</td>
                                 </tr>
-                                <tr class="bg-info hidden">
-                                    <td>Expected graduation semester</td>
-                                    <td>(Data not yet available)</td>
+                                <tr v-if="student.second_year_b3_credits !== null">
+                                    <td>Credits in block 3, 3nd year</td>
+                                    <td>{{ student.second_year_b3_credits }} ECTS</td>
+                                </tr>
+                                <tr v-if="student.second_year_b4_credits !== null">
+                                    <td>Credits in block 4, 4nd year</td>
+                                    <td>{{ student.second_year_b4_credits }} ECTS</td>
+                                </tr>
+                                <tr v-if="student.second_year_b5_credits !== null">
+                                    <td>Credits in block 5, 5nd year</td>
+                                    <td>{{ student.second_year_b5_credits }} ECTS</td>
+                                </tr>
+                                <tr v-if="student.second_year_b6_credits !== null">
+                                    <td>Credits in block 6, 6nd year</td>
+                                    <td>{{ student.second_year_b6_credits }} ECTS</td>
                                 </tr>
 
                                 </tbody>
@@ -246,9 +274,9 @@
                 switch (student.bsa) {
 
                     case 'MX':
-                        return 'Maximal (60 credits)';
+                        return 'Maximal (60 ECTS)';
                     case 'PS':
-                        return 'Positive (48 or more credits)';
+                        return 'Positive (48 or more ECTS)';
                     case 'NE':
                         return 'Negative';
                     case 'Di':
@@ -268,19 +296,19 @@
 
                 students.getCreditsExpected().then((result) => {
 
-                    const creditsExpected0 = _.find(result.items, (value) => {return value.bsa_credits === this.student.bsa_credits && value.second_year_b1_subjects === 0});
-                    const creditsExpected1 = _.find(result.items, (value) => {return value.bsa_credits === this.student.bsa_credits && value.second_year_b1_subjects === 1});
-                    const creditsExpected2 = _.find(result.items, (value) => {return value.bsa_credits === this.student.bsa_credits && value.second_year_b1_subjects > 1});
-
-                    const primaryColor = '#1CA8DD';
-
-                    let dipCategory = this.student.dip_category.split('~');
-
-                    dipCategory = {
-
-                        bsaCredits: parseInt(dipCategory[0]),
-                        block1Courses: parseInt(dipCategory[1])
-                    };
+//                    const creditsExpected0 = _.find(result.items, (value) => {return value.bsa_credits === this.student.bsa_credits && value.second_year_b1_subjects === 0});
+//                    const creditsExpected1 = _.find(result.items, (value) => {return value.bsa_credits === this.student.bsa_credits && value.second_year_b1_subjects === 1});
+//                    const creditsExpected2 = _.find(result.items, (value) => {return value.bsa_credits === this.student.bsa_credits && value.second_year_b1_subjects > 1});
+//
+//                    const primaryColor = '#1CA8DD';
+//
+//                    let dipCategory = this.student.dip_category.split('~');
+//
+//                    dipCategory = {
+//
+//                        bsaCredits: parseInt(dipCategory[0]),
+//                        block1Courses: parseInt(dipCategory[1])
+//                    };
 
                     const chart1 = new Chart(this.$refs.chartCredits, {
 
@@ -290,8 +318,8 @@
                             labels: [
 
                                 'Prognosis (' + this.student.second_year_credits_expected + ')',
-                                'Goal (60)',
-                                'Credits this year (' + this.student.second_year_b1_credits + ')'
+                                'Goal (' + this.student.second_year_credits_goal + ')',
+                                'Credits this year (' + this.student.second_year_credits + ')'
                             ],
                             datasets: [{
 
@@ -311,8 +339,8 @@
                                 data: [
 
                                     this.student.second_year_credits_expected,
-                                    60,
-                                    this.student.second_year_b1_credits
+                                    this.student.second_year_credits_goal,
+                                    this.student.second_year_credits
                                 ]
                             }]
                         },
@@ -401,7 +429,15 @@
                                     ],
                                     fill: false,
                                     pointRadius: 0,
-                                    data: [60, 60, 60, 60, 60, 60]
+                                    data: [
+
+                                        this.student.second_year_credits_goal,
+                                        this.student.second_year_credits_goal,
+                                        this.student.second_year_credits_goal,
+                                        this.student.second_year_credits_goal,
+                                        this.student.second_year_credits_goal,
+                                        this.student.second_year_credits_goal
+                                    ]
                                 },
                                 {
                                     type: 'line',
@@ -414,7 +450,15 @@
 
                                         'rgba(255, 99, 132, 0.2)' // Red
                                     ],
-                                    data: [this.student.second_year_b1_credits]
+                                    data: [
+
+                                        this.student.second_year_b1_credits,
+                                        (this.student.second_year_b2_credits === null) ? null : this.student.second_year_b1_credits + this.student.second_year_b2_credits,
+                                        (this.student.second_year_b3_credits === null) ? null : this.student.second_year_b1_credits + this.student.second_year_b2_credits + this.student.second_year_b3_credits,
+                                        (this.student.second_year_b4_credits === null) ? null : this.student.second_year_b1_credits + this.student.second_year_b2_credits + this.student.second_year_b3_credits + this.student.second_year_b4_credits,
+                                        (this.student.second_year_b5_credits === null) ? null : this.student.second_year_b1_credits + this.student.second_year_b2_credits + this.student.second_year_b3_credits + this.student.second_year_b4_credits + this.student.second_year_b5_credits,
+                                        (this.student.second_year_b6_credits === null) ? null : this.student.second_year_b1_credits + this.student.second_year_b2_credits + this.student.second_year_b3_credits + this.student.second_year_b4_credits + this.student.second_year_b5_credits + this.student.second_year_b6_credits,
+                                    ]
                                 }
                             ]
                         },
@@ -544,7 +588,7 @@
 //                                        else if (passed > 1)
 //                                            return 'At least ' + passed + ' courses passed in block 1';
 //                                    },
-//                                    label: function(tooltipItem, data) { return 'Your prognosis for the 2nd year is ' + tooltipItem.yLabel + ' credits.'; }
+//                                    label: function(tooltipItem, data) { return 'Your prognosis for the 2nd year is ' + tooltipItem.yLabel + ' ECTS.'; }
 //                                },
 //                                displayColors: false
 //                            }

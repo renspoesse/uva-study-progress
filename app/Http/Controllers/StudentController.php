@@ -27,27 +27,41 @@ class StudentController extends BaseController
         if (!$file->isValid())
             throw new \Exception('The file was not uploaded successfully.');
 
-        $rows = [];
+        $contents = file_get_contents($file);
 
-        if (($handle = fopen($file, 'r')) !== false) {
+        if (!mb_check_encoding($contents, 'UTF-8') || !($contents === mb_convert_encoding(mb_convert_encoding($contents, 'UTF-32', 'UTF-8'), 'UTF-8', 'UTF-32'))) {
 
-            while (($data = fgetcsv($handle, 0, ';')) !== false)
-                array_push($rows, $data);
-
-            fclose($handle);
+            $contents = mb_convert_encoding($contents, 'UTF-8');
         }
-        else
-            throw new \Exception('Unable to open file.');
+
+        $rows = explode(PHP_EOL, $contents);
+        $rows = array_map(function ($line) {
+
+            return str_getcsv($line, ';');
+
+        }, $rows);
+
+        //if (($handle = fopen($file, 'r')) !== false) {
+        //
+        //    while (($data = fgetcsv($handle, 0, ';')) !== false)
+        //        array_push($rows, $data);
+        //
+        //    fclose($handle);
+        //}
+        //else
+        //    throw new \Exception('Unable to open file.');
 
         $headers = array_splice($rows, 0, 1)[0];
         $parsed = [];
 
         foreach ($rows as $row) {
 
+            if (count($row) < 2) continue;
+
             $record = [];
 
             foreach ($headers as $index => $header)
-                $record[utf8_encode($header)] = $row[$index];
+                $record[$header] = $row[$index];
 
             array_push($parsed, $record);
         }
@@ -56,60 +70,69 @@ class StudentController extends BaseController
 
             foreach ($parsed as $record) {
 
-                try {
+                //try {
 
-                    $obj = new Student();
+                $obj = new Student();
 
-                    $obj->student_number = $record['ï»¿nummer'];
-                    $obj->program_code = $record['opl'];
-                    $obj->program_name = $record['omschrijving'];
-                    $obj->cohort = $record['cohort'];
-                    $obj->bsa_credits = $record['BSA-crd'];
-                    $obj->bsa = $record['bsa'];
-                    $obj->second_year = $record['2ndY'];
-                    $obj->second_year_b1_credits = $record['2ndY-B1'];
-                    $obj->second_year_b1_subjects = $record['Nvakken-B1'];
-                    $obj->second_year_credits = $record['2ndY-crd'];
-                    $obj->second_year_credits_expected = $record['2ndY-crd Prognose'];
-                    $obj->dip_category = $record['DipCategory'];
-                    $obj->gpa_current = floatval($record['GPA actueel']);
-                    $obj->first_name = $record['VOORNAAM'];
-                    $obj->last_name = $record['ACHTERNAAM'];
-                    $obj->tussenvoegsel = $record['TUSSENVOEGSEL'];
-                    $obj->initials = $record['INITIALEN'];
-                    $obj->birth_date = \DateTime::createFromFormat('d-m-Y', $record['GEBOORTEDATUM']);
-                    $obj->birth_place = $record['GEBOORTEPLAATS'];
-                    $obj->birth_country = $record['GEBOORTELAND'];
-                    $obj->gender = $record['GESLACHT'] === 'M' ? 1 : ($record['GESLACHT'] === 'F' ? 2 : 9);
-                    $obj->nationality = $record['NATIONALITEIT'];
-                    $obj->email_address = $record['EMAILADRES'];
-                    $obj->vooropleiding = $record['vooropleidng'];
-                    $obj->is_published = false;
+                $obj->student_number = $record['ï»¿nummer'];
+                $obj->program_code = $record['opl'];
+                $obj->program_name = $record['omschrijving'];
+                $obj->cohort = $record['cohort'];
+                $obj->bsa_credits = $record['BSA-crd'];
+                $obj->bsa = $record['bsa'];
+                $obj->second_year = $record['2ndY'];
+                $obj->second_year_b1_credits = $record['2ndY-B1'];
+                $obj->second_year_b2_credits = $record['2ndY-B2'];
+                $obj->second_year_b3_credits = $record['2ndY-B3'];
+                $obj->second_year_b4_credits = $record['2ndY-B4'];
+                $obj->second_year_b5_credits = $record['2ndY-B5'];
+                $obj->second_year_b6_credits = $record['2ndY-B6'];
+                $obj->second_year_b1_subjects = $record['Nvakken-B1'];
+                $obj->second_year_credits = $record['2ndY-crd'];
+                $obj->second_year_credits_expected = $record['2ndY-crd Prognose'];
+                $obj->second_year_credits_goal = $record['My2ndGoal'];
+                $obj->dip_category = $record['DipCategory'];
+                $obj->credits = $record['RunningTotal'];
+                $obj->gpa_current = floatval($record['GPA actueel']);
+                $obj->graduation_date_expected = \DateTime::createFromFormat('d-m-Y', $record['prognose afstudeer datum obv tempo']);
+                $obj->first_name = $record['VOORNAAM'];
+                $obj->last_name = $record['ACHTERNAAM'];
+                $obj->tussenvoegsel = $record['TUSSENVOEGSEL'];
+                $obj->initials = $record['INITIALEN'];
+                $obj->birth_date = \DateTime::createFromFormat('d-m-Y', $record['GEBOORTEDATUM']);
+                $obj->birth_place = $record['GEBOORTEPLAATS'];
+                $obj->birth_country = $record['GEBOORTELAND'];
+                $obj->gender = $record['GESLACHT'] === 'M' ? 1 : ($record['GESLACHT'] === 'F' ? 2 : 9);
+                $obj->nationality = $record['NATIONALITEIT'];
+                $obj->email_address = $record['EMAILADRES'];
+                $obj->vooropleiding = $record['vooropleidng'];
+                $obj->is_published = false;
 
-                    if (!empty($obj->tussenvoegsel)) {
+                if (!empty($obj->tussenvoegsel)) {
 
-                        $obj->display_name = $obj->first_name . ' ' . $obj->tussenvoegsel . ' ' . $obj->last_name;
-                    }
-                    else
-                        $obj->display_name = $obj->first_name . ' ' . $obj->last_name;
-
-                    // Delete any existing data that matches the student.
-
-                    Student::where('student_number', $obj->student_number)->delete();
-
-                    $obj->save();
+                    $obj->display_name = $obj->first_name . ' ' . $obj->tussenvoegsel . ' ' . $obj->last_name;
                 }
-                catch (\Exception $ex) {
+                else
+                    $obj->display_name = $obj->first_name . ' ' . $obj->last_name;
 
-                    continue;
-                }
+                // Delete any existing data that matches the student.
+
+                Student::where('student_number', $obj->student_number)->delete();
+
+                $obj->save();
+                //}
+                //catch (\Exception $ex) {
+
+                //    continue;
+                //}
             }
         });
 
         return response('', 201);
     }
 
-    public function getByAuthenticated(Request $request)
+    public
+    function getByAuthenticated(Request $request)
     {
         if (!RoleHelpers::hasAnyRole($request, [Roles::StudyAdvisor, Roles::Administrator]))
             return response(Student::where('student_number', array_get(LtiHelpers::getUser($request), 'ltiUserId'))->where('is_published', true)->firstOrFail());
@@ -117,7 +140,8 @@ class StudentController extends BaseController
             return response(Student::where('student_number', array_get(LtiHelpers::getUser($request), 'ltiUserId'))->firstOrFail());
     }
 
-    public function getById($id, Request $request)
+    public
+    function getById($id, Request $request)
     {
         if (!RoleHelpers::hasAnyRole($request, [Roles::StudyAdvisor, Roles::Administrator]))
             return response(Student::where('id', $id)->where('is_published', true)->firstOrFail());
@@ -125,7 +149,8 @@ class StudentController extends BaseController
             return response(Student::where('id', $id)->firstOrFail());
     }
 
-    public function getCreditsExpected()
+    public
+    function getCreditsExpected()
     {
         // TODO RENS: cachen.
 
@@ -139,12 +164,14 @@ class StudentController extends BaseController
         return response($result);
     }
 
-    public function deleteById($id)
+    public
+    function deleteById($id)
     {
         Student::where('id', $id)->delete();
     }
 
-    public function deleteByParameters(Request $request)
+    public
+    function deleteByParameters(Request $request)
     {
         $this->validate($request, [
 
@@ -164,7 +191,8 @@ class StudentController extends BaseController
         $query->delete();
     }
 
-    public function index(Request $request)
+    public
+    function index(Request $request)
     {
         $this->validate($request, [
 
@@ -208,7 +236,8 @@ class StudentController extends BaseController
         return $paginator;
     }
 
-    public function updatePartialById($id, Request $request)
+    public
+    function updatePartialById($id, Request $request)
     {
         $this->validate($request, $this->getValidatorPartial($request));
 
@@ -224,7 +253,8 @@ class StudentController extends BaseController
         return response(Student::find($student->id));
     }
 
-    public function updatePartialByParameters(Request $request)
+    public
+    function updatePartialByParameters(Request $request)
     {
         $this->validate($request, [
 
@@ -245,7 +275,7 @@ class StudentController extends BaseController
 
         DB::transaction(function () use ($request, $query) {
 
-            foreach($query->get() as $student) {
+            foreach ($query->get() as $student) {
 
                 if ($request->exists('is_published')) $student->is_published = $request->input('is_published');
 
@@ -256,7 +286,8 @@ class StudentController extends BaseController
         return response($query->get());
     }
 
-    protected function getValidatorComplete(Request $request)
+    protected
+    function getValidatorComplete(Request $request)
     {
         return [
 
@@ -264,7 +295,8 @@ class StudentController extends BaseController
         ];
     }
 
-    protected function getValidatorPartial(Request $request)
+    protected
+    function getValidatorPartial(Request $request)
     {
         return [
 
