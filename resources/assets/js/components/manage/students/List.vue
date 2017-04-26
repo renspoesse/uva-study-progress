@@ -75,9 +75,9 @@
                         <td v-bind:title="item.program_name">{{ _.truncate(item.program_name, {length: 30}) }}</td>
                         <td>{{ item.cohort }}</td>
                         <td>
-                            <i class="fa fa-circle" style="color: red;" v-if="item.second_year_b1_subjects === 0"></i>
-                            <i class="fa fa-circle" style="color: yellow;" v-else-if="item.second_year_b1_subjects === 1"></i>
-                            <i class="fa fa-circle" style="color: green;" v-else-if="item.second_year_b1_subjects > 1"></i>
+                            <i class="fa fa-circle" style="color: green;" v-if="item.second_year_credits_expected >= 54"></i>
+                            <i class="fa fa-circle" style="color: yellow;" v-else-if="item.second_year_credits_expected >= 30"></i>
+                            <i class="fa fa-circle" style="color: red;" v-else></i>
                         </td>
                         <td>
                             <i class="fa fa-check" v-if="item.is_published"></i>

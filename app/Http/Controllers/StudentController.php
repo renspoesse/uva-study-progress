@@ -10,12 +10,14 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Validator;
 use DB;
+use League\Csv\Reader;
 
 class StudentController extends BaseController
 {
     public function createByImport(Request $request)
     {
-        ini_set('auto_detect_line_endings', true);
+        if (!ini_get('auto_detect_line_endings'))
+            ini_set('auto_detect_line_endings', true);
 
         $this->validate($request, [
 
@@ -27,41 +29,63 @@ class StudentController extends BaseController
         if (!$file->isValid())
             throw new \Exception('The file was not uploaded successfully.');
 
-        $contents = file_get_contents($file);
-
-        if (!mb_check_encoding($contents, 'UTF-8') || !($contents === mb_convert_encoding(mb_convert_encoding($contents, 'UTF-32', 'UTF-8'), 'UTF-8', 'UTF-32'))) {
-
-            $contents = mb_convert_encoding($contents, 'UTF-8');
-        }
-
-        $rows = explode(PHP_EOL, $contents);
-        $rows = array_map(function ($line) {
-
-            return str_getcsv($line, ';');
-
-        }, $rows);
-
-        //if (($handle = fopen($file, 'r')) !== false) {
+        //$contents = file_get_contents($file);
         //
-        //    while (($data = fgetcsv($handle, 0, ';')) !== false)
-        //        array_push($rows, $data);
+        //if (!mb_check_encoding($contents, 'UTF-8') || !($contents === mb_convert_encoding(mb_convert_encoding($contents, 'UTF-32', 'UTF-8'), 'UTF-8', 'UTF-32'))) {
         //
-        //    fclose($handle);
+        //    $contents = mb_convert_encoding($contents, 'UTF-8');
         //}
-        //else
-        //    throw new \Exception('Unable to open file.');
+        //
+        //$rows = explode(PHP_EOL, $contents);
+        //$rows = array_map(function ($line) {
+        //
+        //    return str_getcsv($line, ';');
+        //
+        //}, $rows);
+
+        /*
+        $rows = [];
+
+        if (($handle = fopen($file, 'r')) !== false) {
+
+            while (($data = fgetcsv($handle, 0, ';')) !== false)
+                array_push($rows, $data);
+
+            fclose($handle);
+        }
+        else
+            throw new \Exception('Unable to open file.');
 
         $headers = array_splice($rows, 0, 1)[0];
         $parsed = [];
 
         foreach ($rows as $row) {
 
-            if (count($row) < 2) continue;
-
             $record = [];
 
             foreach ($headers as $index => $header)
-                $record[$header] = $row[$index];
+                $record[utf8_encode($header)] = $row[$index];
+
+            array_push($parsed, $record);
+        }
+        */
+
+        $stream = fopen($file, 'r');
+        $csv = Reader::createFromStream($stream)->setDelimiter(';');
+
+        $headers = $csv->fetchOne();
+        $rows = $csv->setOffset(1)->fetchAll();
+
+        $parsed = [];
+
+        foreach ($rows as $row) {
+
+            $record = [];
+
+            // We assume that the file is UTF-8 encoded. If not, some loss will occur here.
+
+            foreach ($headers as $index => $header)
+                $record[$header] = utf8_encode($row[$index]);
 
             array_push($parsed, $record);
         }
@@ -72,28 +96,32 @@ class StudentController extends BaseController
 
                 //try {
 
+                //if (empty($record['ï»¿nummer'])) continue;
+                if (empty($record['nummer'])) continue;
+
                 $obj = new Student();
 
-                $obj->student_number = $record['ï»¿nummer'];
-                $obj->program_code = $record['opl'];
+                //$obj->student_number = $record['ï»¿nummer'];
+                $obj->student_number = $record['nummer'];
+                $obj->program_code = !empty($record['opl']) ? $record['opl'] : null;
                 $obj->program_name = $record['omschrijving'];
-                $obj->cohort = $record['cohort'];
-                $obj->bsa_credits = $record['BSA-crd'];
+                $obj->cohort = !empty($record['cohort']) ? $record['cohort'] : null;
+                $obj->bsa_credits = !empty($record['BSA-crd']) ? $record['BSA-crd'] : null;
                 $obj->bsa = $record['bsa'];
-                $obj->second_year = $record['2ndY'];
-                $obj->second_year_b1_credits = $record['2ndY-B1'];
-                $obj->second_year_b2_credits = $record['2ndY-B2'];
-                $obj->second_year_b3_credits = $record['2ndY-B3'];
-                $obj->second_year_b4_credits = $record['2ndY-B4'];
-                $obj->second_year_b5_credits = $record['2ndY-B5'];
-                $obj->second_year_b6_credits = $record['2ndY-B6'];
-                $obj->second_year_b1_subjects = $record['Nvakken-B1'];
-                $obj->second_year_credits = $record['2ndY-crd'];
-                $obj->second_year_credits_expected = $record['2ndY-crd Prognose'];
-                $obj->second_year_credits_goal = $record['My2ndGoal'];
+                $obj->second_year = !empty($record['2ndY']) ? $record['2ndY'] : null;
+                $obj->second_year_b1_credits = !empty($record['2ndY-B1']) ? $record['2ndY-B1'] : null;
+                $obj->second_year_b2_credits = !empty($record['2ndY-B2']) ? $record['2ndY-B2'] : null;
+                $obj->second_year_b3_credits = !empty($record['2ndY-B3']) ? $record['2ndY-B3'] : null;
+                $obj->second_year_b4_credits = !empty($record['2ndY-B4']) ? $record['2ndY-B4'] : null;
+                $obj->second_year_b5_credits = !empty($record['2ndY-B5']) ? $record['2ndY-B5'] : null;
+                $obj->second_year_b6_credits = !empty($record['2ndY-B6']) ? $record['2ndY-B6'] : null;
+                $obj->second_year_b1_subjects = !empty($record['Nvakken-B1']) ? $record['Nvakken-B1'] : null;
+                $obj->second_year_credits = !empty($record['2ndY-crd']) ? $record['2ndY-crd'] : null;
+                $obj->second_year_credits_expected = !empty($record['2ndY-crd Prognose']) ? $record['2ndY-crd Prognose'] : null;
+                $obj->second_year_credits_goal = !empty($record['My2ndGoal']) ? $record['My2ndGoal'] : null;
                 $obj->dip_category = $record['DipCategory'];
-                $obj->credits = $record['RunningTotal'];
-                $obj->gpa_current = floatval($record['GPA actueel']);
+                $obj->credits = !empty($record['RunningTotal']) ? $record['RunningTotal'] : null;
+                $obj->gpa_current = !empty($record['GPA actueel']) ? floatval($record['GPA actueel']) : null;
                 $obj->graduation_date_expected = \DateTime::createFromFormat('d-m-Y', $record['prognose afstudeer datum obv tempo']);
                 $obj->first_name = $record['VOORNAAM'];
                 $obj->last_name = $record['ACHTERNAAM'];
@@ -122,7 +150,7 @@ class StudentController extends BaseController
                 $obj->save();
                 //}
                 //catch (\Exception $ex) {
-
+                //
                 //    continue;
                 //}
             }
@@ -131,8 +159,7 @@ class StudentController extends BaseController
         return response('', 201);
     }
 
-    public
-    function getByAuthenticated(Request $request)
+    public function getByAuthenticated(Request $request)
     {
         if (!RoleHelpers::hasAnyRole($request, [Roles::StudyAdvisor, Roles::Administrator]))
             return response(Student::where('student_number', array_get(LtiHelpers::getUser($request), 'ltiUserId'))->where('is_published', true)->firstOrFail());
@@ -140,8 +167,7 @@ class StudentController extends BaseController
             return response(Student::where('student_number', array_get(LtiHelpers::getUser($request), 'ltiUserId'))->firstOrFail());
     }
 
-    public
-    function getById($id, Request $request)
+    public function getById($id, Request $request)
     {
         if (!RoleHelpers::hasAnyRole($request, [Roles::StudyAdvisor, Roles::Administrator]))
             return response(Student::where('id', $id)->where('is_published', true)->firstOrFail());
@@ -149,8 +175,7 @@ class StudentController extends BaseController
             return response(Student::where('id', $id)->firstOrFail());
     }
 
-    public
-    function getCreditsExpected()
+    public function getCreditsExpected()
     {
         // TODO RENS: cachen.
 
@@ -164,14 +189,12 @@ class StudentController extends BaseController
         return response($result);
     }
 
-    public
-    function deleteById($id)
+    public function deleteById($id)
     {
         Student::where('id', $id)->delete();
     }
 
-    public
-    function deleteByParameters(Request $request)
+    public function deleteByParameters(Request $request)
     {
         $this->validate($request, [
 
@@ -191,8 +214,7 @@ class StudentController extends BaseController
         $query->delete();
     }
 
-    public
-    function index(Request $request)
+    public function index(Request $request)
     {
         $this->validate($request, [
 
@@ -236,8 +258,7 @@ class StudentController extends BaseController
         return $paginator;
     }
 
-    public
-    function updatePartialById($id, Request $request)
+    public function updatePartialById($id, Request $request)
     {
         $this->validate($request, $this->getValidatorPartial($request));
 
@@ -253,8 +274,7 @@ class StudentController extends BaseController
         return response(Student::find($student->id));
     }
 
-    public
-    function updatePartialByParameters(Request $request)
+    public function updatePartialByParameters(Request $request)
     {
         $this->validate($request, [
 
@@ -286,8 +306,7 @@ class StudentController extends BaseController
         return response($query->get());
     }
 
-    protected
-    function getValidatorComplete(Request $request)
+    protected function getValidatorComplete(Request $request)
     {
         return [
 
@@ -295,8 +314,7 @@ class StudentController extends BaseController
         ];
     }
 
-    protected
-    function getValidatorPartial(Request $request)
+    protected function getValidatorPartial(Request $request)
     {
         return [
 
