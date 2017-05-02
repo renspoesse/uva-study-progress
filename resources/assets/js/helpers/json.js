@@ -23,31 +23,84 @@ const getFormData = function(payload, file) {
     return formData;
 };
 
-const removeDataWrappers = function(obj) {
+const removeDataWrappers = function(obj, metaContainer, metaPath) {
+
+    let data, meta;
+
+    // Only if we're dealing with an object or array, we can check for data wrappers and metadata.
+    // NOTE: arrays are also considered objects!
 
     if (_.isObject(obj) || _.isArray(obj)) {
 
-        const length = _.isArray(obj) ? obj.length : (_.keys(obj)).length;
+        // First, try removing the data wrapper and pulling any metadata. We need to make sure that we're dealing with an actual data wrapper and not a field that is just named 'data'!
 
-        if (obj['data']) {
+        if (!_.isArray(obj)) {
 
-            if (length === 1) {
+            const keys = _.keys(obj);
 
-                obj = obj['data'];
+            if ((keys.length === 1 && obj.data) || (keys.length === 2 && obj.data && obj.meta))
+                data = obj.data;
+        }
+
+        meta = obj.meta;
+
+        // If there was no data wrapper, consider the whole object as data - but without any metadata.
+
+        if (!data)
+            data = !_.isArray(obj) ? _.omit(obj, ['meta']) : obj;
+
+        // Handle any metadata.
+
+        if (meta) {
+
+            // If the data is an array, we first try zipping any matching metadata into the array values.
+
+            if (_.isArray(data)) {
+
+                const unmatched = zipMetaData(data, meta);
+
+                // There might be unmatched metadata left. This can be the case when the data contains less values than the metadata, or when other non-matching metadata is available.
+
+                if (metaContainer) {
+
+                    if (metaPath) {
+
+                        _.set(metaContainer, metaPath, _.extend(_.get(metaContainer, metaPath), unmatched));
+                    }
+                    else
+                        _.extend(metaContainer, unmatched);
+                }
             }
-            else if (length === 2 && obj['meta']) {
+            else {
 
-                obj = zipMetaData(obj['data'], obj['meta']); // Zip any meta properties into the data values, if applicable.
+                // If the data is an object instead, we add any metadata to it's meta field.
+                // This may include previously zipped metadata and special object metadata, which the API includes in the 'object' field.
+
+                data.meta = _.extend({}, meta, meta.object);
             }
         }
 
-        _.forEach(obj, (value, key) => {
+        // Do the above process recursively for all data keys.
 
-            obj[key] = removeDataWrappers(obj[key]);
-        });
+        if (_.isArray(data)) {
+
+            _.forEach(data, (value, key) => {
+
+                data[key] = removeDataWrappers(data[key]);
+            });
+        }
+        else if (_.isObject(data)) {
+
+            _.forEach(data, (value, key) => {
+
+                data[key] = removeDataWrappers(data[key], data, 'meta.' + key);
+            });
+        }
     }
+    else
+        data = obj;
 
-    return obj;
+    return data;
 };
 
 const removeEmptyObjects = function(obj) {
@@ -70,30 +123,43 @@ const removeEmptyObjects = function(obj) {
     return obj;
 };
 
-const zipMetaData = function(data, metaArray) {
+const zipMetaData = function(data, meta) {
 
-    if (_.isArray(data)) {
+    const unmatched = {};
 
-        _.forEach(metaArray, (meta) => {
+    _.forEach(meta, (metaValue, metaKey) => {
 
-            _.forEach(meta, (value) => {
+        // Check if the specific metadata is zippable.
+
+        if (_.isArray(metaValue)) {
+
+            _.forEach(metaValue, (value) => {
+
+                let matched = false;
 
                 if (value.id) {
 
                     const match = _.find(data, {id: value.id});
 
-                    if (match)
+                    if (match) {
+
                         match.meta = _.extend(match.meta, value);
+                        matched = true;
+                    }
+                }
+
+                if (!matched) {
+
+                    unmatched[metaKey] = unmatched[metaKey] || [];
+                    unmatched[metaKey].push(value);
                 }
             });
-        });
-    }
-    else {
+        }
+        else
+            unmatched[metaKey] = metaValue;
+    });
 
-        data.meta = metaArray.object;
-    }
-
-    return data;
+    return unmatched;
 };
 
 export {
