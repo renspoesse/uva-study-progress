@@ -54,7 +54,7 @@ class AdviceController extends BaseController
         $this->validate($request, [
 
             'order'         => 'string|nullable',
-            'publishedOnly' => 'nullable',
+            'publishedOnly' => 'boolean|nullable',
             'query'         => 'string|nullable'
         ]);
 
