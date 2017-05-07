@@ -366,7 +366,7 @@
                             title: {
 
                                 display: true,
-                                text: 'Current credits 2nd year'
+                                text: 'Your current 2nd year credits'
                             },
                             tooltips: {
 
@@ -484,7 +484,7 @@
                             title: {
 
                                 display: true,
-                                text: 'Credits 2nd year over time'
+                                text: 'Your 2nd year credits over time'
                             },
                             tooltips: {
 

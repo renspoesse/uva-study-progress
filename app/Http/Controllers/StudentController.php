@@ -219,7 +219,7 @@ class StudentController extends BaseController
         $this->validate($request, [
 
             'order'         => 'string|nullable',
-            'publishedOnly' => 'boolean|nullable',
+            'publishedOnly' => 'nullable',
             'query'         => 'string|nullable'
         ]);
 
