@@ -53,10 +53,6 @@
                                 </thead>
                                 <tbody>
 
-                                <tr class="bg-info" v-if="student.graduation_date_expected">
-                                    <td>Expected graduation date</td>
-                                    <td>{{ moment(student.graduation_date_expected).format('YYYY-MM-DD') }}</td>
-                                </tr>
                                 <tr>
                                     <td>BSA</td>
                                     <td>{{ getStudentBsaText(student) }}<i class="fa fa-check m-l-s" v-if="isStudentBsaPositive(student)"></i></td>
@@ -73,15 +69,32 @@
                                     <td>Total credits</td>
                                     <td>{{ student.credits }} ECTS</td>
                                 </tr>
-                                <tr class="bg-info">
-                                    <td>Prognosis total credits 2nd year</td>
-                                    <td>{{ student.second_year_credits_expected }} ECTS</td>
+                                <tr class="bg-info" v-if="student.graduation_date_expected">
+                                    <td>Expected graduation date</td>
+                                    <td>{{ moment(student.graduation_date_expected).format('YYYY-MM-DD') }}</td>
                                 </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="table-full">
+                        <div class="table-responsive">
+                            <table class="table" data-sort="table">
+                                <thead>
                                 <tr>
+                                    <th class="header">Indicator</th>
+                                    <th class="header">Value</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr v-if="student.second_year_b1_subjects !== null">
                                     <td>Courses passed in block 1, 2nd year</td>
                                     <td>{{ student.second_year_b1_subjects }} course(s)</td>
                                 </tr>
-                                <tr>
+                                <tr v-if="student.second_year_b1_credits !== null">
                                     <td>Credits in block 1, 2nd year</td>
                                     <td>{{ student.second_year_b1_credits }} ECTS</td>
                                 </tr>
@@ -90,20 +103,24 @@
                                     <td>{{ student.second_year_b2_credits }} ECTS</td>
                                 </tr>
                                 <tr v-if="student.second_year_b3_credits !== null">
-                                    <td>Credits in block 3, 3nd year</td>
+                                    <td>Credits in block 3, 2nd year</td>
                                     <td>{{ student.second_year_b3_credits }} ECTS</td>
                                 </tr>
                                 <tr v-if="student.second_year_b4_credits !== null">
-                                    <td>Credits in block 4, 4nd year</td>
+                                    <td>Credits in block 4, 2nd year</td>
                                     <td>{{ student.second_year_b4_credits }} ECTS</td>
                                 </tr>
                                 <tr v-if="student.second_year_b5_credits !== null">
-                                    <td>Credits in block 5, 5nd year</td>
+                                    <td>Credits in block 5, 2nd year</td>
                                     <td>{{ student.second_year_b5_credits }} ECTS</td>
                                 </tr>
                                 <tr v-if="student.second_year_b6_credits !== null">
-                                    <td>Credits in block 6, 6nd year</td>
+                                    <td>Credits in block 6, 2nd year</td>
                                     <td>{{ student.second_year_b6_credits }} ECTS</td>
+                                </tr>
+                                <tr class="bg-info">
+                                    <td>Prognosis total credits 2nd year</td>
+                                    <td>{{ student.second_year_credits_expected }} ECTS</td>
                                 </tr>
 
                                 </tbody>
@@ -317,30 +334,30 @@
 
                             labels: [
 
-                                'Prognosis (' + this.student.second_year_credits_expected + ')',
+                                'Credits this year (' + this.student.second_year_credits + ')',
                                 'Goal (' + this.student.second_year_credits_goal + ')',
-                                'Credits this year (' + this.student.second_year_credits + ')'
+                                'Prognosis (' + this.student.second_year_credits_expected + ')'
                             ],
                             datasets: [{
 
                                 backgroundColor: [
 
-                                    'rgba(255, 206, 86, 0.2)', // Yellow
+                                    'rgba(255, 99, 132, 0.2)', // Red
                                     'rgba(75, 192, 192, 0.2)', // Green
-                                    'rgba(255, 99, 132, 0.2)' // Red
+                                    'rgba(255, 206, 86, 0.2)' // Yellow
                                 ],
                                 borderColor: [
 
-                                    'rgba(255, 206, 86, 1)', // Yellow
-                                    'rgba(75, 192, 192, 1)', // Green
-                                    'rgba(255,99,132,1)' // Red
+                                    'rgba(255,99,132,1)', // Red
+                                    'rgba(75, 192, 192, 1)', // Green'
+                                    'rgba(255, 206, 86, 1)' // Yellow
                                 ],
                                 borderWidth: 1,
                                 data: [
 
-                                    this.student.second_year_credits_expected,
+                                    this.student.second_year_credits,
                                     this.student.second_year_credits_goal,
-                                    this.student.second_year_credits
+                                    this.student.second_year_credits_expected
                                 ]
                             }]
                         },
