@@ -335,29 +335,29 @@
                             labels: [
 
                                 'Credits this year (' + this.student.second_year_credits + ')',
+                                'Prognosis (' + this.student.second_year_credits_expected + ')',
                                 'Goal (' + this.student.second_year_credits_goal + ')',
-                                'Prognosis (' + this.student.second_year_credits_expected + ')'
                             ],
                             datasets: [{
 
                                 backgroundColor: [
 
                                     'rgba(255, 99, 132, 0.2)', // Red
+                                    'rgba(255, 206, 86, 0.2)', // Yellow
                                     'rgba(75, 192, 192, 0.2)', // Green
-                                    'rgba(255, 206, 86, 0.2)' // Yellow
                                 ],
                                 borderColor: [
 
                                     'rgba(255,99,132,1)', // Red
+                                    'rgba(255, 206, 86, 1)', // Yellow
                                     'rgba(75, 192, 192, 1)', // Green'
-                                    'rgba(255, 206, 86, 1)' // Yellow
                                 ],
                                 borderWidth: 1,
                                 data: [
 
                                     this.student.second_year_credits,
+                                    this.student.second_year_credits_expected,
                                     this.student.second_year_credits_goal,
-                                    this.student.second_year_credits_expected
                                 ]
                             }]
                         },
@@ -383,7 +383,7 @@
                             title: {
 
                                 display: true,
-                                text: 'Your current 2nd year credits'
+                                text: 'Your 2nd year'
                             },
                             tooltips: {
 
@@ -410,6 +410,7 @@
 
                                 {
                                     type: 'bar',
+                                    label: 'Standard number of credits',
                                     data: [
 
                                         12,
@@ -427,6 +428,7 @@
                                         'rgba(255, 206, 86, 1)' // Yellow
                                     ],
                                     fill: false,
+                                    label: 'Prognosis',
                                     pointRadius: 0,
                                     data: [
 
@@ -445,6 +447,7 @@
                                         'rgba(75, 192, 192, 1)' // Green
                                     ],
                                     fill: false,
+                                    label: 'Goal',
                                     pointRadius: 0,
                                     data: [
 
@@ -463,10 +466,13 @@
                                         'rgba(255,99,132,1)' // Red
                                     ],
                                     fill: false,
+                                    label: 'Credits this year',
+                                    lineTension: 0,
                                     pointBackgroundColor: [
 
                                         'rgba(255, 99, 132, 0.2)' // Red
                                     ],
+                                    spanGaps: true,
                                     data: [
 
                                         this.student.second_year_b1_credits,
@@ -483,7 +489,8 @@
 
                             legend: {
 
-                                display: false
+                                display: true,
+                                position: 'top'
                             },
                             maintainAspectRatio: false,
                             scales: {
@@ -501,7 +508,7 @@
                             title: {
 
                                 display: true,
-                                text: 'Your 2nd year credits over time'
+                                text: 'Your 2nd year over time'
                             },
                             tooltips: {
 
