@@ -151,6 +151,11 @@
             handleViewAsYourself: function() {
 
                 this.$store.commit('auth/UNSET_VIEW_AS');
+
+                this.$router.replace({
+
+                    query: _.omit(this.$route.query, ['viewAs'])
+                });
             },
             hasAnyRole: roles.hasAnyRole
         }

@@ -87,7 +87,37 @@ const router = new VueRouter({
     }
 });
 
+router.afterEach((to, from) => {
+
+    const viewAs = store.state.auth.viewAs;
+
+    if (viewAs && !_.has(to, 'query.viewAs')) {
+
+        router.replace({
+
+            query: _.extend({
+
+                viewAs: viewAs.id
+
+            }, to.query)
+        });
+    }
+});
+
 router.beforeEach((to, from, next) => {
+
+    const viewAs = store.state.auth.viewAs;
+    const viewAsId = _.get(to, 'query.viewAs');
+
+    if (viewAsId && !viewAs) {
+
+        store.commit('auth/SET_VIEW_AS', {
+
+            fullname: viewAsId,
+            id: viewAsId,
+            roles: [Roles.Student]
+        });
+    }
 
     if (to.matched.some(record => record.meta.requiresAuth)) {
 

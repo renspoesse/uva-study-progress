@@ -91,14 +91,14 @@ export default {
 
             this.$router.replace({
 
-                query: _.omitBy({
+                query: _.extend(_.clone(this.$route.query), _.omitBy({
 
                     limit: this.limit,
                     order: this.order.field ? this.order.field + '|' + this.order.direction : '',
                     page: page > 1 ? page : '',
                     query: this.query.trim()
 
-                }, (value) => {return !value})
+                }, (value) => {return !value}))
             });
         }
     }
