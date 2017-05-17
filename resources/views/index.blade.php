@@ -7,7 +7,7 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>UvA StudyProgress</title>
+    <title>StudyProgress - University of Amsterdam</title>
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
 
