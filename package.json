@@ -23,6 +23,7 @@
     "install": "^0.8.4",
     "laravel-elixir": "^6.0.0-15",
     "laravel-elixir-vue-2": "^0.3.0",
-    "laravel-elixir-webpack-official": "^1.0.10"
+    "laravel-elixir-webpack-official": "^1.0.10",
+    "vue-template-compiler": "^2.3.4"
   }
 }
