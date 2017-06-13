@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Enums\Roles;
 use App\Helpers\LtiHelpers;
-use App\Helpers\RoleHelpers;
 use App\Helpers\PaginationHelpers;
+use App\Helpers\RoleHelpers;
 use App\Models\Student;
 use Illuminate\Http\Request;
-use Validator;
-use DB;
+use Illuminate\Support\Facades\DB;
 use League\Csv\Reader;
 
 class StudentController extends BaseController
@@ -71,10 +70,10 @@ class StudentController extends BaseController
         */
 
         $stream = fopen($file, 'r');
-        $csv = Reader::createFromStream($stream)->setDelimiter(';');
+        $csv    = Reader::createFromStream($stream)->setDelimiter(';');
 
         $headers = $csv->fetchOne();
-        $rows = $csv->setOffset(1)->fetchAll();
+        $rows    = $csv->setOffset(1)->fetchAll();
 
         $parsed = [];
 
@@ -102,39 +101,39 @@ class StudentController extends BaseController
                 $obj = new Student();
 
                 //$obj->student_number = $record['ï»¿nummer'];
-                $obj->student_number = $record['nummer'];
-                $obj->program_code = !empty($record['opl']) ? $record['opl'] : null;
-                $obj->program_name = $record['omschrijving'];
-                $obj->cohort = !empty($record['cohort']) ? $record['cohort'] : null;
-                $obj->bsa_credits = !empty($record['BSA-crd']) ? $record['BSA-crd'] : null;
-                $obj->bsa = $record['bsa'];
-                $obj->second_year = !empty($record['2ndY']) ? $record['2ndY'] : null;
-                $obj->second_year_b1_credits = !empty($record['2ndY-B1']) ? $record['2ndY-B1'] : null;
-                $obj->second_year_b2_credits = !empty($record['2ndY-B2']) ? $record['2ndY-B2'] : null;
-                $obj->second_year_b3_credits = !empty($record['2ndY-B3']) ? $record['2ndY-B3'] : null;
-                $obj->second_year_b4_credits = !empty($record['2ndY-B4']) ? $record['2ndY-B4'] : null;
-                $obj->second_year_b5_credits = !empty($record['2ndY-B5']) ? $record['2ndY-B5'] : null;
-                $obj->second_year_b6_credits = !empty($record['2ndY-B6']) ? $record['2ndY-B6'] : null;
-                $obj->second_year_b1_subjects = !empty($record['Nvakken-B1']) ? $record['Nvakken-B1'] : null;
-                $obj->second_year_credits = !empty($record['2ndY-crd']) ? $record['2ndY-crd'] : null;
+                $obj->student_number               = $record['nummer'];
+                $obj->program_code                 = !empty($record['opl']) ? $record['opl'] : null;
+                $obj->program_name                 = $record['omschrijving'];
+                $obj->cohort                       = !empty($record['cohort']) ? $record['cohort'] : null;
+                $obj->bsa_credits                  = !empty($record['BSA-crd']) ? $record['BSA-crd'] : null;
+                $obj->bsa                          = $record['bsa'];
+                $obj->second_year                  = !empty($record['2ndY']) ? $record['2ndY'] : null;
+                $obj->second_year_b1_credits       = !empty($record['2ndY-B1']) ? $record['2ndY-B1'] : null;
+                $obj->second_year_b2_credits       = !empty($record['2ndY-B2']) ? $record['2ndY-B2'] : null;
+                $obj->second_year_b3_credits       = !empty($record['2ndY-B3']) ? $record['2ndY-B3'] : null;
+                $obj->second_year_b4_credits       = !empty($record['2ndY-B4']) ? $record['2ndY-B4'] : null;
+                $obj->second_year_b5_credits       = !empty($record['2ndY-B5']) ? $record['2ndY-B5'] : null;
+                $obj->second_year_b6_credits       = !empty($record['2ndY-B6']) ? $record['2ndY-B6'] : null;
+                $obj->second_year_b1_subjects      = !empty($record['Nvakken-B1']) ? $record['Nvakken-B1'] : null;
+                $obj->second_year_credits          = !empty($record['2ndY-crd']) ? $record['2ndY-crd'] : null;
                 $obj->second_year_credits_expected = !empty($record['2ndY-crd Prognose']) ? $record['2ndY-crd Prognose'] : null;
-                $obj->second_year_credits_goal = !empty($record['My2ndGoal']) ? $record['My2ndGoal'] : null;
-                $obj->dip_category = $record['DipCategory'];
-                $obj->credits = !empty($record['RunningTotal']) ? $record['RunningTotal'] : null;
-                $obj->gpa_current = !empty($record['GPA actueel']) ? floatval($record['GPA actueel']) : null;
-                $obj->graduation_date_expected = \DateTime::createFromFormat('d-m-Y', $record['prognose afstudeer datum obv tempo']);
-                $obj->first_name = $record['VOORNAAM'];
-                $obj->last_name = $record['ACHTERNAAM'];
-                $obj->tussenvoegsel = $record['TUSSENVOEGSEL'];
-                $obj->initials = $record['INITIALEN'];
-                $obj->birth_date = \DateTime::createFromFormat('d-m-Y', $record['GEBOORTEDATUM']);
-                $obj->birth_place = $record['GEBOORTEPLAATS'];
-                $obj->birth_country = $record['GEBOORTELAND'];
-                $obj->gender = $record['GESLACHT'] === 'M' ? 1 : ($record['GESLACHT'] === 'F' ? 2 : 9);
-                $obj->nationality = $record['NATIONALITEIT'];
-                $obj->email_address = $record['EMAILADRES'];
-                $obj->vooropleiding = $record['vooropleidng'];
-                $obj->is_published = false;
+                $obj->second_year_credits_goal     = !empty($record['My2ndGoal']) ? $record['My2ndGoal'] : null;
+                $obj->dip_category                 = $record['DipCategory'];
+                $obj->credits                      = !empty($record['RunningTotal']) ? $record['RunningTotal'] : null;
+                $obj->gpa_current                  = !empty($record['GPA actueel']) ? floatval($record['GPA actueel']) : null;
+                $obj->graduation_date_expected     = \DateTime::createFromFormat('d-m-Y', $record['prognose afstudeer datum obv tempo']);
+                $obj->first_name                   = $record['VOORNAAM'];
+                $obj->last_name                    = $record['ACHTERNAAM'];
+                $obj->tussenvoegsel                = $record['TUSSENVOEGSEL'];
+                $obj->initials                     = $record['INITIALEN'];
+                $obj->birth_date                   = \DateTime::createFromFormat('d-m-Y', $record['GEBOORTEDATUM']);
+                $obj->birth_place                  = $record['GEBOORTEPLAATS'];
+                $obj->birth_country                = $record['GEBOORTELAND'];
+                $obj->gender                       = $record['GESLACHT'] === 'M' ? 1 : ($record['GESLACHT'] === 'F' ? 2 : 9);
+                $obj->nationality                  = $record['NATIONALITEIT'];
+                $obj->email_address                = $record['EMAILADRES'];
+                $obj->vooropleiding                = $record['vooropleidng'];
+                $obj->is_published                 = false;
 
                 if (!empty($obj->tussenvoegsel)) {
 
@@ -236,7 +235,7 @@ class StudentController extends BaseController
             $query = $query->orWhere('cohort', 'LIKE', '%' . $request->input('query') . '%');
         }
 
-        $orderBy = 'updated_at';
+        $orderBy        = 'updated_at';
         $orderDirection = 'desc';
 
         if ($request->has('order')) {
@@ -245,7 +244,7 @@ class StudentController extends BaseController
 
             if (!empty($field)) {
 
-                $orderBy = $field;
+                $orderBy        = $field;
                 $orderDirection = !empty($direction) ? $direction : 'asc';
             }
         }

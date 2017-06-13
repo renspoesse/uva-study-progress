@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Roles;
-use App\Helpers\RoleHelpers;
 use App\Helpers\PaginationHelpers;
+use App\Helpers\RoleHelpers;
 use App\Models\Advice;
 use Illuminate\Http\Request;
-use Validator;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class AdviceController extends BaseController
 {
@@ -22,8 +21,8 @@ class AdviceController extends BaseController
 
             $advice = new Advice();
 
-            $advice->title = $request->input('title');
-            $advice->text = $request->input('text');
+            $advice->title        = $request->input('title');
+            $advice->text         = $request->input('text');
             $advice->is_published = $request->input('is_published');
 
             $advice->save();
@@ -69,7 +68,7 @@ class AdviceController extends BaseController
             $query = $query->orWhere('text', 'LIKE', '%' . $request->input('query') . '%');
         }
 
-        $orderBy = 'updated_at';
+        $orderBy        = 'updated_at';
         $orderDirection = 'desc';
 
         if ($request->has('order')) {
@@ -78,7 +77,7 @@ class AdviceController extends BaseController
 
             if (!empty($field)) {
 
-                $orderBy = $field;
+                $orderBy        = $field;
                 $orderDirection = !empty($direction) ? $direction : 'asc';
             }
         }

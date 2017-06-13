@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Roles;
-use App\Helpers\RoleHelpers;
 use App\Helpers\PaginationHelpers;
+use App\Helpers\RoleHelpers;
 use App\Models\News;
 use Illuminate\Http\Request;
-use Validator;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class NewsController extends BaseController
 {
@@ -22,8 +21,8 @@ class NewsController extends BaseController
 
             $news = new News();
 
-            $news->title = $request->input('title');
-            $news->text = $request->input('text');
+            $news->title        = $request->input('title');
+            $news->text         = $request->input('text');
             $news->is_published = $request->input('is_published');
 
             $news->save();
@@ -69,7 +68,7 @@ class NewsController extends BaseController
             $query = $query->orWhere('text', 'LIKE', '%' . $request->input('query') . '%');
         }
 
-        $orderBy = 'updated_at';
+        $orderBy        = 'updated_at';
         $orderDirection = 'desc';
 
         if ($request->has('order')) {
@@ -78,7 +77,7 @@ class NewsController extends BaseController
 
             if (!empty($field)) {
 
-                $orderBy = $field;
+                $orderBy        = $field;
                 $orderDirection = !empty($direction) ? $direction : 'asc';
             }
         }

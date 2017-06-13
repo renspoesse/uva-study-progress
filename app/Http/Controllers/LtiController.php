@@ -2,17 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use DB;
-use Illuminate\Http\Request;
-use IMSGlobal\LTI\OAuth\OAuthConsumer;
-use IMSGlobal\LTI\OAuth\OAuthRequest;
-use IMSGlobal\LTI\OAuth\OAuthSignatureMethod_HMAC_SHA1;
-use IMSGlobal\LTI\OAuth\OAuthToken;
-use IMSGlobal\LTI\ToolProvider\DataConnector;
-use IMSGlobal\LTI\ToolProvider;
 use App\LTI\StudyProgressToolProvider;
-use Carbon\Carbon;
-use GuzzleHttp\Client;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use IMSGlobal\LTI\ToolProvider\DataConnector;
 
 class LtiController extends BaseController
 {

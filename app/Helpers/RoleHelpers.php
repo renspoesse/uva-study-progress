@@ -3,7 +3,6 @@
 namespace App\Helpers;
 
 use Illuminate\Http\Request;
-use DB;
 
 class RoleHelpers
 {

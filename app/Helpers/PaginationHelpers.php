@@ -17,15 +17,15 @@ class PaginationHelpers
     public static function getCursorInput(Request $request, &$before, &$after, &$limit)
     {
         $before = $request->input('before');
-        $after = $request->input('after');
-        $limit = PaginationHelpers::getLimit($request);
+        $after  = $request->input('after');
+        $limit  = PaginationHelpers::getLimit($request);
     }
 
     public static function getCursorInputInteger(Request $request, &$before, &$after, &$limit)
     {
         $before = $request->has('before') ? (int)$request->input('before') : null;
-        $after = $request->has('after') ? (int)$request->input('after') : null;
-        $limit = PaginationHelpers::getLimit($request);
+        $after  = $request->has('after') ? (int)$request->input('after') : null;
+        $limit  = PaginationHelpers::getLimit($request);
     }
 
     public static function getOtherQueryParameters(Request $request)

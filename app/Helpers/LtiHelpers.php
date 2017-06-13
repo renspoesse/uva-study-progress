@@ -2,11 +2,7 @@
 
 namespace App\Helpers;
 
-use App\Enums\Roles;
 use Illuminate\Http\Request;
-use IMSGlobal\LTI\ToolProvider\DataConnector;
-use IMSGlobal\LTI\ToolProvider\User;
-use DB;
 
 class LtiHelpers
 {
@@ -32,7 +28,7 @@ class LtiHelpers
         */
 
         $user = $request->session()->get('user');
-        
+
         //array_push($user['roles'], Roles::Administrator);
         //array_push($user['roles'], Roles::StudyAdvisor);
         //array_push($user['roles'], Roles::Student);
