@@ -6,6 +6,7 @@ use App\LTI\StudyProgressToolProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use IMSGlobal\LTI\ToolProvider\DataConnector;
+use IMSGlobal\LTI\ToolProvider;
 
 class LtiController extends BaseController
 {
@@ -13,15 +14,13 @@ class LtiController extends BaseController
     {
         $connector = $this->getConnector();
 
-        /*
-        $consumer = new ToolProvider\ToolConsumer('testing.edu', $connector);
-
-        $consumer->name = 'Testing';
-        $consumer->secret = 'ThisIsASecret!';
-        $consumer->enabled = true;
-
-        $consumer->save();
-        */
+        // $consumer = new ToolProvider\ToolConsumer('2ndYD.blackboard', $connector);
+        //
+        // $consumer->name = '2ndYD Blackboard';
+        // $consumer->secret = 'IjbLSnp-p5E|VY6H!';
+        // $consumer->enabled = true;
+        //
+        // $consumer->save();
 
         $tool = new StudyProgressToolProvider($connector);
         $tool->handleRequest();
