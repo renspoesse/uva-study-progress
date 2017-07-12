@@ -32,6 +32,10 @@ const getters = {
 
         return !!state.user;
     },
+    permissions: (state) => {
+
+        return [];
+    },
     roles: (state) => {
 
         if (state.viewAs) {

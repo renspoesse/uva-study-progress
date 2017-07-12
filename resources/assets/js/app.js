@@ -1,6 +1,10 @@
+import Vue from 'vue'
+
 import App from './components/App'
 import router from './router'
 import store from './store'
+
+const debug = true;
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -24,7 +28,6 @@ Vue.component('pagination', require('./components/_controls/Pagination.vue'));
 
 Vue.component('sidebar-nav', require('./components/SidebarNav.vue'));
 
-
 // Create a global event bus.
 
 const eventBus = new Vue();
@@ -33,8 +36,6 @@ const eventBus = new Vue();
 // so the app is created whether there's a session or not.
 
 let app;
-
-
 
 store.dispatch('auth/getSession').then(() => {
 
@@ -52,5 +53,6 @@ store.dispatch('auth/getSession').then(() => {
 export {
 
     app,
+    debug,
     eventBus
 }

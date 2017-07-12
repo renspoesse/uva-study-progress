@@ -13,8 +13,10 @@ const path = require('path');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
+    .js('resources/assets/js/vendor.js', 'public/js/vendor-load.js')
     .extract([
 
+        'bootstrap-sass',
         'chart.js',
         'corejs-typeahead',
         'jquery',

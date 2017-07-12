@@ -11,8 +11,8 @@
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
 
-    <link rel="stylesheet" href="{{ asset(mix('/js/toolkit.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('/js/app.css')) }}">
+    <link rel="stylesheet" href="{{ asset(mix('/css/toolkit.css')) }}">
+    <link rel="stylesheet" href="{{ asset(mix('/css/app.css')) }}">
 
     <link rel="stylesheet" href="//cdn.jsdelivr.net/medium-editor/latest/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/medium-editor/latest/css/themes/bootstrap.min.css" type="text/css" media="screen" charset="utf-8">
@@ -23,8 +23,7 @@
 
 <script type="text/javascript" src="{{ asset(mix('/js/manifest.js')) }}"></script>
 <script type="text/javascript" src="{{ asset(mix('/js/vendor.js')) }}"></script>
-
-<script type="text/javascript" src="/js/libs/bootstrap.min.js"></script>
+<script type="text/javascript" src="{{ asset(mix('/js/vendor-load.js')) }}"></script>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.1.1/Chart.min.js"></script>
 
