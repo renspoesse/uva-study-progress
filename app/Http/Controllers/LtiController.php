@@ -12,6 +12,8 @@ class LtiController extends BaseController
 {
     public function index(Request $request)
     {
+        //dd($request->all());
+
         $connector = $this->getConnector();
 
         // $consumer = new ToolProvider\ToolConsumer('2ndYD.blackboard', $connector);

@@ -24,9 +24,13 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
 
         $request = request();
 
-        if ($request->has('custom_custom_role_membership')) {
+        if ($request->has('custom_role_membership')) {
 
-            $this->user->roles = explode(',', $request->input('custom_custom_role_membership'));
+            $this->user->roles = array_merge($this->user->roles, explode(',', $request->input('custom_role_membership')));
+        }
+        else if ($request->has('custom_custom_role_membership')) {
+
+            $this->user->roles = array_merge($this->user->roles, explode(',', $request->input('custom_custom_role_membership')));
         }
 
         $allowed = [
