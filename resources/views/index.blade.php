@@ -11,8 +11,8 @@
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
 
-    <link rel="stylesheet" href="/css/toolkit.css">
-    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="{{ asset(mix('/js/toolkit.css')) }}">
+    <link rel="stylesheet" href="{{ asset(mix('/js/app.css')) }}">
 
     <link rel="stylesheet" href="//cdn.jsdelivr.net/medium-editor/latest/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/medium-editor/latest/css/themes/bootstrap.min.css" type="text/css" media="screen" charset="utf-8">
@@ -21,8 +21,8 @@
 
 <div id="app"></div>
 
-<script type="text/javascript" src="/js/manifest.js"></script>
-<script type="text/javascript" src="/js/vendor.js"></script>
+<script type="text/javascript" src="{{ asset(mix('/js/manifest.js')) }}"></script>
+<script type="text/javascript" src="{{ asset(mix('/js/vendor.js')) }}"></script>
 
 <script type="text/javascript" src="/js/libs/bootstrap.min.js"></script>
 
@@ -31,7 +31,7 @@
 <script type="text/javascript" src="/js/libs/datepicker.js"></script>
 <script type="text/javascript" src="/js/libs/demo.js"></script>
 
-<script type="text/javascript" src="/js/app.js"></script>
+<script type="text/javascript" src="{{ asset(mix('/js/app.js')) }}"></script>
 
 </body>
 </html>
