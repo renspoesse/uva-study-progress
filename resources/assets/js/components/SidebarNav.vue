@@ -30,7 +30,7 @@
 
                     </template>
 
-                    <li class="nav-header">Dashboards</li>
+                    <li class="nav-header">Dashboard</li>
 
                     <router-link tag="li" to="/" exact>
                         <a><i class="fa fa-fw fa-home m-r" aria-hidden="true"></i>Overview</a>
@@ -45,7 +45,7 @@
                     </router-link>
 
                     <router-link tag="li" to="/advice" exact>
-                        <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Tips and advice</a>
+                        <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Tips</a>
                     </router-link>
 
                     <template v-if="hasAnyRole(viewAs, [roles.StudyAdvisor, roles.Administrator])">
@@ -57,11 +57,11 @@
                         </router-link>
 
                         <router-link tag="li" to="/manage/news">
-                            <a><i class="fa fa-fw fa-newspaper-o m-r" aria-hidden="true"></i>News</a>
+                            <a><i class="fa fa-fw fa-newspaper-o m-r" aria-hidden="true"></i>Edit news</a>
                         </router-link>
 
                         <router-link tag="li" to="/manage/advice">
-                            <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Tips and advice</a>
+                            <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Edit tips</a>
                         </router-link>
 
                     </template>
@@ -178,7 +178,7 @@
          fullname: student.display_name,
          id: student.id,
          roles: [Roles.Student],
-         ltiUserId: student.student_number
+         //ltiUserId: student.student_number
          });
 
          this.$router.push('/');

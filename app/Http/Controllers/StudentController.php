@@ -160,10 +160,15 @@ class StudentController extends BaseController
 
     public function getByAuthenticated(Request $request)
     {
+        // if (!RoleHelpers::hasAnyRole($request, [Roles::StudyAdvisor, Roles::Administrator]))
+        //     return response(Student::where('student_number', array_get(LtiHelpers::getUser($request), 'ltiUserId'))->where('is_published', true)->firstOrFail());
+        // else
+        //     return response(Student::where('student_number', array_get(LtiHelpers::getUser($request), 'ltiUserId'))->firstOrFail());
+
         if (!RoleHelpers::hasAnyRole($request, [Roles::StudyAdvisor, Roles::Administrator]))
-            return response(Student::where('student_number', array_get(LtiHelpers::getUser($request), 'ltiUserId'))->where('is_published', true)->firstOrFail());
+            return response(Student::where('email_address', array_get(LtiHelpers::getUser($request), 'email'))->where('is_published', true)->firstOrFail());
         else
-            return response(Student::where('student_number', array_get(LtiHelpers::getUser($request), 'ltiUserId'))->firstOrFail());
+            return response(Student::where('email_address', array_get(LtiHelpers::getUser($request), 'email'))->firstOrFail());
     }
 
     public function getById($id, Request $request)

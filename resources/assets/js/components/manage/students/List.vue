@@ -234,7 +234,7 @@
                     fullname: item.display_name,
                     id: item.id,
                     roles: [Roles.Student],
-                    ltiUserId: item.student_number
+                    //ltiUserId: item.student_number
                 });
 
                 this.$router.push('/');
