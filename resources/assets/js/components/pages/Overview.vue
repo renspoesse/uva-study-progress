@@ -283,6 +283,10 @@
                         })
                         .catch((ex) => {
 
+                            // When changing from view-as-student to view-as-yourself, there might be no student data available anymore.
+                            // We should reflect this in the view instead of keeping the old data.
+
+                            this.student = {};
                             this.displayErrors(true, ex.message);
                         });
                 }
