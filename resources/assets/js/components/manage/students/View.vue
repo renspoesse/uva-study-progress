@@ -6,7 +6,7 @@
 
         <div class="dashhead">
             <div class="dashhead-titles">
-                <h2 class="dashhead-subtitle">Manage students</h2>
+                <h2 class="dashhead-subtitle">Manage</h2>
                 <h2 class="dashhead-title">{{ student.display_name }}</h2>
             </div>
         </div>

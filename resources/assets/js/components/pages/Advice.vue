@@ -4,8 +4,7 @@
 
         <div class="dashhead">
             <div class="dashhead-titles">
-                <h6 class="dashhead-subtitle">Dashboards</h6>
-                <h2 class="dashhead-title">Tips and advice</h2>
+                <h2 class="dashhead-title">Tips</h2>
             </div>
         </div>
 

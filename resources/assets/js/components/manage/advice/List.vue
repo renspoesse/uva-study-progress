@@ -6,8 +6,8 @@
 
         <div class="dashhead">
             <div class="dashhead-titles">
-                <h6 class="dashhead-subtitle">Manage advice</h6>
-                <h2 class="dashhead-title">Tips and advice</h2>
+                <h6 class="dashhead-subtitle">Manage</h6>
+                <h2 class="dashhead-title">Edit tips</h2>
             </div>
         </div>
 

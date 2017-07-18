@@ -10,7 +10,6 @@
 
         <div class="dashhead">
             <div class="dashhead-titles">
-                <h6 class="dashhead-subtitle">Dashboards</h6>
                 <h2 class="dashhead-title">Overview for {{ displayName }}</h2>
             </div>
         </div>
@@ -19,12 +18,24 @@
 
         <template v-if="student.id">
 
+            <div class="row text-center">
+                <div class="col-md-12 m-b-md">
+
+                    <h4>Expected graduation date: {{ moment(student.graduation_date_expected).format('MMMM Do YYYY') }}</h4>
+                    <p>Your expected graduation date is based on the average number of credits earned per month.</p>
+
+                </div>
+            </div>
+
             <div class="row text-center m-t-md">
                 <div class="col-md-12 m-b-md">
                     <div class="w-lg m-x-auto" style="height: 30rem;">
                         <canvas ref="chartCredits"></canvas>
                     </div>
-                    <p class="m-t">* Please note that our prognosis has a margin of x credits</p>
+                    <p class="m-t">
+                        * Please note that our prognosis has a margin of 6 credits.<br>
+                        The prognosis is based on your results in year 1 and period 1 of year 2.
+                    </p>
                 </div>
             </div>
 
@@ -69,10 +80,6 @@
                                 <tr>
                                     <td>Total credits</td>
                                     <td>{{ student.credits }} ECTS</td>
-                                </tr>
-                                <tr class="bg-info" v-if="student.graduation_date_expected">
-                                    <td>Expected graduation date</td>
-                                    <td>{{ moment(student.graduation_date_expected).format('YYYY-MM-DD') }}</td>
                                 </tr>
 
                                 </tbody>
@@ -129,45 +136,50 @@
                         </div>
                     </div>
 
-                    <a class="btn btn-primary-outline" href="http://student.uva.nl/ecb/az/content/studieadviseurs/online-afsprakensysteem/afspraak-studieadviseur-economie-bedrijfskunde.html" target="_blank">Contact a study advisor</a>
+                    <a class="btn btn-primary-outline" href="http://student.uva.nl/eco/content/az/study-advisers/study-advisers.html" target="_blank">Contact a study advisor</a>
 
                 </div>
             </div>
 
-            <div class="hr-divider m-t-md m-b">
-                <h3 class="hr-divider-content hr-divider-heading">Latest news, tips and advice</h3>
-            </div>
+            <!--<div class="hr-divider m-t-md m-b">-->
+                <!--<h3 class="hr-divider-content hr-divider-heading">Latest news, tips and advice</h3>-->
+            <!--</div>-->
+
+        </template>
+        <template v-else>
+
+            <alert type="info" message="No student information is available for you (at least not at the moment)." show="true" v-bind:closeable="false"></alert>
 
         </template>
 
-        <div class="row">
-            <div class="col-md-6">
+        <!--<div class="row">-->
+            <!--<div class="col-md-6">-->
 
-                <div class="panel panel-default" v-for="item in news">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">{{ item.title }}</h3>
-                    </div>
-                    <div class="panel-body" v-html="item.text"></div>
-                    <div class="panel-footer">
-                        updated {{ moment.utc(item.updated_at).local().fromNow() }}
-                    </div>
-                </div>
+                <!--<div class="panel panel-default" v-for="item in news">-->
+                    <!--<div class="panel-heading">-->
+                        <!--<h3 class="panel-title">{{ item.title }}</h3>-->
+                    <!--</div>-->
+                    <!--<div class="panel-body" v-html="item.text"></div>-->
+                    <!--<div class="panel-footer">-->
+                        <!--updated {{ moment.utc(item.updated_at).local().fromNow() }}-->
+                    <!--</div>-->
+                <!--</div>-->
 
-            </div>
-            <div class="col-md-6">
+            <!--</div>-->
+            <!--<div class="col-md-6">-->
 
-                <div class="panel panel-default" v-for="item in advice">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">{{ item.title }}</h3>
-                    </div>
-                    <div class="panel-body" v-html="item.text"></div>
-                    <div class="panel-footer">
-                        updated {{ moment.utc(item.updated_at).local().fromNow() }}
-                    </div>
-                </div>
+                <!--<div class="panel panel-default" v-for="item in advice">-->
+                    <!--<div class="panel-heading">-->
+                        <!--<h3 class="panel-title">{{ item.title }}</h3>-->
+                    <!--</div>-->
+                    <!--<div class="panel-body" v-html="item.text"></div>-->
+                    <!--<div class="panel-footer">-->
+                        <!--updated {{ moment.utc(item.updated_at).local().fromNow() }}-->
+                    <!--</div>-->
+                <!--</div>-->
 
-            </div>
-        </div>
+            <!--</div>-->
+        <!--</div>-->
 
     </div>
 
@@ -455,35 +467,37 @@
                                     fill: false,
                                     label: 'Prognosis',
                                     pointRadius: 0,
+                                    spanGaps: true,
                                     data: [
 
-                                        this.student.second_year_credits_expected,
-                                        this.student.second_year_credits_expected,
-                                        this.student.second_year_credits_expected,
-                                        this.student.second_year_credits_expected,
-                                        this.student.second_year_credits_expected,
+                                        6,
+                                        null,
+                                        null,
+                                        null,
+                                        null,
                                         this.student.second_year_credits_expected
                                     ]
                                 },
-                                {
-                                    type: 'line',
-                                    borderColor: [
-
-                                        color3Border
-                                    ],
-                                    fill: false,
-                                    label: 'Goal',
-                                    pointRadius: 0,
-                                    data: [
-
-                                        this.student.second_year_credits_goal,
-                                        this.student.second_year_credits_goal,
-                                        this.student.second_year_credits_goal,
-                                        this.student.second_year_credits_goal,
-                                        this.student.second_year_credits_goal,
-                                        this.student.second_year_credits_goal
-                                    ]
-                                },
+//                                {
+//                                    type: 'line',
+//                                    borderColor: [
+//
+//                                        color3Border
+//                                    ],
+//                                    fill: false,
+//                                    label: 'Goal',
+//                                    pointRadius: 0,
+//                                    spanGaps: true,
+//                                    data: [
+//
+//                                        12,
+//                                        null,
+//                                        null,
+//                                        null,
+//                                        null,
+//                                        this.student.second_year_credits_goal
+//                                    ]
+//                                },
                                 {
                                     type: 'line',
                                     borderColor: [

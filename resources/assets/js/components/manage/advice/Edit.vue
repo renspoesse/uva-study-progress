@@ -6,8 +6,8 @@
 
         <div class="dashhead">
             <div class="dashhead-titles">
-                <h2 class="dashhead-subtitle">Manage advice</h2>
-                <h2 class="dashhead-title" v-if="isNew">New tip or advice</h2>
+                <h2 class="dashhead-subtitle">Manage</h2>
+                <h2 class="dashhead-title" v-if="isNew">New tip</h2>
                 <h2 class="dashhead-title" v-else>Edit {{ advice.title }}</h2>
             </div>
         </div>

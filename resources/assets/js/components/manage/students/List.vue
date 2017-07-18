@@ -6,7 +6,7 @@
 
         <div class="dashhead">
             <div class="dashhead-titles">
-                <h6 class="dashhead-subtitle">Manage students</h6>
+                <h6 class="dashhead-subtitle">Manage</h6>
                 <h2 class="dashhead-title">Students</h2>
             </div>
         </div>
@@ -60,7 +60,7 @@
                         <th v-bind:class="headerClass('display_name')" v-on:click.prevent="handleOrder('display_name')">Name</th>
                         <th v-bind:class="headerClass('program_name')" v-on:click.prevent="handleOrder('program_name')">Program</th>
                         <th v-bind:class="headerClass('cohort')" v-on:click.prevent="handleOrder('cohort')">Cohort</th>
-                        <th v-bind:class="headerClass('second_year_b1_subjects')" v-on:click.prevent="handleOrder('second_year_b1_subjects')" class="header">Prog.</th>
+                        <th class="header">Prognosis</th>
                         <th v-bind:class="headerClass('is_published')" v-on:click.prevent="handleOrder('is_published')">Published</th>
                         <th v-bind:class="headerClass('updated_at')" v-on:click.prevent="handleOrder('updated_at')">Updated at</th>
                         <th class="header">View as</th>

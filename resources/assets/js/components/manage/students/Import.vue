@@ -6,8 +6,8 @@
 
         <div class="dashhead">
             <div class="dashhead-titles">
-                <h2 class="dashhead-subtitle">Manage students</h2>
-                <h2 class="dashhead-title">Import from .csv</h2>
+                <h2 class="dashhead-subtitle">Manage</h2>
+                <h2 class="dashhead-title">Import students from .csv</h2>
             </div>
         </div>
 

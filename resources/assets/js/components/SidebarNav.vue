@@ -66,11 +66,11 @@
 
                     </template>
 
-                    <li class="nav-header">{{ displayName }}</li>
+                    <!--<li class="nav-header">{{ displayName }}</li>-->
 
-                    <router-link tag="li" to="/logout">
-                        <a><i class="fa fa-fw fa-sign-out m-r" aria-hidden="true"></i>Log out</a>
-                    </router-link>
+                    <!--<router-link tag="li" to="/logout">-->
+                        <!--<a><i class="fa fa-fw fa-sign-out m-r" aria-hidden="true"></i>Log out</a>-->
+                    <!--</router-link>-->
 
                 </template>
                 <template v-else>
