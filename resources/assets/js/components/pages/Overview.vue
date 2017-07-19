@@ -308,9 +308,9 @@
                 switch (student.bsa) {
 
                     case 'MX':
-                        return 'Maximal (60 ECTS)';
+                        return 'Maximal';
                     case 'PS':
-                        return 'Positive (48 or more ECTS)';
+                        return 'Positive';
                     case 'NE':
                         return 'Negative';
                     case 'Di':
