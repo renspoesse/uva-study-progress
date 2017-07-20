@@ -24,12 +24,6 @@
 <script type="text/javascript" src="{{ asset(mix('/js/manifest.js')) }}"></script>
 <script type="text/javascript" src="{{ asset(mix('/js/vendor.js')) }}"></script>
 <script type="text/javascript" src="{{ asset(mix('/js/vendor-load.js')) }}"></script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.1.1/Chart.min.js"></script>
-
-<script type="text/javascript" src="/js/libs/datepicker.js"></script>
-<script type="text/javascript" src="/js/libs/demo.js"></script>
-
 <script type="text/javascript" src="{{ asset(mix('/js/app.js')) }}"></script>
 
 </body>

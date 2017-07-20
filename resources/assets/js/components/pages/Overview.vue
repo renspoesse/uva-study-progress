@@ -673,7 +673,7 @@
 
             student: function(newValue) {
 
-                if (newValue)
+                if (newValue && newValue.id)
                     this.renderCharts();
             },
             viewAs: function(newValue) {
