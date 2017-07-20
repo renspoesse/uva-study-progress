@@ -33,7 +33,7 @@
             <div v-bind:class="['form-group']" v-if="hasAnyRole(user, [roles.StudyAdvisor, roles.Administrator])">
                 <label class="col-sm-3 control-label">Roles (not visible to students)</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" v-bind:value="roles.join(', ')" disabled>
+                    <input type="text" class="form-control" v-bind:value="userRoles.join(', ')" disabled>
                 </div>
             </div>
 
@@ -84,10 +84,11 @@
             ...mapGetters({
 
                 displayName: 'auth/displayName',
-                roles: 'auth/roles'
+                userRoles: 'auth/roles'
             }),
             ...mapState({
 
+                user: (state) => state.auth.user,
                 viewAs: (state) => state.auth.viewAs
             }),
             roles() { return Roles; }
