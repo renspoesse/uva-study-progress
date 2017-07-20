@@ -70,7 +70,9 @@
 
                     <tr v-for="item in items" v-bind:key="item.id" v-bind:data-id="item.id">
                         <td><input type="checkbox" class="select-row"></td>
-                        <td><router-link v-bind:to="'/manage/students/' + item.id">{{ item.student_number }}</router-link></td>
+                        <td>
+                            <router-link v-bind:to="'/manage/students/' + item.id">{{ item.student_number }}</router-link>
+                        </td>
                         <td v-bind:title="item.display_name">{{ _.truncate(item.display_name, {length: 30}) }}</td>
                         <td v-bind:title="item.program_name">{{ _.truncate(item.program_name, {length: 30}) }}</td>
                         <td>{{ item.cohort }}</td>
@@ -233,11 +235,10 @@
 
                     fullname: item.display_name,
                     id: item.id,
-                    roles: [Roles.Student],
-                    //ltiUserId: item.student_number
+                    roles: [Roles.Student]
                 });
 
-                this.$router.push('/');
+                this.$router.push({path: '/', query: {viewAs: item.id}});
             },
             hasAnyRole: roles.hasAnyRole
         },

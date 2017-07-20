@@ -36,15 +36,11 @@
                         <a><i class="fa fa-fw fa-home m-r" aria-hidden="true"></i>Overview</a>
                     </router-link>
 
-                    <!--router-link tag="li" to="/courses">
-                        <a><i class="fa fa-fw fa-graduation-cap m-r" aria-hidden="true"></i>Per course</a>
-                    </router-link-->
-
                     <router-link tag="li" to="/news">
                         <a><i class="fa fa-fw fa-newspaper-o m-r" aria-hidden="true"></i>News</a>
                     </router-link>
 
-                    <router-link tag="li" to="/advice" exact>
+                    <router-link tag="li" to="/advice">
                         <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Tips</a>
                     </router-link>
 
@@ -66,8 +62,11 @@
 
                     </template>
 
-                    <!--<li class="nav-header">{{ displayName }}</li>-->
+                    <li class="nav-header">{{ displayName }}</li>
 
+                    <router-link tag="li" to="/me">
+                        <a><i class="fa fa-fw fa-cog m-r" aria-hidden="true"></i>Personalize</a>
+                    </router-link>
                     <!--<router-link tag="li" to="/logout">-->
                         <!--<a><i class="fa fa-fw fa-sign-out m-r" aria-hidden="true"></i>Log out</a>-->
                     <!--</router-link>-->
@@ -177,11 +176,10 @@
 
          fullname: student.display_name,
          id: student.id,
-         roles: [Roles.Student],
-         //ltiUserId: student.student_number
+         roles: [Roles.Student]
          });
 
-         this.$router.push('/');
+         this.$router.push({path: '/', query: {viewAs: student.id}});
          }
          }
          else

@@ -34,6 +34,7 @@ const components = {
 
         Advice: require('./components/pages/Advice.vue'),
         Login: require('./components/pages/Login.vue'),
+        Me: require('./components/pages/Me.vue'),
         News: require('./components/pages/News.vue'),
         NotFound: require('./components/pages/NotFound.vue'),
         Overview: require('./components/pages/Overview.vue')
@@ -65,6 +66,7 @@ const router = new VueRouter({
 
         {path: '/', component: components.pages.Overview, meta: {requiresAuth: true}},
         {path: '/advice', component: components.pages.Advice, meta: {requiresAuth: true}},
+        {path: '/me', component: components.pages.Me, meta: {requiresAuth: true}},
         {path: '/news', component: components.pages.News, meta: {requiresAuth: true}},
 
         {path: '/manage/advice', component: components.manage.advice.List, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdvisor, Roles.Administrator]}},
@@ -114,7 +116,7 @@ router.beforeEach((to, from, next) => {
 
         store.commit('auth/SET_VIEW_AS', {
 
-            fullname: viewAsId,
+            fullname: 'ID ' + viewAsId,
             id: viewAsId,
             roles: [Roles.Student]
         });

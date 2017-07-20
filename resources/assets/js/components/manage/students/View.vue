@@ -15,11 +15,14 @@
 
         <alert type="danger" v-bind:message="errorMessage" v-bind:show="errorMessage" v-on:close="errorMessage = ''"></alert>
 
-        <div class="row m-b" v-if="hasAnyRole(user, roles.Administrator)">
+        <div class="row m-b">
             <div class="col-md-12">
                 <div class="btn-group pull-right">
-                    <a class="btn btn-primary-outline" v-on:click.prevent="handlePublish" v-if="!student.is_published"><i class="fa fa-eye m-r-s"></i>Publish</a>
-                    <a class="btn btn-default-outline" v-on:click.prevent="handleUnpublish" v-else><i class="fa fa-eye-slash m-r-s"></i>Unpublish</a>
+                    <a class="btn btn-default-outline" v-on:click.prevent="handleViewAs"><i class="fa fa-eye"></i></a>
+                    <template v-if="hasAnyRole(user, roles.Administrator)">
+                        <a class="btn btn-primary-outline" v-on:click.prevent="handlePublish" v-if="!student.is_published"><i class="fa fa-eye m-r-s"></i>Publish</a>
+                        <a class="btn btn-default-outline" v-on:click.prevent="handleUnpublish" v-else><i class="fa fa-eye-slash m-r-s"></i>Unpublish</a>
+                    </template>
                 </div>
             </div>
         </div>
@@ -146,6 +149,17 @@
                         this.displayErrors(true, ex.message);
                         this.showLoading(false);
                     });
+            },
+            handleViewAs: function() {
+
+                this.$store.commit('auth/SET_VIEW_AS', {
+
+                    fullname: this.student.display_name,
+                    id: this.student.id,
+                    roles: [Roles.Student]
+                });
+
+                this.$router.push({path: '/', query: {viewAs: this.student.id}});
             },
             hasAnyRole: roles.hasAnyRole
         },

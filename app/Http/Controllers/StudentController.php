@@ -270,6 +270,7 @@ class StudentController extends BaseController
 
         DB::transaction(function () use ($id, $request, $student) {
 
+            if ($request->exists('second_year_credits_goal')) $student->second_year_credits_goal = $request->input('second_year_credits_goal');
             if ($request->exists('is_published')) $student->is_published = $request->input('is_published');
 
             $student->save();
@@ -301,6 +302,7 @@ class StudentController extends BaseController
 
             foreach ($query->get() as $student) {
 
+                if ($request->exists('second_year_credits_goal')) $student->second_year_credits_goal = $request->input('second_year_credits_goal');
                 if ($request->exists('is_published')) $student->is_published = $request->input('is_published');
 
                 $student->save();
@@ -314,7 +316,8 @@ class StudentController extends BaseController
     {
         return [
 
-            'is_published' => 'required|boolean'
+            'second_year_credits_goal' => 'required|integer|min:0',
+            'is_published'             => 'required|boolean'
         ];
     }
 
@@ -322,7 +325,8 @@ class StudentController extends BaseController
     {
         return [
 
-            'is_published' => 'boolean'
+            'second_year_credits_goal' => 'integer|min:0',
+            'is_published'             => 'boolean'
         ];
     }
 }
