@@ -29,7 +29,7 @@
             </div>
             <div class="flextable-item" v-if="hasAnyRole(user, roles.Administrator)">
                 <div class="btn-group">
-                    <a href="#/manage/students/import" class="btn btn-primary-outline"><i class="fa fa-plus m-r-s"></i>Import from .csv</a>
+                    <router-link to="/manage/students/import" class="btn btn-primary-outline"><i class="fa fa-plus m-r-s"></i>Import from .csv</router-link>
                 </div>
             </div>
         </div>
@@ -60,7 +60,7 @@
                         <th v-bind:class="headerClass('display_name')" v-on:click.prevent="handleOrder('display_name')">Name</th>
                         <th v-bind:class="headerClass('program_name')" v-on:click.prevent="handleOrder('program_name')">Program</th>
                         <th v-bind:class="headerClass('cohort')" v-on:click.prevent="handleOrder('cohort')">Cohort</th>
-                        <th class="header">Prognosis</th>
+                        <th v-bind:class="headerClass('second_year_credits_expected')" v-on:click.prevent="handleOrder('second_year_credits_expected')">Prognosis</th>
                         <th v-bind:class="headerClass('is_published')" v-on:click.prevent="handleOrder('is_published')">Published</th>
                         <th v-bind:class="headerClass('updated_at')" v-on:click.prevent="handleOrder('updated_at')">Updated at</th>
                         <th class="header">View as</th>
@@ -70,7 +70,7 @@
 
                     <tr v-for="item in items" v-bind:key="item.id" v-bind:data-id="item.id">
                         <td><input type="checkbox" class="select-row"></td>
-                        <td><a v-bind:href="'#/manage/students/' + item.id">{{ item.student_number }}</a></td>
+                        <td><router-link v-bind:to="'/manage/students/' + item.id">{{ item.student_number }}</router-link></td>
                         <td v-bind:title="item.display_name">{{ _.truncate(item.display_name, {length: 30}) }}</td>
                         <td v-bind:title="item.program_name">{{ _.truncate(item.program_name, {length: 30}) }}</td>
                         <td>{{ item.cohort }}</td>

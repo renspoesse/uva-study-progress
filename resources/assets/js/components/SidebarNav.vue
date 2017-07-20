@@ -6,9 +6,9 @@
             <button class="nav-toggler nav-toggler-sm sidebar-toggler collapsed" type="button" data-toggle="collapse" data-target="#nav-toggleable-sm" aria-expanded="false">
                 <span class="sr-only">Toggle nav</span>
             </button>
-            <a href="/#/" class="img-wrapper img-size-small pull-left">
+            <router-link to="/" class="img-wrapper img-size-small pull-left">
                 <img src="images/logo.png" class="img-responsive">
-            </a>
+            </router-link>
             <a class="img-wrapper img-size-small pull-left m-l-s" v-if="avatarUrl">
                 <img v-bind:src="avatarUrl" class="img-circle img-fit-cover" ref="avatar">
             </a>

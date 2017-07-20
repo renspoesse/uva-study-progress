@@ -6,6 +6,7 @@ window._ = _; // Makes debugging in the console a bit easier.
 
 window.Project = {
 
+    api: '/api',
     csrfToken: $('meta[name="csrf-token"]').attr('content')
 };
 
@@ -38,6 +39,9 @@ Vue.use(VueResource);
  * the outgoing requests issued by this application. The CSRF middleware
  * included with Laravel will automatically verify the header's value.
  */
+
+Vue.http.options.root = Project.api;
+//Vue.http.headers.common['Content-Type'] = 'application/json';
 
 Vue.http.interceptors.push(function(request, next) {
 

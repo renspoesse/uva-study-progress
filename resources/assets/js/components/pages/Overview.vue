@@ -3,7 +3,7 @@
     <div v-if="!hasAnyRole(user, roles.Student) && !viewAs">
 
         <alert type="info" message="This page is only available to students. Try viewing it as a student instead." show="true" v-bind:closeable="false"></alert>
-        <a class="btn btn-primary-outline" href="#/manage/students" v-if="hasAnyRole(user, [roles.StudyAdvisor, roles.Administrator])">Go to Students</a>
+        <router-link class="btn btn-primary-outline" to="/manage/students" v-if="hasAnyRole(user, [roles.StudyAdvisor, roles.Administrator])">Go to Students</router-link>
 
     </div>
     <div v-else>

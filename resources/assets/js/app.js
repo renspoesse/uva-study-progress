@@ -1,10 +1,10 @@
 import Vue from 'vue'
 
-import App from './components/App'
+import App from './components/App.vue'
 import router from './router'
 import store from './store'
 
-const debug = true;
+window.debug = true;
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -53,6 +53,5 @@ store.dispatch('auth/getSession').then(() => {
 export {
 
     app,
-    debug,
     eventBus
 }

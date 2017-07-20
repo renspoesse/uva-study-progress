@@ -29,7 +29,7 @@
             </div>
             <div class="flextable-item">
                 <div class="btn-group">
-                    <a href="#/manage/news/new" class="btn btn-primary-outline"><i class="fa fa-plus"></i></a>
+                    <router-link to="/manage/news/new" class="btn btn-primary-outline"><i class="fa fa-plus"></i></router-link>
                     <a class="btn btn-primary-outline" v-on:click.prevent="handleRemove"><i class="fa fa-trash"></i></a>
                 </div>
             </div>
@@ -50,7 +50,7 @@
 
                     <tr v-for="item in items" v-bind:key="item.id" v-bind:data-id="item.id">
                         <td><input type="checkbox" class="select-row"></td>
-                        <td v-bind:title="item.title"><a v-bind:href="'#/manage/news/' + item.id + '/edit'">{{ _.truncate(item.title, {length: 30}) }}</a></td>
+                        <td v-bind:title="item.title"><router-link v-bind:to="'/manage/news/' + item.id + '/edit'">{{ _.truncate(item.title, {length: 30}) }}</router-link></td>
                         <td>
                             <i class="fa fa-check" v-if="item.is_published"></i>
                         </td>

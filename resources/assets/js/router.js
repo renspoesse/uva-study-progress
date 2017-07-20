@@ -43,6 +43,7 @@ const components = {
 const router = new VueRouter({
 
     linkActiveClass: 'active',
+    mode: 'history',
     routes: [
 
         {path: '/login', component: components.pages.Login, meta: {guestsOnly: true}},
