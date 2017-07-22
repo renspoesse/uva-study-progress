@@ -53,6 +53,11 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
 
         }, ARRAY_FILTER_USE_KEY);
 
+        if ($request->has('custom_student_number')) {
+
+            $userInfo['custom_student_number'] = $request->get('custom_student_number');
+        }
+
         $request->session()->put('user', $userInfo);
         $request->session()->put('authenticated', true);
         $request->session()->put('record_id', $this->user->getRecordId());
