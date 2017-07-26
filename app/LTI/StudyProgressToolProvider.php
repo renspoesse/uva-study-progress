@@ -67,6 +67,7 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
 
         $request->session()->save();
 
+        Log::info('Session id: ' . $request->session()->getId());
         Log::info('Saved LTI information to session: authenticated.');
     }
 

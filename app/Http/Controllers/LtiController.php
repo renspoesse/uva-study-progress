@@ -15,7 +15,8 @@ class LtiController extends BaseController
         //dd($request->all());
 
        Log::info('Request method: ' . $request->method());
-       Log::info('Request: ' . print_r($request->all(), true));
+       Log::info('Request URL: ' . $request->fullUrl());
+       //Log::info('Request: ' . print_r($request->all(), true));
 
         $connector = $this->getConnector();
 

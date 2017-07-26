@@ -17,6 +17,8 @@ class RequireAuthenticated
      */
     public function handle($request, Closure $next)
     {
+        Log::error('Session id: ' . $request->session()->getId());
+
         if (!$request->session()->get('authenticated')) {
 
             Log::error('No authenticated session.');
