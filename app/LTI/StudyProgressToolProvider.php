@@ -4,6 +4,7 @@ namespace App\LTI;
 
 use IMSGlobal\LTI\ToolProvider;
 use IMSGlobal\LTI\ToolProvider\DataConnector\DataConnector;
+use Illuminate\Support\Facades\Log;
 
 class StudyProgressToolProvider extends ToolProvider\ToolProvider
 {
@@ -21,6 +22,8 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
         // Insert code here to handle incoming connections - use the user,
         // context and resourceLink properties of the class instance
         // to access the current user, context and resource link.
+
+        Log::info('Processing LTI launch request.');
 
         $request = request();
 
@@ -63,6 +66,8 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
         $request->session()->put('record_id', $this->user->getRecordId());
 
         $request->session()->save();
+
+        Log::info('Saved LTI information to session: authenticated.');
     }
 
     function onContentItem()
@@ -83,5 +88,7 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
         // the user, context and resourceLink properties to be populated but check the reason
         // property for the cause of the error.  Return TRUE if the error was fully
         // handled by this method.
+
+        Log::error('LTI request rejected. Reason: ' . $this->reason);
     }
 }

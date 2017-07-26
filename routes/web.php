@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::any('/lti/launch', 'LtiController@index');
+Route::post('/lti/launch', 'LtiController@index');
 
 /**
  * Catch all route to enable HTML5 history mode in VueRouter.
