@@ -34,7 +34,8 @@
                     </div>
                     <p class="m-t">
                         * Please note that our prognosis has a margin of 6 credits.<br>
-                        The prognosis is based on your results in year 1 and period 1 of year 2.
+                        The prognosis is based on your results in year 1 and period 1 of year 2.<br>
+                        Your personal goal is based on your results in year 1; you can adjust it on the <router-link to="/me">Personalize</router-link> page.
                     </p>
                 </div>
             </div>
