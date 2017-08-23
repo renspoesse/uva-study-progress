@@ -20,10 +20,14 @@ class LtiController extends BaseController
 
         $connector = $this->getConnector();
 
-        // $consumer = new \IMSGlobal\LTI\ToolProvider\ToolConsumer('2ndYD.blackboard', $connector);
+        // $name = '';
+        // $key = '';
+        // $secret = '';
         //
-        // $consumer->name = '2ndYD Blackboard';
-        // $consumer->secret = 'IjbLSnp-p5E|VY6H!';
+        // $consumer = new \IMSGlobal\LTI\ToolProvider\ToolConsumer($key, $connector);
+        //
+        // $consumer->name = $name;
+        // $consumer->secret = $secret;
         // $consumer->enabled = true;
         //
         // $consumer->save();
