@@ -17,7 +17,9 @@ class RequireAuthenticated
      */
     public function handle($request, Closure $next)
     {
-        Log::error('Session id: ' . $request->session()->getId());
+        Log::info('Request method: ' . $request->method());
+        Log::info('Request URL: ' . $request->fullUrl());
+        Log::info('Session id (middleware): ' . $request->session()->getId());
 
         if (!$request->session()->get('authenticated')) {
 
