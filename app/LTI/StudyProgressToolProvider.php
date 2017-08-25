@@ -2,6 +2,7 @@
 
 namespace App\LTI;
 
+use Carbon\Carbon;
 use IMSGlobal\LTI\ToolProvider;
 use IMSGlobal\LTI\ToolProvider\DataConnector\DataConnector;
 use Illuminate\Support\Facades\Log;
@@ -65,10 +66,24 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
         $request->session()->put('authenticated', true);
         $request->session()->put('record_id', $this->user->getRecordId());
 
+        // After completing the onLaunch() method, the LTI library will perform a redirect. The redirect is performed by sending a Location header and stopping script execution.
+        // We have to manually save the session here because Laravel's session handling will not be executed when the script is terminated.
+
         $request->session()->save();
 
         Log::info('Session id: ' . $request->session()->getId());
         Log::info('Saved LTI information to session: authenticated.');
+
+        // Normally Laravel will sent a cookie with the session ID along with a response object. This cookie is used to identify the session on subsequent requests.
+        // In our case however, a response object is never sent (a Location header is sent instead and script execution is stopped).
+        // Therefore we have to simulate this session cookie to ensure the current session can be identified on subsequent requests.
+
+        $value  = encrypt($request->session()->getId());
+        $expire = config('session.expire_on_close') ? 0 : Carbon::now()->addMinutes(config('session.lifetime'));
+
+        setcookie($request->session()->getName(), $value, $expire, config('session.path'), config('session.domain'), config('session.secure'), config('session.http_only'));
+
+        // The LTI library will now perform the redirect and stop script execution.
     }
 
     function onContentItem()
