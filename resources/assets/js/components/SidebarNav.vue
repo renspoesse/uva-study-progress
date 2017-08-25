@@ -67,9 +67,9 @@
                     <router-link tag="li" to="/me">
                         <a><i class="fa fa-fw fa-cog m-r" aria-hidden="true"></i>Personalize</a>
                     </router-link>
-                    <!--<router-link tag="li" to="/logout">-->
-                        <!--<a><i class="fa fa-fw fa-sign-out m-r" aria-hidden="true"></i>Log out</a>-->
-                    <!--</router-link>-->
+                    <router-link tag="li" to="/logout">
+                        <a><i class="fa fa-fw fa-sign-out m-r" aria-hidden="true"></i>Log out</a>
+                    </router-link>
 
                 </template>
                 <template v-else>
