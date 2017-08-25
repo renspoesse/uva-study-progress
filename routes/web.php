@@ -44,7 +44,10 @@ Route::post('/lti/launch', 'LtiController@index');
 //     return $request->session()->get('authenticated') ? 'authenticated!' : 'nope';
 // });
 
-/**
- * Catch all route to enable HTML5 history mode in VueRouter.
- */
-Route::any('{all}', function () { return view('index'); })->where('all', '[\/\w\.-]*');
+Route::group(['middleware' => ['csrf']], function () {
+
+    /**
+     * Catch all route to enable HTML5 history mode in VueRouter.
+     */
+    Route::any('{all}', function () { return view('index'); })->where('all', '[\/\w\.-]*');
+});

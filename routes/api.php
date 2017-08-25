@@ -13,7 +13,7 @@ use App\Enums\Roles;
 |
 */
 
-Route::group(['middleware' => ['web', 'auth']], function () { // Enable session state etc. for certain API routes.
+Route::group(['middleware' => ['web', 'auth', 'csrf']], function () { // Enable session state etc. for certain API routes.
 
     Route::any('/logout', 'UserController@logout');
 
