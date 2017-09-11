@@ -75,7 +75,7 @@
                 <template v-else>
 
                     <router-link tag="li" to="/login">
-                        <a><i class="fa fa-fw fa-sign-in m-r" aria-hidden="true"></i>Log in</a>
+                        <a><i class="fa fa-fw fa-sign-in m-r" aria-hidden="true"></i>Not logged in</a>
                     </router-link>
 
                 </template>
