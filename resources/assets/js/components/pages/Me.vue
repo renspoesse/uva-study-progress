@@ -7,7 +7,7 @@
         <div class="dashhead">
             <div class="dashhead-titles">
                 <h2 class="dashhead-subtitle">{{ displayName }}</h2>
-                <h2 class="dashhead-title">Personalize</h2>
+                <h2 class="dashhead-title">Personalise</h2>
             </div>
         </div>
 
@@ -18,19 +18,7 @@
 
         <form v-on:submit.prevent="submit" class="form-horizontal">
 
-            <div class="form-group" v-if="student.id">
-                <div class="col-sm-3"></div>
-                <div class="col-sm-9" v-show="hasBackgroundProcesses">
-                    <i class="fa fa-spinner fa-spin m-r"></i>Wait one second please while background processes are finishing.
-                </div>
-                <div class="col-sm-9" v-show="!hasBackgroundProcesses">
-                    <div class="btn-group">
-                        <a v-on:click.prevent="handleSubmit" class="btn btn-primary-outline">Save</a>
-                    </div>
-                </div>
-            </div>
-
-            <div v-bind:class="['form-group']" v-if="hasAnyRole(user, [roles.StudyAdvisor, roles.Administrator])">
+            <div v-bind:class="['form-group']" v-if="hasAnyRole(user, [roles.StudyAdviser, roles.Administrator])">
                 <label class="col-sm-3 control-label">Roles (not visible to students)</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" v-bind:value="userRoles.join(', ')" disabled>
@@ -144,7 +132,12 @@
                 this.displayErrors(false);
                 this.displaySuccess(false);
 
-                const promise = students.updateById(payload.id, payload);
+                let promise;
+
+                if (this.viewAs)
+                    promise = students.updateById(payload.id, payload);
+                else
+                    promise = students.updateByAuthenticated(payload, payload);
 
                 promise.then((result) => {
 

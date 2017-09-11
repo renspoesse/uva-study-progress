@@ -193,6 +193,51 @@ const importFromFile = function(payload, file) {
     });
 };
 
+const updateByAuthenticated = function(payload) {
+
+    return new Promise((resolve, reject) => {
+
+        payload = json.removeEmptyObjects(_.clone(payload));
+
+        Vue.http.patch('me/student', payload).then((response) => {
+
+                response.json().then((obj) => {
+
+                        obj = json.removeDataWrappers(obj);
+                        resolve({item: obj});
+                    })
+                    .catch((parseError) => {
+
+                        console.log(parseError);
+                        reject({message: 'Failed to parse student data.'});
+                    });
+            })
+            .catch((response) => {
+
+                console.log(response);
+
+                if (response.status === 422) {
+
+                    response.json().then((obj) => {
+
+                            reject({
+
+                                message: "It seems like you didn't provide a valid student.",
+                                errors: obj
+                            });
+                        })
+                        .catch((parseError) => {
+
+                            console.log(parseError);
+                            reject({message: 'Failed to parse error data.'});
+                        });
+                }
+                else
+                    reject({message: 'Oops. Something went wrong.'});
+            });
+    });
+};
+
 const updateById = function(id, payload) {
 
     return new Promise((resolve, reject) => {
@@ -296,6 +341,7 @@ export {
     getByParameters,
     getCreditsExpected,
     importFromFile,
+    updateByAuthenticated,
     updateById,
     updateByParameters
 }

@@ -29,9 +29,10 @@ Route::group(['middleware' => ['web', 'auth', 'csrf']], function () { // Enable 
         // These routes are only available to students, as they would fail to return anything for other roles.
 
         Route::get('/me/student', 'StudentController@getByAuthenticated');
+        Route::patch('/me/student', 'StudentController@updatePartialByAuthenticated');
     });
 
-    Route::group(['middleware' => 'role:' . Roles::StudyAdvisor . ',' . Roles::Administrator], function () {
+    Route::group(['middleware' => 'role:' . Roles::StudyAdviser . ',' . Roles::Administrator], function () {
 
         Route::post('/advice', 'AdviceController@create');
 

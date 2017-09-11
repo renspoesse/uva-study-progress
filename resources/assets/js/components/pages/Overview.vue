@@ -3,7 +3,7 @@
     <div v-if="!hasAnyRole(user, roles.Student) && !viewAs">
 
         <alert type="info" message="This page is only available to students. Try viewing it as a student instead." show="true" v-bind:closeable="false"></alert>
-        <router-link class="btn btn-primary-outline" to="/manage/students" v-if="hasAnyRole(user, [roles.StudyAdvisor, roles.Administrator])">Go to Students</router-link>
+        <router-link class="btn btn-primary-outline" to="/manage/students" v-if="hasAnyRole(user, [roles.StudyAdviser, roles.Administrator])">Go to Students</router-link>
 
     </div>
     <div v-else>
@@ -35,7 +35,7 @@
                     <p class="m-t">
                         * Please note that our prognosis has a margin of 6 credits.<br>
                         The prognosis is based on your results in year 1 and period 1 of year 2.<br>
-                        Your personal goal is based on your results in year 1; you can adjust it on the <router-link to="/me">Personalize</router-link> page.
+                        Your personal goal is based on your results in year 1; you can adjust it on the <router-link to="/me">Personalise</router-link> page.
                     </p>
                 </div>
             </div>
@@ -137,7 +137,7 @@
                         </div>
                     </div>
 
-                    <a class="btn btn-primary-outline" href="http://student.uva.nl/eco/content/az/study-advisers/study-advisers.html" target="_blank">Contact a study advisor</a>
+                    <a class="btn btn-primary-outline" href="http://student.uva.nl/eco/content/az/study-advisers/study-advisers.html" target="_blank">Contact a study adviser</a>
 
                 </div>
             </div>

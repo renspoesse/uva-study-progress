@@ -44,7 +44,7 @@
                         <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Tips</a>
                     </router-link>
 
-                    <template v-if="hasAnyRole(viewAs, [roles.StudyAdvisor, roles.Administrator])">
+                    <template v-if="hasAnyRole(viewAs, [roles.StudyAdviser, roles.Administrator])">
 
                         <li class="nav-header">Manage</li>
 
@@ -65,7 +65,7 @@
                     <li class="nav-header">{{ displayName }}</li>
 
                     <router-link tag="li" to="/me">
-                        <a><i class="fa fa-fw fa-cog m-r" aria-hidden="true"></i>Personalize</a>
+                        <a><i class="fa fa-fw fa-cog m-r" aria-hidden="true"></i>Personalise</a>
                     </router-link>
                     <router-link tag="li" to="/logout">
                         <a><i class="fa fa-fw fa-sign-out m-r" aria-hidden="true"></i>Log out</a>

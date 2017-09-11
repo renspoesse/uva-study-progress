@@ -30,7 +30,7 @@ class LtiHelpers
         $user = $request->session()->get('user');
 
         //array_push($user['roles'], Roles::Administrator);
-        //array_push($user['roles'], Roles::StudyAdvisor);
+        //array_push($user['roles'], Roles::StudyAdviser);
         //array_push($user['roles'], Roles::Student);
 
         return $user;

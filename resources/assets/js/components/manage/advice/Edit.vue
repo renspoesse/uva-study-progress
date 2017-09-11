@@ -19,20 +19,6 @@
 
         <form v-on:submit.prevent="submit" class="form-horizontal">
 
-            <div class="form-group">
-                <div class="col-sm-3"></div>
-                <div class="col-sm-9" v-show="hasBackgroundProcesses">
-                    <i class="fa fa-spinner fa-spin m-r"></i>Wait one second please while background processes are finishing.
-                </div>
-                <div class="col-sm-9" v-show="!hasBackgroundProcesses">
-                    <div class="btn-group">
-                        <a v-on:click.prevent="handleSubmit" class="btn btn-primary-outline" v-if="isNew">Create</a>
-                        <a v-on:click.prevent="handleSubmit" class="btn btn-primary-outline" v-if="!isNew">Save</a>
-                    </div>
-                    <a v-on:click.prevent="handleRemove" class="btn btn-primary-outline pull-right" v-if="!isNew"><i class="fa fa-trash"></i></a>
-                </div>
-            </div>
-
             <div v-bind:class="['form-group', hasError('title') ? 'has-feedback has-error' : '']">
                 <label class="col-sm-3 control-label">Title</label>
                 <div class="col-sm-9">

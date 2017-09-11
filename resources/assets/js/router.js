@@ -69,15 +69,15 @@ const router = new VueRouter({
         {path: '/me', component: components.pages.Me, meta: {requiresAuth: true}},
         {path: '/news', component: components.pages.News, meta: {requiresAuth: true}},
 
-        {path: '/manage/advice', component: components.manage.advice.List, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdvisor, Roles.Administrator]}},
-        {path: '/manage/advice/new', component: components.manage.advice.Edit, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdvisor, Roles.Administrator]}},
-        {path: '/manage/advice/:id/edit', component: components.manage.advice.Edit, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdvisor, Roles.Administrator]}},
-        {path: '/manage/news', component: components.manage.news.List, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdvisor, Roles.Administrator]}},
-        {path: '/manage/news/new', component: components.manage.news.Edit, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdvisor, Roles.Administrator]}},
-        {path: '/manage/news/:id/edit', component: components.manage.news.Edit, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdvisor, Roles.Administrator]}},
-        {path: '/manage/students', component: components.manage.students.List, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdvisor, Roles.Administrator]}},
+        {path: '/manage/advice', component: components.manage.advice.List, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdviser, Roles.Administrator]}},
+        {path: '/manage/advice/new', component: components.manage.advice.Edit, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdviser, Roles.Administrator]}},
+        {path: '/manage/advice/:id/edit', component: components.manage.advice.Edit, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdviser, Roles.Administrator]}},
+        {path: '/manage/news', component: components.manage.news.List, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdviser, Roles.Administrator]}},
+        {path: '/manage/news/new', component: components.manage.news.Edit, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdviser, Roles.Administrator]}},
+        {path: '/manage/news/:id/edit', component: components.manage.news.Edit, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdviser, Roles.Administrator]}},
+        {path: '/manage/students', component: components.manage.students.List, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdviser, Roles.Administrator]}},
         {path: '/manage/students/import', component: components.manage.students.Import, meta: {requiresAuth: true, requiresRole: Roles.Administrator}},
-        {path: '/manage/students/:id', component: components.manage.students.View, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdvisor, Roles.Administrator]}},
+        {path: '/manage/students/:id', component: components.manage.students.View, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdviser, Roles.Administrator]}},
 
         {path: '*', component: components.pages.NotFound}
     ],

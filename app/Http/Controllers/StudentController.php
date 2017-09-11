@@ -160,12 +160,12 @@ class StudentController extends BaseController
 
     public function getByAuthenticated(Request $request)
     {
-        // if (!RoleHelpers::hasAnyRole($request, [Roles::StudyAdvisor, Roles::Administrator]))
+        // if (!RoleHelpers::hasAnyRole($request, [Roles::StudyAdviser, Roles::Administrator]))
         //     return response(Student::where('student_number', array_get(LtiHelpers::getUser($request), 'ltiUserId'))->where('is_published', true)->firstOrFail());
         // else
         //     return response(Student::where('student_number', array_get(LtiHelpers::getUser($request), 'ltiUserId'))->firstOrFail());
 
-        if (!RoleHelpers::hasAnyRole($request, [Roles::StudyAdvisor, Roles::Administrator]))
+        if (!RoleHelpers::hasAnyRole($request, [Roles::StudyAdviser, Roles::Administrator]))
             return response(Student::where('student_number', array_get(LtiHelpers::getUser($request), 'custom_student_number'))->where('is_published', true)->firstOrFail());
         else
             return response(Student::where('student_number', array_get(LtiHelpers::getUser($request), 'custom_student_number'))->firstOrFail());
@@ -173,7 +173,7 @@ class StudentController extends BaseController
 
     public function getById($id, Request $request)
     {
-        if (!RoleHelpers::hasAnyRole($request, [Roles::StudyAdvisor, Roles::Administrator]))
+        if (!RoleHelpers::hasAnyRole($request, [Roles::StudyAdviser, Roles::Administrator]))
             return response(Student::where('id', $id)->where('is_published', true)->firstOrFail());
         else
             return response(Student::where('id', $id)->firstOrFail());
@@ -229,7 +229,7 @@ class StudentController extends BaseController
 
         $query = Student::query();
 
-        if (filter_var($request->input('publishedOnly'), FILTER_VALIDATE_BOOLEAN) === true || !RoleHelpers::hasAnyRole($request, [Roles::StudyAdvisor, Roles::Administrator]))
+        if (filter_var($request->input('publishedOnly'), FILTER_VALIDATE_BOOLEAN) === true || !RoleHelpers::hasAnyRole($request, [Roles::StudyAdviser, Roles::Administrator]))
             $query = $query->where('is_published', true);
 
         if ($request->has('query')) {
@@ -260,6 +260,12 @@ class StudentController extends BaseController
         $paginator->appends(PaginationHelpers::getOtherQueryParameters($request));
 
         return $paginator;
+    }
+
+    public function updatePartialByAuthenticated(Request $request)
+    {
+        $student = Student::where('student_number', array_get(LtiHelpers::getUser($request), 'custom_student_number'))->firstOrFail();
+        return $this->updatePartialById($student->id, $request);
     }
 
     public function updatePartialById($id, Request $request)
