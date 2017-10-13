@@ -223,7 +223,7 @@ const updateByAuthenticated = function(payload) {
                             reject({
 
                                 message: "It seems like you didn't provide a valid student.",
-                                errors: obj
+                                errors: obj.errors
                             });
                         })
                         .catch((parseError) => {
@@ -268,7 +268,7 @@ const updateById = function(id, payload) {
                             reject({
 
                                 message: "It seems like you didn't provide a valid student.",
-                                errors: obj
+                                errors: obj.errors
                             });
                         })
                         .catch((parseError) => {
@@ -317,7 +317,7 @@ const updateByParameters = function(params, payload) {
                             reject({
 
                                 message: "It seems like you didn't provide a valid student.",
-                                errors: obj
+                                errors: obj.errors
                             });
                         })
                         .catch((parseError) => {

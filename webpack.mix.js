@@ -1,5 +1,5 @@
-const {mix} = require('laravel-mix');
-const path = require('path');
+let mix = require('laravel-mix');
+let path = require('path');
 
 /*
  |--------------------------------------------------------------------------
@@ -18,13 +18,11 @@ mix.js('resources/assets/js/app.js', 'public/js')
 
         'bootstrap-sass',
         'chart.js',
-        'corejs-typeahead',
         'jquery',
         'lodash',
         'medium-editor',
         'moment',
         'numeral',
-        'sortablejs',
         'vue',
         'vue-resource',
         'vue-router',
@@ -37,6 +35,31 @@ mix.js('resources/assets/js/app.js', 'public/js')
     })
     .sass('resources/assets/sass/app.scss', 'public/css')
     .less('resources/assets/toolkit/toolkit-light.less', 'public/css/toolkit.css');
+
+mix.webpackConfig({
+
+    module: {
+
+        rules: [
+
+            {
+                test: /\.modernizrrc.js$/,
+                use: ['modernizr-loader']
+            },
+            {
+                test: /\.modernizrrc(\.json)?$/,
+                use: ['modernizr-loader', 'json-loader']
+            }
+        ]
+    },
+    resolve: {
+
+        alias: {
+
+            modernizr$: path.resolve(__dirname, '.modernizrrc')
+        }
+    }
+});
 
 if (mix.config.inProduction) {
 

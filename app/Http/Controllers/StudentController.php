@@ -207,7 +207,7 @@ class StudentController extends BaseController
 
         $query = Student::query();
 
-        if ($request->has('query')) {
+        if ($request->filled('query')) {
 
             $query = $query->where('student_number', 'LIKE', '%' . $request->input('query') . '%');
             $query = $query->orWhere('display_name', 'LIKE', '%' . $request->input('query') . '%');
@@ -232,7 +232,7 @@ class StudentController extends BaseController
         if (filter_var($request->input('publishedOnly'), FILTER_VALIDATE_BOOLEAN) === true || !RoleHelpers::hasAnyRole($request, [Roles::StudyAdviser, Roles::Administrator]))
             $query = $query->where('is_published', true);
 
-        if ($request->has('query')) {
+        if ($request->filled('query')) {
 
             $query = $query->where('student_number', 'LIKE', '%' . $request->input('query') . '%');
             $query = $query->orWhere('display_name', 'LIKE', '%' . $request->input('query') . '%');
@@ -243,7 +243,7 @@ class StudentController extends BaseController
         $orderBy        = 'updated_at';
         $orderDirection = 'desc';
 
-        if ($request->has('order')) {
+        if ($request->filled('order')) {
 
             list($field, $direction) = explode('|', $request->input('order'));
 
@@ -296,7 +296,7 @@ class StudentController extends BaseController
 
         $query = Student::query();
 
-        if ($request->has('query')) {
+        if ($request->filled('query')) {
 
             $query = $query->where('student_number', 'LIKE', '%' . $request->input('query') . '%');
             $query = $query->orWhere('display_name', 'LIKE', '%' . $request->input('query') . '%');

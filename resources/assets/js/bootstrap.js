@@ -1,4 +1,7 @@
 import * as _ from 'lodash'
+import Modernizr from 'modernizr'
+import moment from 'moment'
+import numeral from 'numeral'
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 
@@ -55,9 +58,38 @@ Vue.http.interceptors.push(function(request, next) {
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from "laravel-echo"
+// import Echo from 'laravel-echo'
+
+// window.Pusher = require('pusher-js');
 
 // window.Echo = new Echo({
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // });
+
+/**
+ * Other stuff.
+ */
+
+moment.fn.toJSON = function() { return this.format('YYYY-MM-DD HH:mm:ss'); };
+
+window.trans = (string, args) => {
+
+    let value = _.get(window.i18n, string);
+
+    _.eachRight(args, (paramVal, paramKey) => {
+
+        value = _.replace(value, `:${paramKey}`, paramVal);
+    });
+
+    return value;
+};
+
+Vue.prototype.window = window;
+Vue.prototype._ = _;
+Vue.prototype.$ = $;
+Vue.prototype.Modernizr = Modernizr;
+Vue.prototype.moment = moment;
+Vue.prototype.numeral = numeral;
+Vue.prototype.i18n = window.i18n;
+Vue.prototype.trans = window.trans;

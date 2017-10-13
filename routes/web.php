@@ -44,6 +44,41 @@ Route::post('/lti/launch', 'LtiController@index');
 //     return $request->session()->get('authenticated') ? 'authenticated!' : 'nope';
 // });
 
+Route::get('/js/lang.js', function () {
+
+    //$strings = \Illuminate\Support\Facades\Cache::rememberForever('lang.js', function () {
+
+    $lang     = config('app.locale');
+    $fallback = config('app.fallback_locale');
+
+    $files   = glob(resource_path('lang/' . $lang . '/*.php'));
+    $strings = [];
+
+    foreach ($files as $file) {
+
+        $name           = basename($file, '.php');
+        $strings[$name] = require $file;
+    }
+
+    $fallbackFiles   = glob(resource_path('lang/' . $fallback . '/*.php'));
+    $fallbackStrings = [];
+
+    foreach ($fallbackFiles as $file) {
+
+        $name                   = basename($file, '.php');
+        $fallbackStrings[$name] = require $file;
+    }
+
+    $strings = array_replace_recursive($fallbackStrings, $strings);
+
+    //return $strings;
+    //});
+
+    header('Content-Type: text/javascript');
+    echo('window.i18n = ' . json_encode($strings) . ';');
+    exit();
+});
+
 Route::group(['middleware' => ['csrf']], function () {
 
     /**

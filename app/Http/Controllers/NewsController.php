@@ -62,7 +62,7 @@ class NewsController extends BaseController
         if (filter_var($request->input('publishedOnly'), FILTER_VALIDATE_BOOLEAN) === true || !RoleHelpers::hasAnyRole($request, [Roles::StudyAdviser, Roles::Administrator]))
             $query = $query->where('is_published', true);
 
-        if ($request->has('query')) {
+        if ($request->filled('query')) {
 
             $query = $query->where('title', 'LIKE', '%' . $request->input('query') . '%');
             $query = $query->orWhere('text', 'LIKE', '%' . $request->input('query') . '%');
@@ -71,7 +71,7 @@ class NewsController extends BaseController
         $orderBy        = 'updated_at';
         $orderDirection = 'desc';
 
-        if ($request->has('order')) {
+        if ($request->filled('order')) {
 
             list($field, $direction) = explode('|', $request->input('order'));
 

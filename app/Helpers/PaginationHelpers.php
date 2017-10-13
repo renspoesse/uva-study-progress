@@ -23,8 +23,8 @@ class PaginationHelpers
 
     public static function getCursorInputInteger(Request $request, &$before, &$after, &$limit)
     {
-        $before = $request->has('before') ? (int)$request->input('before') : null;
-        $after  = $request->has('after') ? (int)$request->input('after') : null;
+        $before = $request->filled('before') ? (int)$request->input('before') : null;
+        $after  = $request->filled('after') ? (int)$request->input('after') : null;
         $limit  = PaginationHelpers::getLimit($request);
     }
 

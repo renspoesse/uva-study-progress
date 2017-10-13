@@ -28,11 +28,11 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
 
         $request = request();
 
-        if ($request->has('custom_role_membership')) {
+        if ($request->filled('custom_role_membership')) {
 
             $this->user->roles = array_merge($this->user->roles, explode(',', $request->input('custom_role_membership')));
         }
-        else if ($request->has('custom_custom_role_membership')) {
+        else if ($request->filled('custom_custom_role_membership')) {
 
             $this->user->roles = array_merge($this->user->roles, explode(',', $request->input('custom_custom_role_membership')));
         }
@@ -57,7 +57,7 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
 
         }, ARRAY_FILTER_USE_KEY);
 
-        if ($request->has('custom_student_number')) {
+        if ($request->filled('custom_student_number')) {
 
             $userInfo['custom_student_number'] = $request->get('custom_student_number');
         }

@@ -116,7 +116,7 @@ const save = function(payload) {
                             reject({
 
                                 message: "It seems like you didn't provide a valid advice item.",
-                                errors: obj
+                                errors: obj.errors
                             });
                         })
                         .catch((parseError) => {
@@ -166,7 +166,7 @@ const updateById = function(id, payload) {
                             reject({
 
                                 message: "It seems like you didn't provide a valid advice item.",
-                                errors: obj
+                                errors: obj.errors
                             });
                         })
                         .catch((parseError) => {
