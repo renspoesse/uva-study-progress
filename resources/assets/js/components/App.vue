@@ -5,12 +5,12 @@
         <div class="container">
             <div class="row">
 
-                <div class="col-sm-3 app-sidebar">
+                <div class="col-sm-3">
 
                     <sidebar-nav></sidebar-nav>
 
                 </div>
-                <div class="col-sm-9 app-content">
+                <div class="col-sm-9">
 
                     <transition name="fade-fast" appear>
                         <router-view></router-view>
