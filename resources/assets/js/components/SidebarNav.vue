@@ -35,11 +35,9 @@
                     <router-link tag="li" to="/" exact>
                         <a><i class="fa fa-fw fa-home m-r" aria-hidden="true"></i>Overview</a>
                     </router-link>
-
                     <router-link tag="li" to="/news">
                         <a><i class="fa fa-fw fa-newspaper-o m-r" aria-hidden="true"></i>News</a>
                     </router-link>
-
                     <router-link tag="li" to="/advice">
                         <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Tips</a>
                     </router-link>
@@ -51,11 +49,9 @@
                         <router-link tag="li" to="/manage/students">
                             <a><i class="fa fa-fw fa-database m-r" aria-hidden="true"></i>Students</a>
                         </router-link>
-
                         <router-link tag="li" to="/manage/news">
                             <a><i class="fa fa-fw fa-newspaper-o m-r" aria-hidden="true"></i>Edit news</a>
                         </router-link>
-
                         <router-link tag="li" to="/manage/advice">
                             <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Edit tips</a>
                         </router-link>
