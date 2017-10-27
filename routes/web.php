@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
+//Route::get('/lti/launch', 'LtiController@index');
 Route::post('/lti/launch', 'LtiController@index');
 
 // Route::get('/test', function (Request $request) {

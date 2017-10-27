@@ -4,7 +4,7 @@ import App from './components/App.vue'
 import router from './router'
 import store from './store'
 
-window.debug = true;
+window.debug = false;
 
 /**
  * First we will load all of this project's JavaScript dependencies which
