@@ -39,6 +39,49 @@
 
         </form>
 
+        <div class="m-t">
+            <p><strong>The .csv file should meet the following requirements:</strong></p>
+            <ul>
+                <li>It should ideally be UTF-8 encoded to prevent any data loss.</li>
+                <li>The delimiter must be ; (default when exporting from Microsoft Excel).</li>
+            </ul>
+            <p><strong>It should contain the following columns:</strong></p>
+            <ol>
+                <li>nummer (required)</li>
+                <li>opl (required)</li>
+                <li>omschrijving</li>
+                <li>cohort (required)</li>
+                <li>BSA-crd (required)</li>
+                <li>bsa (required)</li>
+                <li>2ndY (required)</li>
+                <li>2ndY-B1</li>
+                <li>2ndY-B2</li>
+                <li>2ndY-B3</li>
+                <li>2ndY-B4</li>
+                <li>2ndY-B5</li>
+                <li>2ndY-B6</li>
+                <li>Nvakken-B1</li>
+                <li>2ndY-crd</li>
+                <li>2ndY-crd Prognose (required)</li>
+                <li>My2ndGoal (required)</li>
+                <li>DipCategory (required)</li>
+                <li>RunningTotal (required)</li>
+                <li>GPA actueel (required)</li>
+                <li>prognose afstudeer datum obv tempo (required, format dd-mm-yyyy)</li>
+                <li>VOORNAAM (required)</li>
+                <li>ACHTERNAAM (required)</li>
+                <li>TUSSENVOEGSEL</li>
+                <li>INITIALEN</li>
+                <li>GEBOORTEDATUM (required, format dd-mm-yyyy)</li>
+                <li>GEBOORTEPLAATS</li>
+                <li>GEBOORTELAND</li>
+                <li>GESLACHT (required, format M/F)</li>
+                <li>NATIONALITEIT</li>
+                <li>EMAILADRES</li>
+                <li>vooropleidng</li>
+            </ol>
+        </div>
+
     </div>
 
 </template>
@@ -68,8 +111,14 @@
                 this.backgroundProcesses++;
 
                 students.importFromFile({}, this.$refs.fileInput.files[0])
-                    .then((result) => {this.displaySuccess(true, 'The data was imported successfully.'); this.backgroundProcesses--;})
-                    .catch((ex) => {this.displayErrors(true, ex.message, ex.errors); this.backgroundProcesses--;});
+                    .then((result) => {
+                        this.displaySuccess(true, 'The data was imported successfully.');
+                        this.backgroundProcesses--;
+                    })
+                    .catch((ex) => {
+                        this.displayErrors(true, ex.message, ex.errors);
+                        this.backgroundProcesses--;
+                    });
             }
         },
         mixins: [

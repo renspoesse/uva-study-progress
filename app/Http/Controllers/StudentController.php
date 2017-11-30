@@ -102,12 +102,12 @@ class StudentController extends BaseController
 
                 //$obj->student_number = $record['ï»¿nummer'];
                 $obj->student_number               = $record['nummer'];
-                $obj->program_code                 = !empty($record['opl']) ? $record['opl'] : null;
+                $obj->program_code                 = $record['opl'];
                 $obj->program_name                 = $record['omschrijving'];
-                $obj->cohort                       = !empty($record['cohort']) ? $record['cohort'] : null;
-                $obj->bsa_credits                  = !empty($record['BSA-crd']) ? $record['BSA-crd'] : null;
+                $obj->cohort                       = $record['cohort'];
+                $obj->bsa_credits                  = $record['BSA-crd'];
                 $obj->bsa                          = $record['bsa'];
-                $obj->second_year                  = !empty($record['2ndY']) ? $record['2ndY'] : null;
+                $obj->second_year                  = $record['2ndY'];
                 $obj->second_year_b1_credits       = !empty($record['2ndY-B1']) ? $record['2ndY-B1'] : null;
                 $obj->second_year_b2_credits       = !empty($record['2ndY-B2']) ? $record['2ndY-B2'] : null;
                 $obj->second_year_b3_credits       = !empty($record['2ndY-B3']) ? $record['2ndY-B3'] : null;
@@ -116,11 +116,11 @@ class StudentController extends BaseController
                 $obj->second_year_b6_credits       = !empty($record['2ndY-B6']) ? $record['2ndY-B6'] : null;
                 $obj->second_year_b1_subjects      = !empty($record['Nvakken-B1']) ? $record['Nvakken-B1'] : null;
                 $obj->second_year_credits          = !empty($record['2ndY-crd']) ? $record['2ndY-crd'] : null;
-                $obj->second_year_credits_expected = !empty($record['2ndY-crd Prognose']) ? $record['2ndY-crd Prognose'] : null;
-                $obj->second_year_credits_goal     = !empty($record['My2ndGoal']) ? $record['My2ndGoal'] : null;
+                $obj->second_year_credits_expected = $record['2ndY-crd Prognose'];
+                $obj->second_year_credits_goal     = $record['My2ndGoal'];
                 $obj->dip_category                 = $record['DipCategory'];
-                $obj->credits                      = !empty($record['RunningTotal']) ? $record['RunningTotal'] : null;
-                $obj->gpa_current                  = !empty($record['GPA actueel']) ? floatval($record['GPA actueel']) : null;
+                $obj->credits                      = $record['RunningTotal'];
+                $obj->gpa_current                  = floatval($record['GPA actueel']);
                 $obj->graduation_date_expected     = \DateTime::createFromFormat('d-m-Y', $record['prognose afstudeer datum obv tempo']);
                 $obj->first_name                   = $record['VOORNAAM'];
                 $obj->last_name                    = $record['ACHTERNAAM'];
