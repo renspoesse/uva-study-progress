@@ -36,10 +36,10 @@
                         <a><i class="fa fa-fw fa-home m-r" aria-hidden="true"></i>Overview</a>
                     </router-link>
                     <router-link tag="li" to="/news">
-                        <a><i class="fa fa-fw fa-newspaper-o m-r" aria-hidden="true"></i>News</a>
+                        <a><i class="fa fa-fw fa-newspaper-o m-r" aria-hidden="true"></i>Updates</a>
                     </router-link>
                     <router-link tag="li" to="/advice">
-                        <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Tips</a>
+                        <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Info</a>
                     </router-link>
 
                     <template v-if="hasAnyRole(viewAs, [roles.StudyAdviser, roles.Administrator])">
@@ -50,10 +50,10 @@
                             <a><i class="fa fa-fw fa-database m-r" aria-hidden="true"></i>Students</a>
                         </router-link>
                         <router-link tag="li" to="/manage/news">
-                            <a><i class="fa fa-fw fa-newspaper-o m-r" aria-hidden="true"></i>Edit news</a>
+                            <a><i class="fa fa-fw fa-newspaper-o m-r" aria-hidden="true"></i>Edit updates</a>
                         </router-link>
                         <router-link tag="li" to="/manage/advice">
-                            <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Edit tips</a>
+                            <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Edit info</a>
                         </router-link>
 
                     </template>

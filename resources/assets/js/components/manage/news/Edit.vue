@@ -7,7 +7,7 @@
         <div class="dashhead">
             <div class="dashhead-titles">
                 <h2 class="dashhead-subtitle">Manage</h2>
-                <h2 class="dashhead-title" v-if="isNew">New article</h2>
+                <h2 class="dashhead-title" v-if="isNew">New update</h2>
                 <h2 class="dashhead-title" v-else>Edit {{ news.title }}</h2>
             </div>
         </div>

@@ -143,7 +143,7 @@
             </div>
 
             <!--<div class="hr-divider m-t-md m-b">-->
-                <!--<h3 class="hr-divider-content hr-divider-heading">Latest news, tips and advice</h3>-->
+                <!--<h3 class="hr-divider-content hr-divider-heading">Latest updates and info</h3>-->
             <!--</div>-->
 
         </template>

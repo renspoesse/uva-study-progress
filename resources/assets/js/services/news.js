@@ -32,7 +32,7 @@ const getById = function(id) {
                     .catch((parseError) => {
 
                         console.log(parseError);
-                        reject({message: 'Failed to parse news.'});
+                        reject({message: 'Failed to parse update.'});
                     });
             })
             .catch((response) => {
@@ -75,7 +75,7 @@ const getByParameters = function(params) {
                     .catch((parseError) => {
 
                         console.log(parseError);
-                        reject({message: 'Failed to parse news.'});
+                        reject({message: 'Failed to parse update.'});
                     });
             })
             .catch((response) => {
@@ -102,7 +102,7 @@ const save = function(payload) {
                     .catch((parseError) => {
 
                         console.log(parseError);
-                        reject({message: 'Failed to parse news data.'});
+                        reject({message: 'Failed to parse update data.'});
                     });
             })
             .catch((response) => {
@@ -115,7 +115,7 @@ const save = function(payload) {
 
                             reject({
 
-                                message: "It seems like you didn't provide a valid news item.",
+                                message: "It seems like you didn't provide a valid update item.",
                                 errors: obj.errors
                             });
                         })
@@ -152,7 +152,7 @@ const updateById = function(id, payload) {
                     .catch((parseError) => {
 
                         console.log(parseError);
-                        reject({message: 'Failed to parse news data.'});
+                        reject({message: 'Failed to parse update data.'});
                     });
             })
             .catch((response) => {
@@ -165,7 +165,7 @@ const updateById = function(id, payload) {
 
                             reject({
 
-                                message: "It seems like you didn't provide a valid news item.",
+                                message: "It seems like you didn't provide a valid update item.",
                                 errors: obj.errors
                             });
                         })

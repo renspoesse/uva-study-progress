@@ -7,7 +7,7 @@
         <div class="dashhead">
             <div class="dashhead-titles">
                 <h6 class="dashhead-subtitle">Manage</h6>
-                <h2 class="dashhead-title">Edit tips</h2>
+                <h2 class="dashhead-title">Edit info</h2>
             </div>
         </div>
 
@@ -18,7 +18,7 @@
         <div class="flextable table-actions">
             <div class="flextable-item flextable-primary">
                 <div class="btn-toolbar-item input-with-icon">
-                    <input type="text" class="form-control input-block" placeholder="Search advice" v-model="query" v-on:keyup.enter="handleSearch">
+                    <input type="text" class="form-control input-block" placeholder="Search info" v-model="query" v-on:keyup.enter="handleSearch">
                     <i class="icon icon-magnifying-glass"></i>
                 </div>
                 <select class="m-l-s" v-model="limit" v-on:change="handleRefresh()">
