@@ -28,7 +28,7 @@
             <div v-bind:class="['form-group', hasError('second_year_credits_goal') ? 'has-feedback has-error' : '']" v-if="student.id">
                 <label class="col-sm-3 control-label">2nd year credits goal</label>
                 <div class="col-sm-9">
-                    <input type="number" class="form-control" v-model="student.second_year_credits_goal">
+                    <input type="number" class="form-control" min="0" max="100" v-model="student.second_year_credits_goal">
                 </div>
             </div>
 

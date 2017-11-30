@@ -322,7 +322,7 @@ class StudentController extends BaseController
     {
         return [
 
-            'second_year_credits_goal' => 'required|integer|min:0',
+            'second_year_credits_goal' => 'required|integer|min:0|max:100',
             'is_published'             => 'required|boolean'
         ];
     }
@@ -331,7 +331,7 @@ class StudentController extends BaseController
     {
         return [
 
-            'second_year_credits_goal' => 'integer|min:0',
+            'second_year_credits_goal' => 'integer|min:0|max:100',
             'is_published'             => 'boolean'
         ];
     }

@@ -80,6 +80,10 @@
                 <li>EMAILADRES</li>
                 <li>vooropleidng</li>
             </ol>
+            <p>
+                <strong>Recommendation:</strong> verify the .csv file before uploading by opening it in a plain text editor such as Notepad or TextMate.
+                                                 Pay special attention to the delimiting character (;) and date formats (dd-mm-yyyy).
+            </p>
         </div>
 
     </div>
