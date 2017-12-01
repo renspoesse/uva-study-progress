@@ -19,7 +19,7 @@
         <form v-on:submit.prevent="submit" class="form-horizontal">
 
             <div v-bind:class="['form-group']" v-if="hasAnyRole(user, [roles.StudyAdviser, roles.Administrator])">
-                <label class="col-sm-3 control-label">Roles (not visible to students)</label>
+                <label class="col-sm-3 control-label">Roles (not visible to student)</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" v-bind:value="userRoles.join(', ')" disabled>
                 </div>
@@ -28,11 +28,12 @@
             <div v-bind:class="['form-group', hasError('second_year_credits_goal') ? 'has-feedback has-error' : '']" v-if="student.id">
                 <label class="col-sm-3 control-label">2nd year credits goal</label>
                 <div class="col-sm-9">
-                    <input type="number" class="form-control" min="0" max="100" v-model="student.second_year_credits_goal">
+                    <input type="number" class="form-control" min="0" max="100" v-model="student.second_year_credits_goal" v-bind:disabled="!canEdit">
+                    <span class="help-block" v-show="getValidationErrors('second_year_credits_goal')">{{ getValidationErrors('second_year_credits_goal') }}</span>
                 </div>
             </div>
 
-            <div class="form-group" v-if="student.id">
+            <div class="form-group" v-if="student.id && canEdit">
                 <div class="col-sm-3"></div>
                 <div class="col-sm-9" v-show="hasBackgroundProcesses">
                     <i class="fa fa-spinner fa-spin m-r"></i>Wait one second please while background processes are finishing.
@@ -79,7 +80,12 @@
                 user: (state) => state.auth.user,
                 viewAs: (state) => state.auth.viewAs
             }),
-            roles() { return Roles; }
+            roles() { return Roles; },
+
+            canEdit: function() {
+
+                return (!this.viewAs || this.hasAnyRole(this.user, [this.roles.Administrator]));
+            }
         },
         created() {
 
@@ -143,6 +149,10 @@
 
                         this.student = _.defaultsDeep(result.item, {});
                         this.displaySuccess(true);
+
+                        // By request: redirect to the overview page. This should probably be removed once more settings can be edited on this page:
+
+                        this.$router.push({path: '/'});
                     })
                     .catch((ex) => {this.displayErrors(true, ex.message, ex.errors);});
 

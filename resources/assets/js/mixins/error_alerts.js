@@ -30,6 +30,33 @@ export default {
 
             this.successMessage = show ? message : '';
         },
+        getAttributeFromTranslations: function(name) {
+
+            return _.replace(_.defaultTo(trans('validation.attributes.' + name), name), /_/g, ' ');
+        },
+        getValidationErrors: function(field) {
+
+            let result = [];
+
+            if (_.isArray(field)) {
+
+                _.each(field, (value) => {
+
+                    result = result.concat(_.get(this.errors, value, []));
+                })
+            }
+            else
+                result = result.concat(_.get(this.errors, field, []));
+
+            return result.join(' ');
+        },
+        hasArrayItemWithError: function(arrayName, index, field) {
+
+            return _.find(this.errors, function(value, key) {
+
+                return (key === (arrayName + '.' + index + '.' + field));
+            });
+        },
         hasError: function(field) {
 
             return _.find(this.errors, function(value, key) {
