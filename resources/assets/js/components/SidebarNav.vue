@@ -41,6 +41,9 @@
                     <router-link tag="li" to="/advice">
                         <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Info</a>
                     </router-link>
+                    <li>
+                        <a href="mailto:mydashboard-eb@uva.nl" target="_blank"><i class="fa fa-fw fa-envelope m-r" aria-hidden="true"></i>Contact</a>
+                    </li>
 
                     <template v-if="hasAnyRole(viewAs, [roles.StudyAdviser, roles.Administrator])">
 

@@ -24,6 +24,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'moment',
         'numeral',
         'vue',
+        'vue-analytics',
         'vue-resource',
         'vue-router',
         'vuex',

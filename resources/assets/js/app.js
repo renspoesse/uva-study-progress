@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueAnalytics from 'vue-analytics'
 
 import App from './components/App.vue'
 import router from './router'
@@ -31,6 +32,14 @@ Vue.component('sidebar-nav', require('./components/SidebarNav.vue'));
 // Create a global event bus.
 
 const eventBus = new Vue();
+
+// Enable Google Analytics.
+
+Vue.use(VueAnalytics, {
+
+    id: 'UA-110515281-1',
+    router
+});
 
 // Try using an existing session on the server. The getSession action guarantees a resolved promise,
 // so the app is created whether there's a session or not.
