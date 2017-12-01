@@ -7,7 +7,7 @@
                 <span class="sr-only">Toggle nav</span>
             </button>
             <router-link to="/" class="img-wrapper img-size-small pull-left">
-                <img src="images/logo.png" class="img-responsive">
+                <img src="/images/logo.png" class="img-responsive">
             </router-link>
             <a class="img-wrapper img-size-small pull-left m-l-s" v-if="avatarUrl">
                 <img v-bind:src="avatarUrl" class="img-circle img-fit-cover" ref="avatar">
