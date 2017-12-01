@@ -154,7 +154,7 @@
 
                         this.$router.push({path: '/'});
                     })
-                    .catch((ex) => {this.displayErrors(true, ex.message, ex.errors);});
+                    .catch((ex) => {this.displayErrorsSpecific(true, ex.errors);});
 
                 return promise;
             }

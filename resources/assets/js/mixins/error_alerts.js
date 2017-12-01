@@ -24,6 +24,11 @@ export default {
             this.errorMessage = show ? message : '';
             this.errors = show && errors ? errors : [];
         },
+        displayErrorsSpecific: function(show, errors) {
+
+            this.errorMessage = show ? _.values(errors).join('\n') : '';
+            this.errors = show ? errors : [];
+        },
         displaySuccess: function(show, message) {
 
             if (show && _.isEmpty(message)) message = 'You have successfully saved your changes!';
