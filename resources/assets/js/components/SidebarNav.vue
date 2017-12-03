@@ -150,10 +150,12 @@
 
                 this.$store.commit('auth/UNSET_VIEW_AS');
 
-                this.$router.replace({
+                //this.$router.replace({
+                //
+                //    query: _.omit(this.$route.query, ['viewAs'])
+                //});
 
-                    query: _.omit(this.$route.query, ['viewAs'])
-                });
+                this.$router.push({path: '/manage/students'});
             },
             hasAnyRole: roles.hasAnyRole
         }
