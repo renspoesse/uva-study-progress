@@ -126,12 +126,9 @@
 
                 // TODO RENS: confirmation.
 
-                _.forEach(this.getSelectedItems(), (item) => {
-
-                    news.deleteById(item.id)
-                        .then(() => {this.fetchData(this.pagination.currentPage);})
-                        .catch((ex) => {this.addError(ex.message);});
-                });
+                news.deleteByIds(_.map(this.getSelectedItems(), 'id'))
+                    .then(() => {this.fetchData(this.pagination.currentPage);})
+                    .catch((ex) => {this.addError(ex.message);});
             }
         },
         mixins: [

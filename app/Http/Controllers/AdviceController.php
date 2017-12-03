@@ -43,9 +43,9 @@ class AdviceController extends BaseController
         return response(Advice::where('id', $id)->firstOrFail());
     }
 
-    public function deleteById($id)
+    public function deleteByIds($ids)
     {
-        Advice::where('id', $id)->delete();
+        Advice::whereIn('id', explode(',', $ids))->delete();
     }
 
     public function index(Request $request)

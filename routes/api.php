@@ -39,13 +39,13 @@ Route::group(['middleware' => ['web', 'auth', 'csrf']], function () { // Enable 
 
         Route::get('/advice/{id}', 'AdviceController@getById');
         Route::patch('/advice/{id}', 'AdviceController@updatePartialById');
-        Route::delete('/advice/{id}', 'AdviceController@deleteById');
+        Route::delete('/advice/{ids}', 'AdviceController@deleteByIds');
 
         Route::post('/news', 'NewsController@create');
 
         Route::get('/news/{id}', 'NewsController@getById');
         Route::patch('/news/{id}', 'NewsController@updatePartialById');
-        Route::delete('/news/{id}', 'NewsController@deleteById');
+        Route::delete('/news/{ids}', 'NewsController@deleteByIds');
 
         Route::get('/students', 'StudentController@index');
 
@@ -57,8 +57,8 @@ Route::group(['middleware' => ['web', 'auth', 'csrf']], function () { // Enable 
         Route::patch('/students', 'StudentController@updatePartialByParameters');
         Route::delete('/students', 'StudentController@deleteByParameters');
 
-        Route::patch('/students/{id}', 'StudentController@updatePartialById');
-        Route::delete('/students/{id}', 'StudentController@deleteById');
+        Route::patch('/students/{ids}', 'StudentController@updatePartialByIds');
+        Route::delete('/students/{ids}', 'StudentController@deleteByIds');
 
         Route::post('/import/students', 'StudentController@createByImport');
     });

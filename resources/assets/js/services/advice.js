@@ -1,12 +1,16 @@
 import Vue from 'vue'
+import * as _ from 'lodash'
 
 import * as json from '../helpers/json'
 
-const deleteById = function(id) {
+const deleteByIds = function(ids) {
+
+    if (_.isArray(ids))
+        ids = ids.join(',');
 
     return new Promise((resolve, reject) => {
 
-        Vue.http.delete('advice/' + id).then((response) => {
+        Vue.http.delete('advice/' + ids).then((response) => {
 
                 resolve({});
             })
@@ -183,7 +187,7 @@ const updateById = function(id, payload) {
 
 export {
 
-    deleteById,
+    deleteByIds,
     getById,
     getByParameters,
     save,

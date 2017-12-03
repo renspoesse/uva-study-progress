@@ -193,9 +193,9 @@ class StudentController extends BaseController
         return response($result);
     }
 
-    public function deleteById($id)
+    public function deleteByIds($ids)
     {
-        Student::where('id', $id)->delete();
+        Student::whereIn('id', explode(',', $ids))->delete();
     }
 
     public function deleteByParameters(Request $request)
@@ -268,19 +268,24 @@ class StudentController extends BaseController
         return $this->updatePartialById($student->id, $request);
     }
 
-    public function updatePartialById($id, Request $request)
+    public function updatePartialByIds($ids, Request $request)
     {
         $this->validate($request, $this->getValidatorPartial($request));
 
-        $student = Student::findOrFail($id);
+        $student = null;
 
-        DB::transaction(function () use ($id, $request, $student) {
+        foreach(explode(',', $ids) as $id) {
 
-            if ($request->exists('second_year_credits_goal')) $student->second_year_credits_goal = $request->input('second_year_credits_goal');
-            if ($request->exists('is_published')) $student->is_published = $request->input('is_published');
+            $student = Student::findOrFail($id);
 
-            $student->save();
-        });
+            DB::transaction(function () use ($id, $request, $student) {
+
+                if ($request->exists('second_year_credits_goal')) $student->second_year_credits_goal = $request->input('second_year_credits_goal');
+                if ($request->exists('is_published')) $student->is_published = $request->input('is_published');
+
+                $student->save();
+            });
+        }
 
         return response(Student::find($student->id));
     }

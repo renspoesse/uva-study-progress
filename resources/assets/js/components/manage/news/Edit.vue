@@ -124,7 +124,7 @@
             },
             handleRemove: function() {
 
-                news.deleteById(this.news.id)
+                news.deleteByIds(this.news.id)
                     .then(() => {this.$router.push({path: '/manage/news'});})
                     .catch((ex) => {this.displayErrors(true, ex.message);});
             },

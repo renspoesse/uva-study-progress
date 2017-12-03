@@ -43,9 +43,9 @@ class NewsController extends BaseController
         return response(News::where('id', $id)->firstOrFail());
     }
 
-    public function deleteById($id)
+    public function deleteByIds($ids)
     {
-        News::where('id', $id)->delete();
+        News::whereIn('id', explode(',', $ids))->delete();
     }
 
     public function index(Request $request)

@@ -173,12 +173,9 @@
 
                 if (this.actionMode === 1) {
 
-                    _.forEach(this.getSelectedItems(), (item) => {
-
-                        students.updateById(item.id, {is_published: true})
-                            .then(() => {this.fetchData(this.pagination.currentPage);})
-                            .catch((ex) => {this.addError(ex.message);});
-                    });
+                    students.updateByIds(_.map(this.getSelectedItems(), 'id'), {is_published: true})
+                        .then(() => {this.fetchData(this.pagination.currentPage);})
+                        .catch((ex) => {this.addError(ex.message);});
                 }
                 else if (this.actionMode === 2) {
 
@@ -195,12 +192,9 @@
 
                 if (this.actionMode === 1) {
 
-                    _.forEach(this.getSelectedItems(), (item) => {
-
-                        students.deleteById(item.id)
-                            .then(() => {this.fetchData(this.pagination.currentPage);})
-                            .catch((ex) => {this.addError(ex.message);});
-                    });
+                    students.deleteByIds(_.map(this.getSelectedItems(), 'id'))
+                        .then(() => {this.fetchData(this.pagination.currentPage);})
+                        .catch((ex) => {this.addError(ex.message);});
                 }
                 else if (this.actionMode === 2) {
 
@@ -215,12 +209,9 @@
 
                 if (this.actionMode === 1) {
 
-                    _.forEach(this.getSelectedItems(), (item) => {
-
-                        students.updateById(item.id, {is_published: false})
-                            .then(() => {this.fetchData(this.pagination.currentPage);})
-                            .catch((ex) => {this.addError(ex.message);});
-                    });
+                    students.updateByIds(_.map(this.getSelectedItems(), 'id'), {is_published: false})
+                        .then(() => {this.fetchData(this.pagination.currentPage);})
+                        .catch((ex) => {this.addError(ex.message);});
                 }
                 else if (this.actionMode === 2) {
 

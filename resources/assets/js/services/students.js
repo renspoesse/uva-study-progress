@@ -1,12 +1,16 @@
 import Vue from 'vue'
+import * as _ from 'lodash'
 
 import * as json from '../helpers/json'
 
-const deleteById = function(id) {
+const deleteByIds = function(ids) {
+
+    if (_.isArray(ids))
+        ids = ids.join(',');
 
     return new Promise((resolve, reject) => {
 
-        Vue.http.delete('students/' + id).then((response) => {
+        Vue.http.delete('students/' + ids).then((response) => {
 
                 resolve({});
             })
@@ -238,13 +242,16 @@ const updateByAuthenticated = function(payload) {
     });
 };
 
-const updateById = function(id, payload) {
+const updateByIds = function(ids, payload) {
+
+    if (_.isArray(ids))
+        ids = ids.join(',');
 
     return new Promise((resolve, reject) => {
 
         payload = json.removeEmptyObjects(_.clone(payload));
 
-        Vue.http.patch('students/' + id, payload).then((response) => {
+        Vue.http.patch('students/' + ids, payload).then((response) => {
 
                 response.json().then((obj) => {
 
@@ -334,7 +341,7 @@ const updateByParameters = function(params, payload) {
 
 export {
 
-    deleteById,
+    deleteByIds,
     deleteByParameters,
     getByAuthenticated,
     getById,
@@ -342,6 +349,6 @@ export {
     getCreditsExpected,
     importFromFile,
     updateByAuthenticated,
-    updateById,
+    updateByIds,
     updateByParameters
 }
