@@ -141,7 +141,7 @@
                 let promise;
 
                 if (this.viewAs)
-                    promise = students.updateById(payload.id, payload);
+                    promise = students.updateByIds(payload.id, payload);
                 else
                     promise = students.updateByAuthenticated(payload, payload);
 

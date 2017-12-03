@@ -121,7 +121,7 @@
                 this.showLoading(true);
                 this.displayErrors(false);
 
-                students.updateById(this.student.id, {is_published: true})
+                students.updateByIds(this.student.id, {is_published: true})
                     .then((result) => {
 
                         this.student = result.item;
@@ -138,7 +138,7 @@
                 this.showLoading(true);
                 this.displayErrors(false);
 
-                students.updateById(this.student.id, {is_published: false})
+                students.updateByIds(this.student.id, {is_published: false})
                     .then((result) => {
 
                         this.student = result.item;
