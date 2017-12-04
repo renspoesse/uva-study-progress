@@ -10,7 +10,7 @@
 
         <div class="dashhead">
             <div class="dashhead-titles">
-                <h2 class="dashhead-title">Overview for {{ displayName }}</h2>
+                <h2 class="dashhead-title">Dashboard for {{ displayName }}</h2>
             </div>
         </div>
 

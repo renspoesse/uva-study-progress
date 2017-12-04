@@ -33,7 +33,7 @@
                     <li class="nav-header">Dashboard</li>
 
                     <router-link tag="li" to="/" exact>
-                        <a><i class="fa fa-fw fa-home m-r" aria-hidden="true"></i>Overview</a>
+                        <a><i class="fa fa-fw fa-home m-r" aria-hidden="true"></i>Dashboard</a>
                     </router-link>
                     <router-link tag="li" to="/news">
                         <a><i class="fa fa-fw fa-newspaper-o m-r" aria-hidden="true"></i>Updates</a>

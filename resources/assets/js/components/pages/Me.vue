@@ -150,7 +150,7 @@
                         this.student = _.defaultsDeep(result.item, {});
                         this.displaySuccess(true);
 
-                        // By request: redirect to the overview page. This should probably be removed once more settings can be edited on this page:
+                        // By request: redirect to the dashboard page. This should probably be removed once more settings can be edited on this page:
 
                         this.$router.push({path: '/'});
                     })
