@@ -44,6 +44,7 @@
             <ul>
                 <li>It should ideally be UTF-8 encoded to prevent any data loss.</li>
                 <li>The delimiter must be ; (default when exporting from Microsoft Excel).</li>
+                <li>The first row must contain the column headers.</li>
             </ul>
             <p><strong>It should contain the following columns:</strong></p>
             <ol>

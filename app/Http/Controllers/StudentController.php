@@ -28,79 +28,20 @@ class StudentController extends BaseController
         if (!$file->isValid())
             throw new \Exception('The file was not uploaded successfully.');
 
-        //$contents = file_get_contents($file);
-        //
-        //if (!mb_check_encoding($contents, 'UTF-8') || !($contents === mb_convert_encoding(mb_convert_encoding($contents, 'UTF-32', 'UTF-8'), 'UTF-8', 'UTF-32'))) {
-        //
-        //    $contents = mb_convert_encoding($contents, 'UTF-8');
-        //}
-        //
-        //$rows = explode(PHP_EOL, $contents);
-        //$rows = array_map(function ($line) {
-        //
-        //    return str_getcsv($line, ';');
-        //
-        //}, $rows);
-
-        /*
-        $rows = [];
-
-        if (($handle = fopen($file, 'r')) !== false) {
-
-            while (($data = fgetcsv($handle, 0, ';')) !== false)
-                array_push($rows, $data);
-
-            fclose($handle);
-        }
-        else
-            throw new \Exception('Unable to open file.');
-
-        $headers = array_splice($rows, 0, 1)[0];
-        $parsed = [];
-
-        foreach ($rows as $row) {
-
-            $record = [];
-
-            foreach ($headers as $index => $header)
-                $record[utf8_encode($header)] = $row[$index];
-
-            array_push($parsed, $record);
-        }
-        */
-
         $stream = fopen($file, 'r');
-        $csv    = Reader::createFromStream($stream)->setDelimiter(';');
+        $csv    = Reader::createFromStream($stream)->setDelimiter(';')->setHeaderOffset(0);
 
-        $headers = $csv->fetchOne();
-        $rows    = $csv->setOffset(1)->fetchAll();
+        DB::transaction(function () use ($csv) {
 
-        $parsed = [];
-
-        foreach ($rows as $row) {
-
-            $record = [];
-
-            // We assume that the file is UTF-8 encoded. If not, some loss will occur here.
-
-            foreach ($headers as $index => $header)
-                $record[$header] = utf8_encode($row[$index]);
-
-            array_push($parsed, $record);
-        }
-
-        DB::transaction(function () use ($parsed) {
-
-            foreach ($parsed as $record) {
+            foreach ($csv->getRecords() as $offset => $record) {
 
                 //try {
 
-                //if (empty($record['ï»¿nummer'])) continue;
-                if (empty($record['nummer'])) continue;
+                if (empty($record['nummer']))
+                    throw new \Exception('Student number cannot be empty.');
 
                 $obj = new Student();
 
-                //$obj->student_number = $record['ï»¿nummer'];
                 $obj->student_number               = $record['nummer'];
                 $obj->program_code                 = $record['opl'];
                 $obj->program_name                 = $record['omschrijving'];
@@ -274,7 +215,7 @@ class StudentController extends BaseController
 
         $student = null;
 
-        foreach(explode(',', $ids) as $id) {
+        foreach (explode(',', $ids) as $id) {
 
             $student = Student::findOrFail($id);
 
