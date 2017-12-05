@@ -95,7 +95,7 @@ export default {
 
                     limit: this.limit,
                     order: this.order.field ? this.order.field + '|' + this.order.direction : '',
-                    page: page > 1 ? page : '',
+                    page: page,
                     query: this.query.trim()
 
                 }, (value) => {return !value}))
