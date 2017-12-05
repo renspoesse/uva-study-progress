@@ -69,7 +69,7 @@ export default {
         },
         handleSearch: function() {
 
-            this.fetchData(1)
+            this.fetchData(1);
         },
         handleSelectAll: function() {
 
