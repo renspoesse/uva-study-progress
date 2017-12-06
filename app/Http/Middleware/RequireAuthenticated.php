@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Enums\Roles;
 use Closure;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 
 class RequireAuthenticated
@@ -22,12 +23,7 @@ class RequireAuthenticated
         Log::info('Request URL: ' . $request->fullUrl());
         Log::info('Session id (middleware): ' . $request->session()->getId());
 
-        $domain   = parse_url($request->url(), PHP_URL_HOST);
-        $elements = explode('.', $domain);
-
-        $tld = $elements[count($elements) - 1];
-
-        if ($tld === 'dev' && !$request->session()->get('authenticated')) {
+        if (App::environment('local') && !$request->session()->get('authenticated')) {
 
             $request->session()->put('user', [
 
