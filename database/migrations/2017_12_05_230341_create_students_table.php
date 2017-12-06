@@ -32,8 +32,8 @@ class CreateStudentsTable extends Migration
             $table->integer('second_year_b6_credits')->nullable();
             $table->integer('second_year_b1_subjects')->nullable();
             $table->integer('second_year_credits')->nullable();
-            $table->integer('second_year_expected');
-            $table->integer('second_year_goal');
+            $table->integer('second_year_credits_expected');
+            $table->integer('second_year_credits_goal');
             $table->string('dip_category', 16);
             $table->integer('credits');
             $table->decimal('gpa_current', 4, 2);
