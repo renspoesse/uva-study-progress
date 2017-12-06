@@ -186,9 +186,9 @@ class StudentController extends BaseController
 
         return response($csv->getContent(), 200, [
 
-            'Content-Encoding' => 'none',
-            'Content-Type' => 'text/csv; charset=UTF-8',
-            'Content-Disposition' => 'attachment; filename="export.csv"',
+            'Content-Encoding'    => 'none',
+            'Content-Type'        => 'text/csv; charset=UTF-8',
+            'Content-Disposition' => 'attachment; filename="Export students ' . Carbon::now()->format('Y-m-d His') . '.csv"',
             'Content-Description' => 'File Transfer',
         ]);
     }

@@ -29,7 +29,8 @@
             </div>
             <div class="flextable-item" v-if="hasAnyRole(user, roles.Administrator)">
                 <div class="btn-group">
-                    <router-link to="/manage/students/import" class="btn btn-primary-outline"><i class="fa fa-plus m-r-s"></i>Import from .csv</router-link>
+                    <router-link to="/manage/students/import" class="btn btn-primary-outline"><i class="fa fa-plus m-r-s"></i>Import</router-link>
+                    <a href="/api/export/students" class="btn btn-primary-outline"><i class="fa fa-download m-r-s"></i>Export</a>
                 </div>
             </div>
         </div>
