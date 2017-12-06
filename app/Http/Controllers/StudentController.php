@@ -7,9 +7,12 @@ use App\Helpers\LtiHelpers;
 use App\Helpers\PaginationHelpers;
 use App\Helpers\RoleHelpers;
 use App\Models\Student;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use League\Csv\Reader;
+use League\Csv\Writer;
 
 class StudentController extends BaseController
 {
@@ -97,6 +100,97 @@ class StudentController extends BaseController
         });
 
         return response('', 201);
+    }
+
+    public function export()
+    {
+        $header = [
+
+            'nummer',
+            'opl',
+            'omschrijving',
+            'cohort',
+            'BSA-crd',
+            'bsa',
+            '2ndY',
+            '2ndY-B1',
+            '2ndY-B2',
+            '2ndY-B3',
+            '2ndY-B4',
+            '2ndY-B5',
+            '2ndY-B6',
+            'Nvakken-B1',
+            '2ndY-crd',
+            '2ndY-crd Prognose',
+            'My2ndGoal',
+            'DipCategory',
+            'RunningTotal',
+            'GPA actueel',
+            'prognose afstudeer datum obv tempo',
+            'VOORNAAM',
+            'ACHTERNAAM',
+            'TUSSENVOEGSEL',
+            'INITIALEN',
+            'GEBOORTEDATUM',
+            'GEBOORTEPLAATS',
+            'GEBOORTELAND',
+            'GESLACHT',
+            'NATIONALITEIT',
+            'EMAILADRES',
+            'vooropleidng'
+        ];
+
+        $records = Student::all()->map(function ($obj) {
+
+            return [
+
+                $obj->student_number,
+                $obj->program_code,
+                $obj->program_name,
+                $obj->cohort,
+                $obj->bsa_credits,
+                $obj->bsa,
+                $obj->second_year,
+                $obj->second_year_b1_credits,
+                $obj->second_year_b2_credits,
+                $obj->second_year_b3_credits,
+                $obj->second_year_b4_credits,
+                $obj->second_year_b5_credits,
+                $obj->second_year_b6_credits,
+                $obj->second_year_b1_subjects,
+                $obj->second_year_credits,
+                $obj->second_year_credits_expected,
+                $obj->second_year_credits_goal,
+                $obj->dip_category,
+                $obj->credits,
+                $obj->gpa_current,
+                $obj->graduation_date_expected ? (new Carbon($obj->graduation_date_expected))->format('d-m-Y') : null,
+                $obj->first_name,
+                $obj->last_name,
+                $obj->tussenvoegsel,
+                $obj->initials,
+                $obj->birth_date ? (new Carbon($obj->birth_date))->format('d-m-Y') : null,
+                $obj->birth_place,
+                $obj->birth_country,
+                $obj->gender === 1 ? 'M' : ($obj->gender === 2 ? 'F' : null),
+                $obj->nationality,
+                $obj->email_address,
+                $obj->vooropleiding
+            ];
+        });
+
+        $csv = Writer::createFromString('')->setDelimiter(';');
+
+        $csv->insertOne($header);
+        $csv->insertAll($records);
+
+        return response($csv->getContent(), 200, [
+
+            'Content-Encoding' => 'none',
+            'Content-Type' => 'text/csv; charset=UTF-8',
+            'Content-Disposition' => 'attachment; filename="export.csv"',
+            'Content-Description' => 'File Transfer',
+        ]);
     }
 
     public function getByAuthenticated(Request $request)

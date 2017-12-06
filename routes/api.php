@@ -60,6 +60,8 @@ Route::group(['middleware' => ['web', 'auth', 'csrf']], function () { // Enable 
         Route::patch('/students/{ids}', 'StudentController@updatePartialByIds');
         Route::delete('/students/{ids}', 'StudentController@deleteByIds');
 
+        Route::get('/export/students', 'StudentController@export');
+
         Route::post('/import/students', 'StudentController@createByImport');
     });
 });
