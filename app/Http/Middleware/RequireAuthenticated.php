@@ -27,13 +27,14 @@ class RequireAuthenticated
 
             $request->session()->put('user', [
 
-                'firstname' => 'Developer',
-                'lastname'  => '',
-                'fullname'  => 'Developer',
-                'email'     => 'email@example.com',
-                'image'     => '',
-                'roles'     => [Roles::Administrator],
-                'groups'    => []
+                'firstname'             => 'Developer',
+                'lastname'              => '',
+                'fullname'              => 'Developer',
+                'email'                 => 'email@example.com',
+                'image'                 => '',
+                'roles'                 => [Roles::Student, Roles::Administrator],
+                'groups'                => [],
+                'custom_student_number' => 20000000
             ]);
             $request->session()->put('authenticated', true);
         }

@@ -300,7 +300,7 @@ class StudentController extends BaseController
     public function updatePartialByAuthenticated(Request $request)
     {
         $student = Student::where('student_number', array_get(LtiHelpers::getUser($request), 'custom_student_number'))->firstOrFail();
-        return $this->updatePartialById($student->id, $request);
+        return $this->updatePartialByIds($student->id, $request);
     }
 
     public function updatePartialByIds($ids, Request $request)
