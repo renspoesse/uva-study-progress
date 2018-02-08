@@ -40,7 +40,7 @@ class StudentController extends BaseController
 
                 //try {
 
-                if (empty($record['nummer']))
+                if ($record['nummer'] === '')
                     throw new \Exception('Student number cannot be empty.');
 
                 $obj = new Student();
@@ -52,14 +52,14 @@ class StudentController extends BaseController
                 $obj->bsa_credits                  = $record['BSA-crd'];
                 $obj->bsa                          = $record['bsa'];
                 $obj->second_year                  = $record['2ndY'];
-                $obj->second_year_b1_credits       = !empty($record['2ndY-B1']) ? $record['2ndY-B1'] : null;
-                $obj->second_year_b2_credits       = !empty($record['2ndY-B2']) ? $record['2ndY-B2'] : null;
-                $obj->second_year_b3_credits       = !empty($record['2ndY-B3']) ? $record['2ndY-B3'] : null;
-                $obj->second_year_b4_credits       = !empty($record['2ndY-B4']) ? $record['2ndY-B4'] : null;
-                $obj->second_year_b5_credits       = !empty($record['2ndY-B5']) ? $record['2ndY-B5'] : null;
-                $obj->second_year_b6_credits       = !empty($record['2ndY-B6']) ? $record['2ndY-B6'] : null;
-                $obj->second_year_b1_subjects      = !empty($record['Nvakken-B1']) ? $record['Nvakken-B1'] : null;
-                $obj->second_year_credits          = !empty($record['2ndY-crd']) ? $record['2ndY-crd'] : null;
+                $obj->second_year_b1_credits       = $record['2ndY-B1'] !== '' ? $record['2ndY-B1'] : null;
+                $obj->second_year_b2_credits       = $record['2ndY-B2'] !== '' ? $record['2ndY-B2'] : null;
+                $obj->second_year_b3_credits       = $record['2ndY-B3'] !== '' ? $record['2ndY-B3'] : null;
+                $obj->second_year_b4_credits       = $record['2ndY-B4'] !== '' ? $record['2ndY-B4'] : null;
+                $obj->second_year_b5_credits       = $record['2ndY-B5'] !== '' ? $record['2ndY-B5'] : null;
+                $obj->second_year_b6_credits       = $record['2ndY-B6'] !== '' ? $record['2ndY-B6'] : null;
+                $obj->second_year_b1_subjects      = $record['Nvakken-B1'] !== '' ? $record['Nvakken-B1'] : null;
+                $obj->second_year_credits          = $record['2ndY-crd'] !== '' ? $record['2ndY-crd'] : null;
                 $obj->second_year_credits_expected = $record['2ndY-crd Prognose'];
                 $obj->second_year_credits_goal     = $record['My2ndGoal'];
                 $obj->dip_category                 = $record['DipCategory'];
@@ -79,7 +79,7 @@ class StudentController extends BaseController
                 $obj->vooropleiding                = $record['vooropleidng'];
                 $obj->is_published                 = false;
 
-                if (!empty($obj->tussenvoegsel)) {
+                if ($obj->tussenvoegsel !== '') {
 
                     $obj->display_name = $obj->first_name . ' ' . $obj->tussenvoegsel . ' ' . $obj->last_name;
                 }
