@@ -214,15 +214,46 @@ class StudentController extends BaseController
             return response(Student::where('id', $id)->firstOrFail());
     }
 
+    public function getCreditsAverage()
+    {
+        // TODO RENS: cachen.
+
+        $record = DB::table('students')->select(
+
+            DB::raw('AVG(second_year_b1_credits) AS second_year_b1_credits_average'),
+            DB::raw('AVG(second_year_b2_credits) AS second_year_b2_credits_average'),
+            DB::raw('AVG(second_year_b3_credits) AS second_year_b3_credits_average'),
+            DB::raw('AVG(second_year_b4_credits) AS second_year_b4_credits_average'),
+            DB::raw('AVG(second_year_b5_credits) AS second_year_b5_credits_average'),
+            DB::raw('AVG(second_year_b6_credits) AS second_year_b6_credits_average')
+
+        )->first();
+
+        $record->second_year_b1_credits_average = is_null($record->second_year_b1_credits_average) ? null : (int)round((double)$record->second_year_b1_credits_average);
+        $record->second_year_b2_credits_average = is_null($record->second_year_b2_credits_average) ? null : (int)round((double)$record->second_year_b2_credits_average);
+        $record->second_year_b3_credits_average = is_null($record->second_year_b3_credits_average) ? null : (int)round((double)$record->second_year_b3_credits_average);
+        $record->second_year_b4_credits_average = is_null($record->second_year_b4_credits_average) ? null : (int)round((double)$record->second_year_b4_credits_average);
+        $record->second_year_b5_credits_average = is_null($record->second_year_b5_credits_average) ? null : (int)round((double)$record->second_year_b5_credits_average);
+        $record->second_year_b6_credits_average = is_null($record->second_year_b6_credits_average) ? null : (int)round((double)$record->second_year_b6_credits_average);
+
+        return response()->json($record);
+    }
+
     public function getCreditsExpected()
     {
         // TODO RENS: cachen.
 
-        $result = DB::table('students')->select('bsa_credits', 'second_year_b1_subjects', DB::raw('AVG(second_year_credits) AS second_year_credits_expected'))->whereNotNull('second_year_credits')->groupBy('bsa_credits', 'second_year_b1_subjects')->get();
+        $result = DB::table('students')->select(
+
+            'bsa_credits',
+            'second_year_b1_subjects',
+            DB::raw('AVG(second_year_credits) AS second_year_credits_expected')
+
+        )->groupBy('bsa_credits', 'second_year_b1_subjects')->get();
 
         $result->each(function ($record) {
 
-            $record->second_year_credits_expected = (int)round((double)$record->second_year_credits_expected);
+            $record->second_year_credits_expected = is_null($record->second_year_credits_expected) ? null : (int)round((double)$record->second_year_credits_expected);
         });
 
         return response($result);

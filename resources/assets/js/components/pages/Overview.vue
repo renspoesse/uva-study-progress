@@ -329,7 +329,7 @@
             hasAnyRole: roles.hasAnyRole,
             renderCharts: function() {
 
-                students.getCreditsExpected().then((result) => {
+                students.getCreditsAverage().then((result) => result.item).then((average) => {
 
                     //                    const creditsExpected0 = _.find(result.items, (value) => {return value.bsa_credits === this.student.bsa_credits && value.second_year_b1_subjects === 0});
                     //                    const creditsExpected1 = _.find(result.items, (value) => {return value.bsa_credits === this.student.bsa_credits && value.second_year_b1_subjects === 1});
@@ -457,6 +457,28 @@
                                         12 + 12 + 6 + 12,
                                         12 + 12 + 6 + 12 + 12,
                                         12 + 12 + 6 + 12 + 12 + 6
+                                    ]
+                                },
+                                {
+                                    type: 'line',
+                                    borderColor: [
+
+                                        '#000000'
+                                    ],
+                                    borderWidth: 1,
+                                    fill: false,
+                                    label: 'Peer group average',
+                                    lineTension: 0,
+                                    pointRadius: 0,
+                                    spanGaps: true,
+                                    data: [
+
+                                        average.second_year_b1_credits_average,
+                                        (average.second_year_b2_credits_average === null) ? null : average.second_year_b1_credits_average + average.second_year_b2_credits_average,
+                                        (average.second_year_b3_credits_average === null) ? null : average.second_year_b1_credits_average + average.second_year_b2_credits_average + average.second_year_b3_credits_average,
+                                        (average.second_year_b4_credits_average === null) ? null : average.second_year_b1_credits_average + average.second_year_b2_credits_average + average.second_year_b3_credits_average + average.second_year_b4_credits_average,
+                                        (average.second_year_b5_credits_average === null) ? null : average.second_year_b1_credits_average + average.second_year_b2_credits_average + average.second_year_b3_credits_average + average.second_year_b4_credits_average + average.second_year_b5_credits_average,
+                                        (average.second_year_b6_credits_average === null) ? null : average.second_year_b1_credits_average + average.second_year_b2_credits_average + average.second_year_b3_credits_average + average.second_year_b4_credits_average + average.second_year_b5_credits_average + average.second_year_b6_credits_average,
                                     ]
                                 },
                                 {

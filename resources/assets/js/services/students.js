@@ -135,6 +135,31 @@ const getByParameters = function(params) {
     });
 };
 
+const getCreditsAverage = function() {
+
+    return new Promise((resolve, reject) => {
+
+        Vue.http.get('students/creditsaverage').then((response) => {
+
+                response.json().then((obj) => {
+
+                        obj = json.removeDataWrappers(obj);
+                        resolve({item: obj});
+                    })
+                    .catch((parseError) => {
+
+                        console.log(parseError);
+                        reject({message: 'Failed to parse result.'});
+                    });
+            })
+            .catch((response) => {
+
+                console.log(response);
+                reject({message: 'Oops. Something went wrong.'});
+            });
+    });
+};
+
 const getCreditsExpected = function() {
 
     return new Promise((resolve, reject) => {
@@ -346,6 +371,7 @@ export {
     getByAuthenticated,
     getById,
     getByParameters,
+    getCreditsAverage,
     getCreditsExpected,
     importFromFile,
     updateByAuthenticated,
