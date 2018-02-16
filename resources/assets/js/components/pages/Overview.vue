@@ -469,7 +469,6 @@
                                     fill: false,
                                     label: 'Peer group average',
                                     lineTension: 0,
-                                    pointRadius: 0,
                                     spanGaps: true,
                                     data: [
 
