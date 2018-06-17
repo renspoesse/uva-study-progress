@@ -293,26 +293,6 @@ class StudentController extends BaseController
         return response()->json($record);
     }
 
-    public function getCreditsExpected()
-    {
-        // TODO RENS: cachen.
-
-        $result = DB::table('students')->select(
-
-            'bsa_credits',
-            'second_year_b1_subjects',
-            DB::raw('AVG(second_year_credits) AS second_year_credits_expected')
-
-        )->groupBy('bsa_credits', 'second_year_b1_subjects')->get();
-
-        $result->each(function ($record) {
-
-            $record->second_year_credits_expected = is_null($record->second_year_credits_expected) ? null : (int)round((double)$record->second_year_credits_expected);
-        });
-
-        return response($result);
-    }
-
     public function deleteByIds($ids)
     {
         Student::whereIn('id', explode(',', $ids))->delete();

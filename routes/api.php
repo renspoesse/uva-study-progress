@@ -24,7 +24,6 @@ Route::group(['middleware' => ['web', 'auth', 'csrf']], function () { // Enable 
     Route::get('/news', 'NewsController@index');
 
     Route::get('/students/creditsaverage', 'StudentController@getCreditsAverage');
-    Route::get('/students/creditsexpected', 'StudentController@getCreditsExpected');
 
     Route::group(['middleware' => 'role:' . Roles::Student], function () {
 
