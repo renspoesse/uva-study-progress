@@ -195,7 +195,6 @@ class StudentController extends BaseController
                 $obj->first_year_b4_credits,
                 $obj->first_year_b5_credits,
                 $obj->first_year_b6_credits,
-                $obj->first_year_b1_subjects,
                 $obj->first_year_credits,
                 $obj->first_year_credits_goal,
                 $obj->wa1_credits,
