@@ -18,7 +18,7 @@
 
         <template v-if="student.id">
 
-            <div class="row text-center">
+            <div class="row text-center" v-if="student.graduation_date_expected">
                 <div class="col-md-12 m-b-md">
 
                     <h4>Expected graduation date: {{ moment(student.graduation_date_expected).format('MMMM Do YYYY') }}</h4>
@@ -66,15 +66,19 @@
                                 </thead>
                                 <tbody>
 
-                                <tr>
+                                <tr v-if="student.bsa !== null">
                                     <td>BSA</td>
                                     <td>{{ getStudentBsaText(student) }}<i class="fa fa-check m-l-s" v-if="isStudentBsaPositive(student)"></i></td>
                                 </tr>
-                                <tr>
-                                    <td>Credits in 1st year</td>
+                                <tr v-if="student.bsa_credits !== null">
+                                    <td>BSA credits</td>
                                     <td>{{ student.bsa_credits }} ECTS</td>
                                 </tr>
-                                <tr>
+                                <tr v-if="student.first_year_credits !== null">
+                                    <td>Credits in 1st year</td>
+                                    <td>{{ student.first_year_credits }} ECTS</td>
+                                </tr>
+                                <tr v-if="student.second_year_credits !== null">
                                     <td>Credits in 2nd year</td>
                                     <td>{{ student.second_year_credits }} ECTS</td>
                                 </tr>
@@ -127,7 +131,7 @@
                                     <td>Credits in block 6, 2nd year</td>
                                     <td>{{ student.second_year_b6_credits }} ECTS</td>
                                 </tr>
-                                <tr class="bg-info">
+                                <tr class="bg-info" v-if="student.second_year_credits_expected !== null">
                                     <td>Prognosis total credits 2nd year</td>
                                     <td>{{ student.second_year_credits_expected }} ECTS</td>
                                 </tr>
@@ -372,9 +376,9 @@
 
                             labels: [
 
-                                'Credits this year (' + this.student.second_year_credits + ')',
-                                'Prognosis* (' + this.student.second_year_credits_expected + ')',
-                                'Goal (' + this.student.second_year_credits_goal + ')',
+                                'Credits this year (' + (this.student.second_year_credits || 'none') + ')',
+                                'Prognosis* (' + (this.student.second_year_credits_expected || 'none') + ')',
+                                'Goal (' + (this.student.second_year_credits_goal || 'none') + ')',
                             ],
                             datasets: [{
 
@@ -472,7 +476,7 @@
                                     spanGaps: true,
                                     data: [
 
-                                        average.second_year_b1_credits_average,
+                                        (average.second_year_b1_credits_average === null) ? null : average.second_year_b1_credits_average,
                                         (average.second_year_b2_credits_average === null) ? null : average.second_year_b1_credits_average + average.second_year_b2_credits_average,
                                         (average.second_year_b3_credits_average === null) ? null : average.second_year_b1_credits_average + average.second_year_b2_credits_average + average.second_year_b3_credits_average,
                                         (average.second_year_b4_credits_average === null) ? null : average.second_year_b1_credits_average + average.second_year_b2_credits_average + average.second_year_b3_credits_average + average.second_year_b4_credits_average,
@@ -536,7 +540,7 @@
                                     spanGaps: true,
                                     data: [
 
-                                        this.student.second_year_b1_credits,
+                                        (this.student.second_year_b1_credits === null) ? null : this.student.second_year_b1_credits,
                                         (this.student.second_year_b2_credits === null) ? null : this.student.second_year_b1_credits + this.student.second_year_b2_credits,
                                         (this.student.second_year_b3_credits === null) ? null : this.student.second_year_b1_credits + this.student.second_year_b2_credits + this.student.second_year_b3_credits,
                                         (this.student.second_year_b4_credits === null) ? null : this.student.second_year_b1_credits + this.student.second_year_b2_credits + this.student.second_year_b3_credits + this.student.second_year_b4_credits,
