@@ -52,9 +52,29 @@
                 <li>opl (required)</li>
                 <li>omschrijving</li>
                 <li>cohort (required)</li>
-                <li>BSA-crd (required)</li>
-                <li>bsa (required)</li>
-                <li>2ndY (required)</li>
+                <li>Jaar (required)</li>
+
+                <li>1stY-Mentor</li>
+                <li>1stY-B1</li>
+                <li>1stY-B2</li>
+                <li>1stY-B3</li>
+                <li>1stY-B4</li>
+                <li>1stY-B5</li>
+                <li>1stY-B6</li>
+                <li>1stY-crd</li>
+                <li>My1stGoal</li>
+
+                <li>WA1-crd</li>
+                <li>WA1</li>
+                <li>WA2-crd</li>
+                <li>WA2</li>
+                <li>WA3-crd</li>
+                <li>WA3</li>
+
+                <li>BSA-crd</li>
+                <li>bsa</li>
+
+                <li>2ndY</li>
                 <li>2ndY-B1</li>
                 <li>2ndY-B2</li>
                 <li>2ndY-B3</li>
@@ -63,20 +83,22 @@
                 <li>2ndY-B6</li>
                 <li>Nvakken-B1</li>
                 <li>2ndY-crd</li>
-                <li>2ndY-crd Prognose (required)</li>
-                <li>My2ndGoal (required)</li>
-                <li>DipCategory (required)</li>
+                <li>2ndY-crd Prognose</li>
+                <li>My2ndGoal</li>
+
+                <li>DipCategory</li>
                 <li>RunningTotal (required)</li>
-                <li>GPA actueel (required)</li>
-                <li>prognose afstudeer datum obv tempo (required, format dd-mm-yyyy)</li>
+                <li>GPA actueel</li>
+                <li>prognose afstudeer datum obv tempo (format: dd-mm-yyyy)</li>
+
                 <li>VOORNAAM (required)</li>
                 <li>ACHTERNAAM (required)</li>
                 <li>TUSSENVOEGSEL</li>
                 <li>INITIALEN</li>
-                <li>GEBOORTEDATUM (required, format dd-mm-yyyy)</li>
+                <li>GEBOORTEDATUM (required, format: dd-mm-yyyy)</li>
                 <li>GEBOORTEPLAATS</li>
                 <li>GEBOORTELAND</li>
-                <li>GESLACHT (required, format M/F)</li>
+                <li>GESLACHT (required, format: M/F)</li>
                 <li>NATIONALITEIT</li>
                 <li>EMAILADRES</li>
                 <li>vooropleidng</li>
