@@ -289,12 +289,12 @@ class StudentController extends BaseController
 
         )->first();
 
-        $record->first_year_b1_credits_average = is_null($record->first_year_b1_credits_average) ? null : (int)round((double)$record->first_year_b1_credits_average);
-        $record->first_year_b2_credits_average = is_null($record->first_year_b2_credits_average) ? null : (int)round((double)$record->first_year_b2_credits_average);
-        $record->first_year_b3_credits_average = is_null($record->first_year_b3_credits_average) ? null : (int)round((double)$record->first_year_b3_credits_average);
-        $record->first_year_b4_credits_average = is_null($record->first_year_b4_credits_average) ? null : (int)round((double)$record->first_year_b4_credits_average);
-        $record->first_year_b5_credits_average = is_null($record->first_year_b5_credits_average) ? null : (int)round((double)$record->first_year_b5_credits_average);
-        $record->first_year_b6_credits_average = is_null($record->first_year_b6_credits_average) ? null : (int)round((double)$record->first_year_b6_credits_average);
+        $record->first_year_b1_credits_average  = is_null($record->first_year_b1_credits_average) ? null : (int)round((double)$record->first_year_b1_credits_average);
+        $record->first_year_b2_credits_average  = is_null($record->first_year_b2_credits_average) ? null : (int)round((double)$record->first_year_b2_credits_average);
+        $record->first_year_b3_credits_average  = is_null($record->first_year_b3_credits_average) ? null : (int)round((double)$record->first_year_b3_credits_average);
+        $record->first_year_b4_credits_average  = is_null($record->first_year_b4_credits_average) ? null : (int)round((double)$record->first_year_b4_credits_average);
+        $record->first_year_b5_credits_average  = is_null($record->first_year_b5_credits_average) ? null : (int)round((double)$record->first_year_b5_credits_average);
+        $record->first_year_b6_credits_average  = is_null($record->first_year_b6_credits_average) ? null : (int)round((double)$record->first_year_b6_credits_average);
         $record->second_year_b1_credits_average = is_null($record->second_year_b1_credits_average) ? null : (int)round((double)$record->second_year_b1_credits_average);
         $record->second_year_b2_credits_average = is_null($record->second_year_b2_credits_average) ? null : (int)round((double)$record->second_year_b2_credits_average);
         $record->second_year_b3_credits_average = is_null($record->second_year_b3_credits_average) ? null : (int)round((double)$record->second_year_b3_credits_average);
@@ -392,6 +392,7 @@ class StudentController extends BaseController
 
             DB::transaction(function () use ($id, $request, $student) {
 
+                if ($request->exists('first_year_credits_goal')) $student->first_year_credits_goal = $request->input('first_year_credits_goal');
                 if ($request->exists('second_year_credits_goal')) $student->second_year_credits_goal = $request->input('second_year_credits_goal');
                 if ($request->exists('is_published')) $student->is_published = $request->input('is_published');
 
@@ -425,6 +426,7 @@ class StudentController extends BaseController
 
             foreach ($query->get() as $student) {
 
+                if ($request->exists('first_year_credits_goal')) $student->first_year_credits_goal = $request->input('first_year_credits_goal');
                 if ($request->exists('second_year_credits_goal')) $student->second_year_credits_goal = $request->input('second_year_credits_goal');
                 if ($request->exists('is_published')) $student->is_published = $request->input('is_published');
 
@@ -439,6 +441,7 @@ class StudentController extends BaseController
     {
         return [
 
+            'first_year_credits_goal'  => 'required|integer|nullable|min:0|max:100',
             'second_year_credits_goal' => 'required|integer|nullable|min:0|max:100',
             'is_published'             => 'required|boolean'
         ];
@@ -448,6 +451,7 @@ class StudentController extends BaseController
     {
         return [
 
+            'first_year_credits_goal'  => 'integer|nullable|min:0|max:100',
             'second_year_credits_goal' => 'integer|nullable|min:0|max:100',
             'is_published'             => 'boolean'
         ];
