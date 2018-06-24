@@ -274,6 +274,12 @@ class StudentController extends BaseController
 
         $record = DB::table('students')->select(
 
+            DB::raw('AVG(first_year_b1_credits) AS first_year_b1_credits_average'),
+            DB::raw('AVG(first_year_b2_credits) AS first_year_b2_credits_average'),
+            DB::raw('AVG(first_year_b3_credits) AS first_year_b3_credits_average'),
+            DB::raw('AVG(first_year_b4_credits) AS first_year_b4_credits_average'),
+            DB::raw('AVG(first_year_b5_credits) AS first_year_b5_credits_average'),
+            DB::raw('AVG(first_year_b6_credits) AS first_year_b6_credits_average'),
             DB::raw('AVG(second_year_b1_credits) AS second_year_b1_credits_average'),
             DB::raw('AVG(second_year_b2_credits) AS second_year_b2_credits_average'),
             DB::raw('AVG(second_year_b3_credits) AS second_year_b3_credits_average'),
@@ -283,6 +289,12 @@ class StudentController extends BaseController
 
         )->first();
 
+        $record->first_year_b1_credits_average = is_null($record->first_year_b1_credits_average) ? null : (int)round((double)$record->first_year_b1_credits_average);
+        $record->first_year_b2_credits_average = is_null($record->first_year_b2_credits_average) ? null : (int)round((double)$record->first_year_b2_credits_average);
+        $record->first_year_b3_credits_average = is_null($record->first_year_b3_credits_average) ? null : (int)round((double)$record->first_year_b3_credits_average);
+        $record->first_year_b4_credits_average = is_null($record->first_year_b4_credits_average) ? null : (int)round((double)$record->first_year_b4_credits_average);
+        $record->first_year_b5_credits_average = is_null($record->first_year_b5_credits_average) ? null : (int)round((double)$record->first_year_b5_credits_average);
+        $record->first_year_b6_credits_average = is_null($record->first_year_b6_credits_average) ? null : (int)round((double)$record->first_year_b6_credits_average);
         $record->second_year_b1_credits_average = is_null($record->second_year_b1_credits_average) ? null : (int)round((double)$record->second_year_b1_credits_average);
         $record->second_year_b2_credits_average = is_null($record->second_year_b2_credits_average) ? null : (int)round((double)$record->second_year_b2_credits_average);
         $record->second_year_b3_credits_average = is_null($record->second_year_b3_credits_average) ? null : (int)round((double)$record->second_year_b3_credits_average);
