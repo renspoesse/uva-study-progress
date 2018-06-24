@@ -59,7 +59,7 @@
 
                             <tr v-if="student.bsa !== null">
                                 <td>BSA</td>
-                                <td>{{ getStudentBsaText(student) }}<i class="fa fa-check m-l-s" v-if="isStudentBsaPositive(student)"></i></td>
+                                <td>{{ getStudentBsaText(student.bsa) }}<i class="fa fa-check m-l-s" v-if="isStudentBsaPositive(student.bsa)"></i></td>
                             </tr>
                             <tr v-if="student.bsa_credits !== null">
                                 <td>BSA credits</td>
@@ -247,9 +247,9 @@
                         this.displayErrors(true, ex.message);
                     });
             },
-            getStudentBsaText: function(student) {
+            getStudentBsaText: function(bsa) {
 
-                switch (student.bsa) {
+                switch (bsa) {
 
                     case 'MX':
                         return 'Maximal';
@@ -262,12 +262,12 @@
                     case 'HC':
                         return 'Hardness clause';
                     default:
-                        return student.bsa;
+                        return bsa;
                 }
             },
-            isStudentBsaPositive: function(student) {
+            isStudentBsaPositive: function(bsa) {
 
-                return (student.bsa === 'MX' || student.bsa === 'PS');
+                return (bsa === 'MX' || bsa === 'PS');
             },
             renderCharts: function() {
 
