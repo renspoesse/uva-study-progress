@@ -244,6 +244,8 @@
                     const color1Border = color1;
                     const color3Border = color3;
 
+                    let max = Math.max(...[70, Math.ceil(this.student.first_year_credits / 10) * 10, Math.ceil(this.student.first_year_credits_goal / 10) * 10]);
+
                     const chart1 = new Chart(this.$refs.chartCredits, {
 
                         type: 'bar',
@@ -287,7 +289,7 @@
 
                                     ticks: {
 
-                                        max: 70,
+                                        max,
                                         min: 0,
                                         stepSize: 10
                                     }
@@ -304,6 +306,8 @@
                             }
                         }
                     });
+
+                    max = Math.max(...[70, Math.ceil(this.student.first_year_credits / 10) * 10]);
 
                     const chart2 = new Chart(this.$refs.chartCreditsOverTime, {
 
@@ -395,7 +399,7 @@
 
                                     ticks: {
 
-                                        max: 70,
+                                        max,
                                         min: 0,
                                         stepSize: 10
                                     }
