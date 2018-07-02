@@ -61,9 +61,9 @@
                         <th v-bind:class="headerClass('display_name')" v-on:click.prevent="handleOrder('display_name')">Name</th>
                         <th v-bind:class="headerClass('program_name')" v-on:click.prevent="handleOrder('program_name')">Program</th>
                         <th v-bind:class="headerClass('cohort')" v-on:click.prevent="handleOrder('cohort')">Cohort</th>
+                        <th v-bind:class="headerClass('year')" v-on:click.prevent="handleOrder('year')">Year</th>
                         <th v-bind:class="headerClass('second_year_credits_expected')" v-on:click.prevent="handleOrder('second_year_credits_expected')">Prognosis</th>
                         <th v-bind:class="headerClass('is_published')" v-on:click.prevent="handleOrder('is_published')">Published</th>
-                        <th v-bind:class="headerClass('updated_at')" v-on:click.prevent="handleOrder('updated_at')">Updated at</th>
                         <th class="header">View as</th>
                     </tr>
                     </thead>
@@ -77,6 +77,7 @@
                         <td v-bind:title="item.display_name">{{ _.truncate(item.display_name, {length: 30}) }}</td>
                         <td v-bind:title="item.program_name">{{ _.truncate(item.program_name, {length: 30}) }}</td>
                         <td>{{ item.cohort }}</td>
+                        <td>{{ item.year }}</td>
                         <td>
                             <i class="fa fa-circle" style="color: green;" v-if="item.second_year_credits_expected >= 54"></i>
                             <i class="fa fa-circle" style="color: yellow;" v-else-if="item.second_year_credits_expected >= 30"></i>
@@ -85,7 +86,6 @@
                         <td>
                             <i class="fa fa-check" v-if="item.is_published"></i>
                         </td>
-                        <td>{{ moment.utc(item.updated_at).local().format('YYYY-MM-DD HH:mm:ss') }}</td>
                         <td><a class="btn btn-default-outline" v-on:click.prevent="handleViewAs(item)"><i class="fa fa-eye"></i></a></td>
                     </tr>
 
