@@ -6,11 +6,9 @@ StudyProgress Dashboard for the University of Amsterdam, 2ndYD
 
 The following roles are used in the application and should be provided by the LTI tool consumer:
 
-1. Administrator: `rens_1`*
-2. Study Adviser: `rens_2`*
+1. Administrator: `feb_dashboard_admin` (was: `rens_1`)
+2. Study Adviser: `feb_dashboard_studyadviser` (was: `rens_2`)
 3. Student: `urn:lti:role:ims/lis/Learner`
-
-\* Note: these roles will be renamed in a future version but are currently retained for compatibility.
 
 ## LTI setup
 

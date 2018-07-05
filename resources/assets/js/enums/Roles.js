@@ -1,6 +1,6 @@
 export default {
 
-    Administrator: 'rens_1',
+    Administrator: 'feb_dashboard_admin',
     Student: 'urn:lti:role:ims/lis/Learner',
-    StudyAdviser: 'rens_2'
+    StudyAdviser: 'feb_dashboard_studyadviser'
 }
