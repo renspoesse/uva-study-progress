@@ -13,8 +13,8 @@
     <blti:icon></blti:icon>
     <blti:launch_url>https://studyprogress.uva.nl/lti/launch</blti:launch_url>
     <blti:custom>
-        <lticm:property name="custom_student_number"></lticm:property>
-        <lticm:property name="custom_role_membership"></lticm:property>
+        <lticm:property name="custom_student_number">$Canvas.user.loginId</lticm:property>
+        <lticm:property name="custom_role_membership">$Canvas.membership.roles</lticm:property>
     </blti:custom>
     <blti:extensions platform="canvas.instructure.com">
         <lticm:property name="tool_id">2ndYD</lticm:property>
