@@ -37,6 +37,9 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
             $this->user->roles = array_merge($this->user->roles, explode(',', $request->input('custom_custom_role_membership')));
         }
 
+        $this->user->roles = str_replace('rens_1', 'feb_dashboard_admin', $this->user->roles);
+        $this->user->roles = str_replace('rens_2', 'feb_dashboard_studyadviser', $this->user->roles);
+
         $allowed = [
 
             'firstname',
