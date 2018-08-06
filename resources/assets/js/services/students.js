@@ -160,6 +160,22 @@ const getCreditsAverage = function() {
     });
 };
 
+const getProgramSatisfactionAverage = function({cohort, program_code, year}) {
+
+    return new Promise((resolve, reject) => {
+
+        Vue.http.get(`students/programsatisfactionaverage?program_code=${program_code}&cohort=${cohort}&year=${year}`).then((response) => {
+
+                resolve(Number(response.data) || null);
+            })
+            .catch((response) => {
+
+                console.log(response);
+                reject({message: 'Oops. Something went wrong.'});
+            });
+    });
+};
+
 const importFromFile = function(payload, file) {
 
     return new Promise((resolve, reject) => {
@@ -347,6 +363,7 @@ export {
     getById,
     getByParameters,
     getCreditsAverage,
+    getProgramSatisfactionAverage,
     importFromFile,
     updateByAuthenticated,
     updateByIds,

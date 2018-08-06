@@ -307,6 +307,27 @@ class StudentController extends BaseController
         return response()->json($record);
     }
 
+    public function getProgramSatisfactionAverage(Request $request)
+    {
+        // TODO RENS: cachen
+
+        $this->validate($request, [
+
+            'cohort'       => 'required|integer',
+            'program_code' => 'required|integer',
+            'year'         => 'required|integer'
+        ]);
+
+        $record = DB::table('students')
+            ->groupBy('cohort', 'program_code', 'year')
+            ->having('cohort', $request->input('cohort'))
+            ->having('program_code', $request->input('program_code'))
+            ->having('year', $request->input('year'))
+            ->avg('program_satisfaction');
+
+        return $record;
+    }
+
     public function deleteByIds($ids)
     {
         Student::whereIn('id', explode(',', $ids))->delete();
