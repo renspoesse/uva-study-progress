@@ -421,65 +421,68 @@
                     });
                 });
 
-                const chart3 = new Chart(this.$refs.chartProgramSatisfaction, {
+                students.getProgramSatisfactionAverage(this.student).then((average) => {
 
-                    type: 'bar',
-                    data: {
+                    const chart3 = new Chart(this.$refs.chartProgramSatisfaction, {
 
-                        labels: [
+                        type: 'bar',
+                        data: {
 
-                            'Me (' + (this.student.program_satisfaction || 'N/A') + ')',
-                            'Peer group',
-                        ],
-                        datasets: [{
+                            labels: [
 
-                            backgroundColor: [
-
-                                color1,
-                                color3
+                                'Me (' + (this.student.program_satisfaction || 'N/A') + ')',
+                                'Peer group (' + (average || 'N/A') + ')'
                             ],
-                            borderColor: [
+                            datasets: [{
 
-                                color1Border,
-                                color3Border
-                            ],
-                            borderWidth: 1,
-                            data: [
+                                backgroundColor: [
 
-                                this.student.program_satisfaction,
-                                null,
-                            ]
-                        }]
-                    },
-                    options: {
+                                    color1,
+                                    color3
+                                ],
+                                borderColor: [
 
-                        legend: {
+                                    color1Border,
+                                    color3Border
+                                ],
+                                borderWidth: 1,
+                                data: [
 
-                            display: false
-                        },
-                        maintainAspectRatio: false,
-                        scales: {
-
-                            yAxes: [{
-
-                                ticks: {
-
-                                    max: 10,
-                                    min: 0,
-                                    stepSize: 1
-                                }
+                                    this.student.program_satisfaction,
+                                    average,
+                                ]
                             }]
                         },
-                        title: {
+                        options: {
 
-                            display: true,
-                            text: 'Satisfaction'
-                        },
-                        tooltips: {
+                            legend: {
 
-                            enabled: false
+                                display: false
+                            },
+                            maintainAspectRatio: false,
+                            scales: {
+
+                                yAxes: [{
+
+                                    ticks: {
+
+                                        max: 10,
+                                        min: 0,
+                                        stepSize: 1
+                                    }
+                                }]
+                            },
+                            title: {
+
+                                display: true,
+                                text: 'Satisfaction'
+                            },
+                            tooltips: {
+
+                                enabled: false
+                            }
                         }
-                    }
+                    });
                 });
             }
         },
