@@ -44,11 +44,12 @@ class StudentController extends BaseController
 
                 $obj = new Student();
 
-                $obj->student_number = $record['nummer'];
-                $obj->program_code   = $record['opl'];
-                $obj->program_name   = $record['omschrijving'];
-                $obj->cohort         = $record['cohort'];
-                $obj->year           = $record['Jaar'];
+                $obj->student_number       = $record['nummer'];
+                $obj->program_code         = $record['opl'];
+                $obj->program_name         = $record['omschrijving'];
+                $obj->program_satisfaction = null;
+                $obj->cohort               = $record['cohort'];
+                $obj->year                 = $record['Jaar'];
 
                 $obj->first_year_mentor       = $record['1stY-Mentor'] !== '' ? $record['1stY-Mentor'] : null;
                 $obj->first_year_b1_credits   = $record['1stY-B1'] !== '' ? $record['1stY-B1'] : null;
@@ -185,6 +186,7 @@ class StudentController extends BaseController
                 $obj->student_number,
                 $obj->program_code,
                 $obj->program_name,
+                $obj->program_satisfaction,
                 $obj->cohort,
                 $obj->year,
                 $obj->first_year_mentor,
@@ -394,6 +396,7 @@ class StudentController extends BaseController
 
                 if ($request->exists('first_year_credits_goal')) $student->first_year_credits_goal = $request->input('first_year_credits_goal');
                 if ($request->exists('second_year_credits_goal')) $student->second_year_credits_goal = $request->input('second_year_credits_goal');
+                if ($request->exists('program_satisfaction')) $student->program_satisfaction = $request->input('program_satisfaction');
                 if ($request->exists('is_published')) $student->is_published = $request->input('is_published');
 
                 $student->save();
@@ -428,6 +431,7 @@ class StudentController extends BaseController
 
                 if ($request->exists('first_year_credits_goal')) $student->first_year_credits_goal = $request->input('first_year_credits_goal');
                 if ($request->exists('second_year_credits_goal')) $student->second_year_credits_goal = $request->input('second_year_credits_goal');
+                if ($request->exists('program_satisfaction')) $student->program_satisfaction = $request->input('program_satisfaction');
                 if ($request->exists('is_published')) $student->is_published = $request->input('is_published');
 
                 $student->save();
@@ -443,6 +447,7 @@ class StudentController extends BaseController
 
             'first_year_credits_goal'  => 'required|integer|nullable|min:0|max:100',
             'second_year_credits_goal' => 'required|integer|nullable|min:0|max:100',
+            'program_satisfaction'     => 'required|integer|nullable|min:1|max:10',
             'is_published'             => 'required|boolean'
         ];
     }
@@ -453,6 +458,7 @@ class StudentController extends BaseController
 
             'first_year_credits_goal'  => 'integer|nullable|min:0|max:100',
             'second_year_credits_goal' => 'integer|nullable|min:0|max:100',
+            'program_satisfaction'     => 'integer|nullable|min:1|max:10',
             'is_published'             => 'boolean'
         ];
     }

@@ -20,6 +20,7 @@ class CreateStudentsTable extends Migration
             $table->string('display_name', 128);
             $table->integer('program_code');
             $table->string('program_name', 64);
+            $table->integer('program_satisfaction')->nullable();
             $table->integer('cohort');
             $table->integer('year');
 
