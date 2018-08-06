@@ -57,14 +57,16 @@
                     <thead>
                     <tr>
                         <th class="header"><input type="checkbox" ref="selectAll" v-on:change="handleSelectAll"></th>
-                        <th v-bind:class="headerClass('student_number')" v-on:click.prevent="handleOrder('student_number')">#</th>
-                        <th v-bind:class="headerClass('display_name')" v-on:click.prevent="handleOrder('display_name')">Name</th>
+                        <th v-bind:class="headerClass('student_number')" v-on:click.prevent="handleOrder('student_number')"></th>
+                        <th v-bind:class="headerClass('display_name')" v-on:click.prevent="handleOrder('display_name')"></th>
                         <th v-bind:class="headerClass('program_name')" v-on:click.prevent="handleOrder('program_name')">Program</th>
+                        <th class="header">Satisfaction</th>
                         <th v-bind:class="headerClass('cohort')" v-on:click.prevent="handleOrder('cohort')">Cohort</th>
                         <th v-bind:class="headerClass('year')" v-on:click.prevent="handleOrder('year')">Year</th>
-                        <th v-bind:class="headerClass('second_year_credits_expected')" v-on:click.prevent="handleOrder('second_year_credits_expected')">Prognosis</th>
+                        <th class="header">Goal</th>
+                        <th v-bind:class="headerClass('second_year_credits_expected')" v-on:click.prevent="handleOrder('second_year_credits_expected')"></th>
                         <th v-bind:class="headerClass('is_published')" v-on:click.prevent="handleOrder('is_published')">Published</th>
-                        <th class="header">View as</th>
+                        <th class="header"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -76,8 +78,10 @@
                         </td>
                         <td v-bind:title="item.display_name">{{ _.truncate(item.display_name, {length: 30}) }}</td>
                         <td v-bind:title="item.program_name">{{ _.truncate(item.program_name, {length: 30}) }}</td>
+                        <td>{{ item.program_satisfaction }}</td>
                         <td>{{ item.cohort }}</td>
                         <td>{{ item.year }}</td>
+                        <td>{{ (item.year === 1) ? item.first_year_credits_goal : item.second_year_credits_goal }}</td>
                         <td>
                             <i class="fa fa-circle" style="color: green;" v-if="item.second_year_credits_expected >= 54"></i>
                             <i class="fa fa-circle" style="color: yellow;" v-else-if="item.second_year_credits_expected >= 30"></i>
