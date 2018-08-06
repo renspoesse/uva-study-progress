@@ -174,7 +174,6 @@
         created() {
 
             this.fetchData();
-            this.renderCharts();
         },
         data: function() {
 
@@ -244,78 +243,74 @@
             },
             renderCharts: function() {
 
-                students.getCreditsAverage().then((result) => result.item).then((average) => {
+                const color1 = 'rgba(135, 192, 181, .7)';
+                const color3 = 'rgba(135, 192, 181, .4)';
 
-                    const color1 = 'rgba(135, 192, 181, .7)';
-                    const color3 = 'rgba(135, 192, 181, .4)';
+                const color1Border = color1;
+                const color3Border = color3;
 
-                    const color1Border = color1;
-                    const color3Border = color3;
+                const chart1 = new Chart(this.$refs.chartCredits, {
 
-                    let max = Math.max(...[70, Math.ceil(this.student.first_year_credits / 10) * 10, Math.ceil(this.student.first_year_credits_goal / 10) * 10]);
+                    type: 'bar',
+                    data: {
 
-                    const chart1 = new Chart(this.$refs.chartCredits, {
+                        labels: [
 
-                        type: 'bar',
-                        data: {
+                            'Credits this year (' + (this.student.first_year_credits || 'none') + ')',
+                            'Goal (' + (this.student.first_year_credits_goal || 'none') + ')',
+                        ],
+                        datasets: [{
 
-                            labels: [
+                            backgroundColor: [
 
-                                'Credits this year (' + (this.student.first_year_credits || 'none') + ')',
-                                'Goal (' + (this.student.first_year_credits_goal || 'none') + ')',
+                                color1,
+                                color3
                             ],
-                            datasets: [{
+                            borderColor: [
 
-                                backgroundColor: [
+                                color1Border,
+                                color3Border
+                            ],
+                            borderWidth: 1,
+                            data: [
 
-                                    color1,
-                                    color3
-                                ],
-                                borderColor: [
+                                this.student.first_year_credits,
+                                this.student.first_year_credits_goal,
+                            ]
+                        }]
+                    },
+                    options: {
 
-                                    color1Border,
-                                    color3Border
-                                ],
-                                borderWidth: 1,
-                                data: [
+                        legend: {
 
-                                    this.student.first_year_credits,
-                                    this.student.first_year_credits_goal,
-                                ]
+                            display: false
+                        },
+                        maintainAspectRatio: false,
+                        scales: {
+
+                            yAxes: [{
+
+                                ticks: {
+
+                                    max: Math.max(...[70, Math.ceil(this.student.first_year_credits / 10) * 10, Math.ceil(this.student.first_year_credits_goal / 10) * 10]),
+                                    min: 0,
+                                    stepSize: 10
+                                }
                             }]
                         },
-                        options: {
+                        title: {
 
-                            legend: {
+                            display: true,
+                            text: 'Your 1st year'
+                        },
+                        tooltips: {
 
-                                display: false
-                            },
-                            maintainAspectRatio: false,
-                            scales: {
-
-                                yAxes: [{
-
-                                    ticks: {
-
-                                        max,
-                                        min: 0,
-                                        stepSize: 10
-                                    }
-                                }]
-                            },
-                            title: {
-
-                                display: true,
-                                text: 'Your 1st year'
-                            },
-                            tooltips: {
-
-                                enabled: false
-                            }
+                            enabled: false
                         }
-                    });
+                    }
+                });
 
-                    max = Math.max(...[70, Math.ceil(this.student.first_year_credits / 10) * 10]);
+                students.getCreditsAverage().then((result) => result.item).then((average) => {
 
                     const chart2 = new Chart(this.$refs.chartCreditsOverTime, {
 
@@ -407,7 +402,7 @@
 
                                     ticks: {
 
-                                        max,
+                                        max: Math.max(...[70, Math.ceil(this.student.first_year_credits / 10) * 10]),
                                         min: 0,
                                         stepSize: 10
                                     }
@@ -424,67 +419,67 @@
                             }
                         }
                     });
+                });
 
-                    const chart3 = new Chart(this.$refs.chartProgramSatisfaction, {
+                const chart3 = new Chart(this.$refs.chartProgramSatisfaction, {
 
-                        type: 'bar',
-                        data: {
+                    type: 'bar',
+                    data: {
 
-                            labels: [
+                        labels: [
 
-                                'Me (' + (this.student.program_satisfaction || 'N/A') + ')',
-                                'Peer group',
+                            'Me (' + (this.student.program_satisfaction || 'N/A') + ')',
+                            'Peer group',
+                        ],
+                        datasets: [{
+
+                            backgroundColor: [
+
+                                color1,
+                                color3
                             ],
-                            datasets: [{
+                            borderColor: [
 
-                                backgroundColor: [
+                                color1Border,
+                                color3Border
+                            ],
+                            borderWidth: 1,
+                            data: [
 
-                                    color1,
-                                    color3
-                                ],
-                                borderColor: [
+                                this.student.program_satisfaction,
+                                null,
+                            ]
+                        }]
+                    },
+                    options: {
 
-                                    color1Border,
-                                    color3Border
-                                ],
-                                borderWidth: 1,
-                                data: [
+                        legend: {
 
-                                    this.student.program_satisfaction,
-                                    null,
-                                ]
+                            display: false
+                        },
+                        maintainAspectRatio: false,
+                        scales: {
+
+                            yAxes: [{
+
+                                ticks: {
+
+                                    max: 10,
+                                    min: 0,
+                                    stepSize: 1
+                                }
                             }]
                         },
-                        options: {
+                        title: {
 
-                            legend: {
+                            display: true,
+                            text: 'Satisfaction'
+                        },
+                        tooltips: {
 
-                                display: false
-                            },
-                            maintainAspectRatio: false,
-                            scales: {
-
-                                yAxes: [{
-
-                                    ticks: {
-
-                                        max: 10,
-                                        min: 0,
-                                        stepSize: 1
-                                    }
-                                }]
-                            },
-                            title: {
-
-                                display: true,
-                                text: 'Satisfaction'
-                            },
-                            tooltips: {
-
-                                enabled: false
-                            }
+                            enabled: false
                         }
-                    });
+                    }
                 });
             }
         },
@@ -492,11 +487,15 @@
 
             errorAlerts
         ],
+        mounted() {
+
+            this.renderCharts();
+        },
         props: [
 
             'student'
         ],
-        updated () {
+        updated() {
 
             images.fadeWhenLoaded($(this.$el).find('img'));
         },
