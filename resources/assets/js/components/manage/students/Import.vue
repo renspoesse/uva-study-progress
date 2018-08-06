@@ -51,6 +51,7 @@
                 <li>nummer (required)</li>
                 <li>opl (required)</li>
                 <li>omschrijving</li>
+                <li>Satisfaction</li>
                 <li>cohort (required)</li>
                 <li>Jaar (required)</li>
 

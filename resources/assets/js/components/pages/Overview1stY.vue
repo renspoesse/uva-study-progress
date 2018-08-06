@@ -26,6 +26,14 @@
             </div>
         </div>
 
+        <div class="row text-center m-t-md">
+            <div class="col-md-12 m-b-md">
+                <div class="w-lg m-x-auto" style="height: 30rem;">
+                    <canvas ref="chartProgramSatisfaction"></canvas>
+                </div>
+            </div>
+        </div>
+
         <div class="hr-divider m-t-md m-b">
             <h3 class="hr-divider-content hr-divider-heading">Study progress indicators</h3>
         </div>
@@ -409,6 +417,67 @@
 
                                 display: true,
                                 text: 'Your 1st year over time'
+                            },
+                            tooltips: {
+
+                                enabled: false
+                            }
+                        }
+                    });
+
+                    const chart3 = new Chart(this.$refs.chartProgramSatisfaction, {
+
+                        type: 'bar',
+                        data: {
+
+                            labels: [
+
+                                'Me (' + (this.student.program_satisfaction || 'N/A') + ')',
+                                'Peer group',
+                            ],
+                            datasets: [{
+
+                                backgroundColor: [
+
+                                    color1,
+                                    color3
+                                ],
+                                borderColor: [
+
+                                    color1Border,
+                                    color3Border
+                                ],
+                                borderWidth: 1,
+                                data: [
+
+                                    this.student.program_satisfaction,
+                                    null,
+                                ]
+                            }]
+                        },
+                        options: {
+
+                            legend: {
+
+                                display: false
+                            },
+                            maintainAspectRatio: false,
+                            scales: {
+
+                                yAxes: [{
+
+                                    ticks: {
+
+                                        max: 10,
+                                        min: 0,
+                                        stepSize: 1
+                                    }
+                                }]
+                            },
+                            title: {
+
+                                display: true,
+                                text: 'Satisfaction'
                             },
                             tooltips: {
 
