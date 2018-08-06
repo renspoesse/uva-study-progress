@@ -47,7 +47,7 @@ class StudentController extends BaseController
                 $obj->student_number       = $record['nummer'];
                 $obj->program_code         = $record['opl'];
                 $obj->program_name         = $record['omschrijving'];
-                $obj->program_satisfaction = null;
+                $obj->program_satisfaction = $record['Satisfaction'] !== '' ? $record['Satisfaction'] : null;
                 $obj->cohort               = $record['cohort'];
                 $obj->year                 = $record['Jaar'];
 
