@@ -55,7 +55,7 @@ class CreateLtiTables extends Migration
         Schema::create('lti2_nonce', function (Blueprint $table) {
 
             $table->integer('consumer_pk');
-            $table->string('value', 32);
+            $table->string('value', 64);
             $table->dateTime('expires');
 
             $table->primary(['consumer_pk', 'value']);
