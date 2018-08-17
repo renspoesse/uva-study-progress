@@ -29,8 +29,8 @@ class CreateLtiTables extends Migration
             $table->text('settings')->nullable();
             $table->boolean('protected');
             $table->boolean('enabled');
-            $table->dateTime('enabled_from')->nullable();
-            $table->dateTime('enabled_until')->nullable();
+            $table->dateTime('enable_from')->nullable();
+            $table->dateTime('enable_until')->nullable();
             $table->date('last_access')->nullable();
             $table->dateTime('created');
             $table->dateTime('updated');
