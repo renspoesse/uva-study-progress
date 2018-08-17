@@ -35,11 +35,31 @@
         </div>
 
         <div class="hr-divider m-t-md m-b">
-            <h3 class="hr-divider-content hr-divider-heading">Study progress indicators</h3>
+            <h3 class="hr-divider-content hr-divider-heading">Study progress</h3>
         </div>
 
         <div class="row">
             <div class="col-md-12">
+
+                <div class="table-full" v-if="student.first_year_mentor !== null">
+                    <div class="table-responsive">
+                        <table class="table" data-sort="table">
+                            <thead>
+                            <tr>
+                                <th class="header" colspan="2">General</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr>
+                                <td>Mentor</td>
+                                <td>{{ student.first_year_mentor }}</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
                 <div class="table-full">
                     <div class="table-responsive">
@@ -51,33 +71,29 @@
                             </thead>
                             <tbody>
 
-                            <tr v-if="student.first_year_mentor !== null">
-                                <td>Mentor</td>
-                                <td>{{ student.first_year_mentor }}</td>
-                            </tr>
-                            <tr v-if="student.wa1 !== null">
-                                <td>1st intermediate advice (WA1)</td>
+                            <tr>
+                                <td>1st intermediate advice (November)</td>
                                 <td>{{ getStudentBsaText(student.wa1) }}<i class="fa fa-check m-l-s" v-if="isStudentBsaPositive(student.wa1)"></i></td>
                             </tr>
-                            <tr v-if="student.wa1_credits !== null">
-                                <td>WA1 credits</td>
-                                <td>{{ student.wa1_credits }} ECTS</td>
+                            <tr>
+                                <td>Required credits</td>
+                                <td>{{ student.wa1_credits ? `${student.wa1_credits} of x ECTS` : 'x ECTS' }}</td>
                             </tr>
-                            <tr v-if="student.wa2 !== null">
-                                <td>2nd intermediate advice (WA2)</td>
+                            <tr>
+                                <td>2nd intermediate advice (January)</td>
                                 <td>{{ getStudentBsaText(student.wa2) }}<i class="fa fa-check m-l-s" v-if="isStudentBsaPositive(student.wa2)"></i></td>
                             </tr>
-                            <tr v-if="student.wa2_credits !== null">
-                                <td>WA2 credits</td>
-                                <td>{{ student.wa2_credits }} ECTS</td>
+                            <tr>
+                                <td>Required credits</td>
+                                <td>{{ student.wa2_credits ? `${student.wa2_credits} of x ECTS` : 'x ECTS' }}</td>
                             </tr>
-                            <tr v-if="student.wa3 !== null">
-                                <td>3rd intermediate advice (WA3)</td>
+                            <tr>
+                                <td>3rd intermediate advice (April)</td>
                                 <td>{{ getStudentBsaText(student.wa3) }}<i class="fa fa-check m-l-s" v-if="isStudentBsaPositive(student.wa3)"></i></td>
                             </tr>
-                            <tr v-if="student.wa3_credits !== null">
-                                <td>WA3 credits</td>
-                                <td>{{ student.wa3_credits }} ECTS</td>
+                            <tr>
+                                <td>Required credits</td>
+                                <td>{{ student.wa3_credits ? `${student.wa3_credits} of x ECTS` : 'x ECTS' }}</td>
                             </tr>
                             <tr v-if="student.bsa !== null">
                                 <td>BSA</td>
@@ -102,7 +118,7 @@
                         <table class="table" data-sort="table">
                             <thead>
                             <tr>
-                                <th class="header" colspan="2">1st year indicators</th>
+                                <th class="header" colspan="2">1st year results</th>
                             </tr>
                             </thead>
                             <tbody>

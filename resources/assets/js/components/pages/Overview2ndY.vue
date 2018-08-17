@@ -41,7 +41,7 @@
         </div>
 
         <div class="hr-divider m-t-md m-b">
-            <h3 class="hr-divider-content hr-divider-heading">Study progress indicators</h3>
+            <h3 class="hr-divider-content hr-divider-heading">Study progress</h3>
         </div>
 
         <div class="row">
@@ -88,7 +88,7 @@
                         <table class="table" data-sort="table">
                             <thead>
                             <tr>
-                                <th class="header" colspan="2">2nd year indicators</th>
+                                <th class="header" colspan="2">2nd year results</th>
                             </tr>
                             </thead>
                             <tbody>
