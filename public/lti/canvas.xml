@@ -26,6 +26,7 @@
             <lticm:property name="visibility">public</lticm:property>
             <lticm:property name="default">enabled</lticm:property>
             <lticm:property name="enabled">true</lticm:property>
+            <lticm:property name="windowTarget">_blank</lticm:property>
         </lticm:options>
     </blti:extensions>
     <cartridge_bundle identifierref="BLTI001_Bundle"/>
