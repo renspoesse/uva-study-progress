@@ -86,7 +86,7 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
         $cookie = new Cookie(
 
             $request->session()->getName(),
-            encrypt($request->session()->getId()),
+            config('session.encrypt') ? encrypt($request->session()->getId()) : $request->session()->getId(),
             config('session.expire_on_close') ? 0 : Carbon::now()->addMinutes(config('session.lifetime')),
             config('session.path'),
             config('session.domain'),
