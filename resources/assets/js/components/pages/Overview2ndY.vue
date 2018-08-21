@@ -52,7 +52,8 @@
                         <table class="table" data-sort="table">
                             <thead>
                             <tr>
-                                <th class="header" colspan="2">Overall indicators</th>
+                                <th class="header w-50">Overall indicators</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -63,19 +64,19 @@
                             </tr>
                             <tr v-if="student.bsa_credits !== null">
                                 <td>BSA credits</td>
-                                <td>{{ student.bsa_credits }} ECTS</td>
+                                <td>{{ student.bsa_credits }} EC</td>
                             </tr>
                             <tr v-if="student.first_year_credits !== null">
                                 <td>Credits in 1st year</td>
-                                <td>{{ student.first_year_credits }} ECTS</td>
+                                <td>{{ student.first_year_credits }} EC</td>
                             </tr>
                             <tr v-if="student.second_year_credits !== null">
                                 <td>Credits in 2nd year</td>
-                                <td>{{ student.second_year_credits }} ECTS</td>
+                                <td>{{ student.second_year_credits }} EC</td>
                             </tr>
                             <tr>
                                 <td>Total credits</td>
-                                <td>{{ student.credits }} ECTS</td>
+                                <td>{{ student.credits }} EC</td>
                             </tr>
 
                             </tbody>
@@ -88,7 +89,8 @@
                         <table class="table" data-sort="table">
                             <thead>
                             <tr>
-                                <th class="header" colspan="2">2nd year results</th>
+                                <th class="header w-50">2nd year results</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -99,31 +101,31 @@
                             </tr>
                             <tr v-if="student.second_year_b1_credits !== null">
                                 <td>Credits in block 1</td>
-                                <td>{{ student.second_year_b1_credits }} ECTS</td>
+                                <td>{{ student.second_year_b1_credits }} EC</td>
                             </tr>
                             <tr v-if="student.second_year_b2_credits !== null">
                                 <td>Credits in block 2</td>
-                                <td>{{ student.second_year_b2_credits }} ECTS</td>
+                                <td>{{ student.second_year_b2_credits }} EC</td>
                             </tr>
                             <tr v-if="student.second_year_b3_credits !== null">
                                 <td>Credits in block 3</td>
-                                <td>{{ student.second_year_b3_credits }} ECTS</td>
+                                <td>{{ student.second_year_b3_credits }} EC</td>
                             </tr>
                             <tr v-if="student.second_year_b4_credits !== null">
                                 <td>Credits in block 4</td>
-                                <td>{{ student.second_year_b4_credits }} ECTS</td>
+                                <td>{{ student.second_year_b4_credits }} EC</td>
                             </tr>
                             <tr v-if="student.second_year_b5_credits !== null">
                                 <td>Credits in block 5</td>
-                                <td>{{ student.second_year_b5_credits }} ECTS</td>
+                                <td>{{ student.second_year_b5_credits }} EC</td>
                             </tr>
                             <tr v-if="student.second_year_b6_credits !== null">
                                 <td>Credits in block 6</td>
-                                <td>{{ student.second_year_b6_credits }} ECTS</td>
+                                <td>{{ student.second_year_b6_credits }} EC</td>
                             </tr>
                             <tr class="bg-info" v-if="student.second_year_credits_expected !== null">
                                 <td>Prognosis total credits 2nd year</td>
-                                <td>{{ student.second_year_credits_expected }} ECTS</td>
+                                <td>{{ student.second_year_credits_expected }} EC</td>
                             </tr>
 
                             </tbody>
