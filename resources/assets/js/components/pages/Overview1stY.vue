@@ -482,7 +482,7 @@
                             title: {
 
                                 display: true,
-                                text: 'Satisfaction'
+                                text: 'How satisfied are you with your choice of program?'
                             },
                             tooltips: {
 
