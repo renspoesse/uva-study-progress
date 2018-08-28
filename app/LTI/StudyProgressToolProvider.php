@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use IMSGlobal\LTI\ToolProvider;
 use IMSGlobal\LTI\ToolProvider\DataConnector\DataConnector;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\Cookie;
 
 class StudyProgressToolProvider extends ToolProvider\ToolProvider
 {
@@ -77,14 +78,25 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
         Log::info('Session id: ' . $request->session()->getId());
         Log::info('Saved LTI information to session: authenticated.');
 
-        // Normally Laravel will sent a cookie with the session ID along with a response object. This cookie is used to identify the session on subsequent requests.
+        // Normally Laravel will sent a cookie with the session ID along with a response object (addCookieToResponse).
+        // This cookie is used to identify the session on subsequent requests.
         // In our case however, a response object is never sent (a Location header is sent instead and script execution is stopped).
         // Therefore we have to simulate this session cookie to ensure the current session can be identified on subsequent requests.
 
-        $value  = encrypt($request->session()->getId());
-        $expire = config('session.expire_on_close') ? 0 : Carbon::now()->addMinutes(config('session.lifetime'));
+        $cookie = new Cookie(
 
-        setcookie($request->session()->getName(), $value, $expire, config('session.path'), config('session.domain'), config('session.secure'), config('session.http_only'));
+            $request->session()->getName(),
+            config('session.encrypt') ? encrypt($request->session()->getId()) : $request->session()->getId(),
+            config('session.expire_on_close') ? 0 : Carbon::now()->addMinutes(config('session.lifetime')),
+            config('session.path'),
+            config('session.domain'),
+            config('session.secure') ?? false,
+            config('session.http_only') ?? true,
+            false,
+            config('session.same_site') ?? null
+        );
+
+        header('Set-Cookie: ' . $cookie);
 
         // The LTI library will now perform the redirect and stop script execution.
     }

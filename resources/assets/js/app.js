@@ -25,6 +25,8 @@ require('./bootstrap');
 
 Vue.component('alert', require('./components/_controls/Alert.vue'));
 Vue.component('loading-overlay', require('./components/_controls/LoadingOverlay.vue'));
+Vue.component('overview-1sty', require('./components/pages/Overview1stY.vue'));
+Vue.component('overview-2ndy', require('./components/pages/Overview2ndY.vue'));
 Vue.component('pagination', require('./components/_controls/Pagination.vue'));
 
 Vue.component('sidebar-nav', require('./components/SidebarNav.vue'));

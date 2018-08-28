@@ -25,11 +25,27 @@
                 </div>
             </div>
 
-            <div v-bind:class="['form-group', hasError('second_year_credits_goal') ? 'has-feedback has-error' : '']" v-if="student.id">
+            <div v-bind:class="['form-group', hasError('first_year_credits_goal') ? 'has-feedback has-error' : '']" v-if="student.id && student.year === 1">
+                <label class="col-sm-3 control-label">1st year credits goal</label>
+                <div class="col-sm-9">
+                    <input type="number" class="form-control" min="0" max="100" v-model="student.first_year_credits_goal" v-bind:disabled="!canEdit">
+                    <span class="help-block" v-show="getValidationErrors('first_year_credits_goal')">{{ getValidationErrors('first_year_credits_goal') }}</span>
+                </div>
+            </div>
+
+            <div v-bind:class="['form-group', hasError('second_year_credits_goal') ? 'has-feedback has-error' : '']" v-if="student.id && student.year === 2">
                 <label class="col-sm-3 control-label">2nd year credits goal</label>
                 <div class="col-sm-9">
                     <input type="number" class="form-control" min="0" max="100" v-model="student.second_year_credits_goal" v-bind:disabled="!canEdit">
                     <span class="help-block" v-show="getValidationErrors('second_year_credits_goal')">{{ getValidationErrors('second_year_credits_goal') }}</span>
+                </div>
+            </div>
+
+            <div v-bind:class="['form-group', hasError('program_satisfaction') ? 'has-feedback has-error' : '']" v-if="student.id && student.year === 1">
+                <label class="col-sm-3 control-label">How satisfied are you with your choice of program? (1-10)</label>
+                <div class="col-sm-9">
+                    <input type="number" class="form-control" min="1" max="10" v-model="student.program_satisfaction" v-bind:disabled="!canEdit">
+                    <span class="help-block" v-show="getValidationErrors('program_satisfaction')">{{ getValidationErrors('program_satisfaction') }}</span>
                 </div>
             </div>
 

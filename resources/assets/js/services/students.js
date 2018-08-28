@@ -160,22 +160,13 @@ const getCreditsAverage = function() {
     });
 };
 
-const getCreditsExpected = function() {
+const getProgramSatisfactionAverage = function({cohort, program_code, year}) {
 
     return new Promise((resolve, reject) => {
 
-        Vue.http.get('students/creditsexpected').then((response) => {
+        Vue.http.get(`students/programsatisfactionaverage?program_code=${program_code}&cohort=${cohort}&year=${year}`).then((response) => {
 
-                response.json().then((obj) => {
-
-                        obj = json.removeDataWrappers(obj);
-                        resolve({items: obj});
-                    })
-                    .catch((parseError) => {
-
-                        console.log(parseError);
-                        reject({message: 'Failed to parse result.'});
-                    });
+                resolve(Number(response.data) || null);
             })
             .catch((response) => {
 
@@ -372,7 +363,7 @@ export {
     getById,
     getByParameters,
     getCreditsAverage,
-    getCreditsExpected,
+    getProgramSatisfactionAverage,
     importFromFile,
     updateByAuthenticated,
     updateByIds,

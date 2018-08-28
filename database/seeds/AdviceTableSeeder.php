@@ -28,6 +28,13 @@ class AdviceTableSeeder extends Seeder
             'is_published' => true,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
+        ], [
+
+            'title' => 'My Dashboard preferred browsers',
+            'text' => '<p>‘My Dashboard’ is best used with one of the following browsers:</p><p>- Chrome</p><p>- Edge</p><p>- Safari</p><p>- Internet Explorer</p>',
+            'is_published' => true,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
         ]);
     }
 }

@@ -168,7 +168,7 @@
 
          const student = _.find(this.viewAsStudents, (obj) => {
 
-         return obj.student_number === parseInt(newValue);
+         return obj.student_number === newValue;
          });
 
          if (student) {

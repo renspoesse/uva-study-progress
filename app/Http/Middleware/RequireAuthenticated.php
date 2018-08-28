@@ -34,7 +34,7 @@ class RequireAuthenticated
                 'image'                 => '',
                 'roles'                 => [Roles::Student, Roles::Administrator],
                 'groups'                => [],
-                'custom_student_number' => 20000000
+                'custom_student_number' => '00000000'
             ]);
             $request->session()->put('authenticated', true);
         }
