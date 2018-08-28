@@ -51,7 +51,12 @@
                 <li>nummer (required)</li>
                 <li>opl (required)</li>
                 <li>omschrijving</li>
-                <li>Satisfaction</li>
+                <li>Satisfaction-B1</li>
+                <li>Satisfaction-B2</li>
+                <li>Satisfaction-B3</li>
+                <li>Satisfaction-B4</li>
+                <li>Satisfaction-B5</li>
+                <li>Satisfaction-B6</li>
                 <li>cohort (required)</li>
                 <li>Jaar (required)</li>
 

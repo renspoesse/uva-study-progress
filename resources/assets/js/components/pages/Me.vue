@@ -41,11 +41,11 @@
                 </div>
             </div>
 
-            <div v-bind:class="['form-group', hasError('program_satisfaction') ? 'has-feedback has-error' : '']" v-if="student.id && student.year === 1">
+            <div v-bind:class="['form-group', hasError('program_satisfaction_b1') ? 'has-feedback has-error' : '']" v-if="student.id && student.year === 1">
                 <label class="col-sm-3 control-label">How satisfied are you with your choice of program? (1-10)</label>
                 <div class="col-sm-9">
-                    <input type="number" class="form-control" min="1" max="10" v-model="student.program_satisfaction" v-bind:disabled="!canEdit">
-                    <span class="help-block" v-show="getValidationErrors('program_satisfaction')">{{ getValidationErrors('program_satisfaction') }}</span>
+                    <input type="number" class="form-control" min="1" max="10" v-model="student.program_satisfaction_b1" v-bind:disabled="!canEdit">
+                    <span class="help-block" v-show="getValidationErrors('program_satisfaction_b1')">{{ getValidationErrors('program_satisfaction_b1') }}</span>
                 </div>
             </div>
 

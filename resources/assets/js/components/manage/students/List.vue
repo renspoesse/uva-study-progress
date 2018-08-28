@@ -79,7 +79,7 @@
                         </td>
                         <td v-bind:title="item.display_name">{{ _.truncate(item.display_name, {length: 30}) }}</td>
                         <td v-bind:title="item.program_name">{{ _.truncate(item.program_name, {length: 30}) }}</td>
-                        <td>{{ item.program_satisfaction }}</td>
+                        <td>{{ item.program_satisfaction_b1 }}</td>
                         <td>{{ item.first_year_mentor }}</td>
                         <td>{{ item.cohort }}</td>
                         <td>{{ item.year }}</td>

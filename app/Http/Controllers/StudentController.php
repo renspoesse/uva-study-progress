@@ -44,12 +44,17 @@ class StudentController extends BaseController
 
                 $obj = new Student();
 
-                $obj->student_number       = $record['nummer'];
-                $obj->program_code         = $record['opl'];
-                $obj->program_name         = $record['omschrijving'];
-                $obj->program_satisfaction = $record['Satisfaction'] !== '' ? $record['Satisfaction'] : null;
-                $obj->cohort               = $record['cohort'];
-                $obj->year                 = $record['Jaar'];
+                $obj->student_number          = $record['nummer'];
+                $obj->program_code            = $record['opl'];
+                $obj->program_name            = $record['omschrijving'];
+                $obj->program_satisfaction_b1 = $record['Satisfaction-B1'] !== '' ? $record['Satisfaction-B1'] : null;
+                $obj->program_satisfaction_b2 = $record['Satisfaction-B2'] !== '' ? $record['Satisfaction-B2'] : null;
+                $obj->program_satisfaction_b3 = $record['Satisfaction-B3'] !== '' ? $record['Satisfaction-B3'] : null;
+                $obj->program_satisfaction_b4 = $record['Satisfaction-B4'] !== '' ? $record['Satisfaction-B4'] : null;
+                $obj->program_satisfaction_b5 = $record['Satisfaction-B5'] !== '' ? $record['Satisfaction-B5'] : null;
+                $obj->program_satisfaction_b6 = $record['Satisfaction-B6'] !== '' ? $record['Satisfaction-B6'] : null;
+                $obj->cohort                  = $record['cohort'];
+                $obj->year                    = $record['Jaar'];
 
                 $obj->first_year_mentor       = $record['1stY-Mentor'] !== '' ? $record['1stY-Mentor'] : null;
                 $obj->first_year_b1_credits   = $record['1stY-B1'] !== '' ? $record['1stY-B1'] : null;
@@ -186,7 +191,12 @@ class StudentController extends BaseController
                 $obj->student_number,
                 $obj->program_code,
                 $obj->program_name,
-                $obj->program_satisfaction,
+                $obj->program_satisfaction_b1,
+                $obj->program_satisfaction_b2,
+                $obj->program_satisfaction_b3,
+                $obj->program_satisfaction_b4,
+                $obj->program_satisfaction_b5,
+                $obj->program_satisfaction_b6,
                 $obj->cohort,
                 $obj->year,
                 $obj->first_year_mentor,
@@ -323,7 +333,7 @@ class StudentController extends BaseController
             ->having('cohort', $request->input('cohort'))
             ->having('program_code', $request->input('program_code'))
             ->having('year', $request->input('year'))
-            ->avg('program_satisfaction');
+            ->avg('program_satisfaction_b1');
 
         return $record;
     }
@@ -419,7 +429,7 @@ class StudentController extends BaseController
 
                 if ($request->exists('first_year_credits_goal')) $student->first_year_credits_goal = $request->input('first_year_credits_goal');
                 if ($request->exists('second_year_credits_goal')) $student->second_year_credits_goal = $request->input('second_year_credits_goal');
-                if ($request->exists('program_satisfaction')) $student->program_satisfaction = $request->input('program_satisfaction');
+                if ($request->exists('program_satisfaction')) $student->program_satisfaction_b1 = $request->input('program_satisfaction');
                 if ($request->exists('is_published')) $student->is_published = $request->input('is_published');
 
                 $student->save();
@@ -455,7 +465,7 @@ class StudentController extends BaseController
 
                 if ($request->exists('first_year_credits_goal')) $student->first_year_credits_goal = $request->input('first_year_credits_goal');
                 if ($request->exists('second_year_credits_goal')) $student->second_year_credits_goal = $request->input('second_year_credits_goal');
-                if ($request->exists('program_satisfaction')) $student->program_satisfaction = $request->input('program_satisfaction');
+                if ($request->exists('program_satisfaction')) $student->program_satisfaction_b1 = $request->input('program_satisfaction');
                 if ($request->exists('is_published')) $student->is_published = $request->input('is_published');
 
                 $student->save();
