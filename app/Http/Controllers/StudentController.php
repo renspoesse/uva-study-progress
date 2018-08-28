@@ -347,6 +347,7 @@ class StudentController extends BaseController
             $query = $query->where('student_number', 'LIKE', '%' . $request->input('query') . '%');
             $query = $query->orWhere('display_name', 'LIKE', '%' . $request->input('query') . '%');
             $query = $query->orWhere('program_name', 'LIKE', '%' . $request->input('query') . '%');
+            $query = $query->orWhere('first_year_mentor', 'LIKE', '%' . $request->input('query') . '%');
             $query = $query->orWhere('cohort', 'LIKE', '%' . $request->input('query') . '%');
         }
 
@@ -372,6 +373,7 @@ class StudentController extends BaseController
             $query = $query->where('student_number', 'LIKE', '%' . $request->input('query') . '%');
             $query = $query->orWhere('display_name', 'LIKE', '%' . $request->input('query') . '%');
             $query = $query->orWhere('program_name', 'LIKE', '%' . $request->input('query') . '%');
+            $query = $query->orWhere('first_year_mentor', 'LIKE', '%' . $request->input('query') . '%');
             $query = $query->orWhere('cohort', 'LIKE', '%' . $request->input('query') . '%');
         }
 
@@ -443,6 +445,7 @@ class StudentController extends BaseController
             $query = $query->where('student_number', 'LIKE', '%' . $request->input('query') . '%');
             $query = $query->orWhere('display_name', 'LIKE', '%' . $request->input('query') . '%');
             $query = $query->orWhere('program_name', 'LIKE', '%' . $request->input('query') . '%');
+            $query = $query->orWhere('first_year_mentor', 'LIKE', '%' . $request->input('query') . '%');
             $query = $query->orWhere('cohort', 'LIKE', '%' . $request->input('query') . '%');
         }
 

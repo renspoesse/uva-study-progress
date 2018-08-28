@@ -61,6 +61,7 @@
                         <th v-bind:class="headerClass('display_name')" v-on:click.prevent="handleOrder('display_name')"></th>
                         <th v-bind:class="headerClass('program_name')" v-on:click.prevent="handleOrder('program_name')">Program</th>
                         <th class="header">Satisfaction</th>
+                        <th v-bind:class="headerClass('first_year_mentor')" v-on:click.prevent="handleOrder('first_year_mentor')">Mentor</th>
                         <th v-bind:class="headerClass('cohort')" v-on:click.prevent="handleOrder('cohort')">Cohort</th>
                         <th v-bind:class="headerClass('year')" v-on:click.prevent="handleOrder('year')">Year</th>
                         <th class="header">Goal</th>
@@ -79,6 +80,7 @@
                         <td v-bind:title="item.display_name">{{ _.truncate(item.display_name, {length: 30}) }}</td>
                         <td v-bind:title="item.program_name">{{ _.truncate(item.program_name, {length: 30}) }}</td>
                         <td>{{ item.program_satisfaction }}</td>
+                        <td>{{ item.first_year_mentor }}</td>
                         <td>{{ item.cohort }}</td>
                         <td>{{ item.year }}</td>
                         <td>{{ (item.year === 1) ? item.first_year_credits_goal : item.second_year_credits_goal }}</td>
