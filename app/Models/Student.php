@@ -17,11 +17,11 @@ class Student extends BaseModel
 
     public function getProgramSatisfactionAttribute()
     {
-        return $this->program_satisfaction_b1;
+        return $this->attributes['program_satisfaction_b' . Settings::first()->active_block];
     }
 
     public function setProgramSatisfactionAttribute($value)
     {
-        $this->attributes['program_satisfaction_b1'] = $value;
+        $this->attributes['program_satisfaction_b' . Settings::first()->active_block] = $value;
     }
 }
