@@ -61,7 +61,7 @@
                         <th v-bind:class="headerClass('display_name')" v-on:click.prevent="handleOrder('display_name')"></th>
                         <th v-bind:class="headerClass('program_name')" v-on:click.prevent="handleOrder('program_name')">Program</th>
                         <th class="header">Satisfaction</th>
-                        <th v-bind:class="headerClass('first_year_mentor')" v-on:click.prevent="handleOrder('first_year_mentor')">Mentor</th>
+                        <th v-bind:class="headerClass('first_year_mentor')" v-on:click.prevent="handleOrder('first_year_mentor')">Student Coach</th>
                         <th v-bind:class="headerClass('cohort')" v-on:click.prevent="handleOrder('cohort')">Cohort</th>
                         <th v-bind:class="headerClass('year')" v-on:click.prevent="handleOrder('year')">Year</th>
                         <th class="header">Goal</th>

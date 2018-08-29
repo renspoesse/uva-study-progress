@@ -53,7 +53,7 @@
                             <tbody>
 
                             <tr>
-                                <td>Mentor</td>
+                                <td>Student Coach</td>
                                 <td>{{ student.first_year_mentor }}</td>
                             </tr>
 
