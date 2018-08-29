@@ -29,7 +29,7 @@
         <div class="row text-center m-t-md">
             <div class="col-md-12 m-b-md">
                 <div class="w-lg m-x-auto" style="height: 30rem;">
-                    <canvas ref="chartProgramSatisfaction"></canvas>
+                    <canvas ref="chartProgramSatisfactionOverTime"></canvas>
                 </div>
             </div>
         </div>
@@ -428,43 +428,77 @@
                     });
                 });
 
-                students.getProgramSatisfactionAverage(this.student).then((average) => {
+                students.getProgramSatisfactionAverage(this.student).then((result) => result.item).then((average) => {
 
-                    const chart3 = new Chart(this.$refs.chartProgramSatisfaction, {
+                    const chart3 = new Chart(this.$refs.chartProgramSatisfactionOverTime, {
 
                         type: 'bar',
                         data: {
 
                             labels: [
 
-                                'Me (' + (this.student.program_satisfaction || 'N/A') + ')',
-                                'Peer group (' + (average || 'N/A') + ')'
+                                'Block 1',
+                                'Block 2',
+                                'Block 3',
+                                'Block 4',
+                                'Block 5',
+                                'Block 6'
                             ],
-                            datasets: [{
+                            datasets: [
 
-                                backgroundColor: [
+                                {
+                                    type: 'line',
+                                    borderColor: [
 
-                                    color1,
-                                    color3
-                                ],
-                                borderColor: [
+                                        '#000000'
+                                    ],
+                                    borderWidth: 1,
+                                    fill: false,
+                                    label: 'Peer group average',
+                                    lineTension: 0,
+                                    spanGaps: true,
+                                    data: [
 
-                                    color1Border,
-                                    color3Border
-                                ],
-                                borderWidth: 1,
-                                data: [
+                                        average.program_satisfaction_b1_average,
+                                        average.program_satisfaction_b2_average,
+                                        average.program_satisfaction_b3_average,
+                                        average.program_satisfaction_b4_average,
+                                        average.program_satisfaction_b5_average,
+                                        average.program_satisfaction_b6_average,
+                                    ]
+                                },
+                                {
+                                    type: 'line',
+                                    borderColor: [
 
-                                    this.student.program_satisfaction,
-                                    average,
-                                ]
-                            }]
+                                        color1Border
+                                    ],
+                                    fill: false,
+                                    label: 'You',
+                                    lineTension: 0,
+                                    pointBackgroundColor: [
+
+                                        color1
+                                    ],
+                                    spanGaps: true,
+                                    data: [
+
+                                        this.student.program_satisfaction_b1,
+                                        this.student.program_satisfaction_b2,
+                                        this.student.program_satisfaction_b3,
+                                        this.student.program_satisfaction_b4,
+                                        this.student.program_satisfaction_b5,
+                                        this.student.program_satisfaction_b6,
+                                    ]
+                                }
+                            ]
                         },
                         options: {
 
                             legend: {
 
-                                display: false
+                                display: true,
+                                position: 'top'
                             },
                             maintainAspectRatio: false,
                             scales: {

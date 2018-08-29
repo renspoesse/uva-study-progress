@@ -333,9 +333,25 @@ class StudentController extends BaseController
             ->having('cohort', $request->input('cohort'))
             ->having('program_code', $request->input('program_code'))
             ->having('year', $request->input('year'))
-            ->avg('program_satisfaction_b1');
+            ->select(
 
-        return $record;
+                DB::raw('AVG(program_satisfaction_b1) AS program_satisfaction_b1_average'),
+                DB::raw('AVG(program_satisfaction_b2) AS program_satisfaction_b2_average'),
+                DB::raw('AVG(program_satisfaction_b3) AS program_satisfaction_b3_average'),
+                DB::raw('AVG(program_satisfaction_b4) AS program_satisfaction_b4_average'),
+                DB::raw('AVG(program_satisfaction_b5) AS program_satisfaction_b5_average'),
+                DB::raw('AVG(program_satisfaction_b6) AS program_satisfaction_b6_average')
+            )
+            ->first();
+
+        $record->program_satisfaction_b1_average = is_null($record->program_satisfaction_b1_average) ? null : (double)$record->program_satisfaction_b1_average;
+        $record->program_satisfaction_b2_average = is_null($record->program_satisfaction_b2_average) ? null : (double)$record->program_satisfaction_b2_average;
+        $record->program_satisfaction_b3_average = is_null($record->program_satisfaction_b3_average) ? null : (double)$record->program_satisfaction_b3_average;
+        $record->program_satisfaction_b4_average = is_null($record->program_satisfaction_b4_average) ? null : (double)$record->program_satisfaction_b4_average;
+        $record->program_satisfaction_b5_average = is_null($record->program_satisfaction_b5_average) ? null : (double)$record->program_satisfaction_b5_average;
+        $record->program_satisfaction_b6_average = is_null($record->program_satisfaction_b6_average) ? null : (double)$record->program_satisfaction_b6_average;
+
+        return response()->json($record);
     }
 
     public function deleteByIds($ids)

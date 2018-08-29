@@ -166,7 +166,16 @@ const getProgramSatisfactionAverage = function({cohort, program_code, year}) {
 
         Vue.http.get(`students/programsatisfactionaverage?program_code=${program_code}&cohort=${cohort}&year=${year}`).then((response) => {
 
-                resolve(Number(response.data) || null);
+                response.json().then((obj) => {
+
+                        obj = json.removeDataWrappers(obj);
+                        resolve({item: obj});
+                    })
+                    .catch((parseError) => {
+
+                        console.log(parseError);
+                        reject({message: 'Failed to parse result.'});
+                    });
             })
             .catch((response) => {
 
