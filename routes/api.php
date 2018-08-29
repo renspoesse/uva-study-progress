@@ -55,6 +55,9 @@ Route::group(['middleware' => ['web', 'auth', 'csrf']], function () { // Enable 
 
     Route::group(['middleware' => 'role:' . Roles::Administrator], function () {
 
+        Route::get('/settings', 'SettingsController@get');
+        Route::patch('/settings', 'SettingsController@updatePartial');
+
         Route::patch('/students', 'StudentController@updatePartialByParameters');
         Route::delete('/students', 'StudentController@deleteByParameters');
 

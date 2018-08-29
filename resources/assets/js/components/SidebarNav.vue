@@ -58,6 +58,9 @@
                         <router-link tag="li" to="/manage/advice">
                             <a><i class="fa fa-fw fa-info m-r" aria-hidden="true"></i>Edit info</a>
                         </router-link>
+                        <router-link tag="li" to="/manage/settings" v-if="hasAnyRole(viewAs, [roles.Administrator])">
+                            <a><i class="fa fa-fw fa-cog m-r" aria-hidden="true"></i>Settings</a>
+                        </router-link>
 
                     </template>
 

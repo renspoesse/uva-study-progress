@@ -23,6 +23,10 @@ const components = {
             Edit: require('./components/manage/news/Edit.vue'),
             List: require('./components/manage/news/List.vue')
         },
+        settings: {
+
+            Index: require('./components/manage/settings/Index.vue'),
+        },
         students: {
 
             Import: require('./components/manage/students/Import.vue'),
@@ -75,6 +79,7 @@ const router = new VueRouter({
         {path: '/manage/news', component: components.manage.news.List, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdviser, Roles.Administrator]}},
         {path: '/manage/news/new', component: components.manage.news.Edit, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdviser, Roles.Administrator]}},
         {path: '/manage/news/:id/edit', component: components.manage.news.Edit, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdviser, Roles.Administrator]}},
+        {path: '/manage/settings', component: components.manage.settings.Index, meta: {requiresAuth: true, requiresRole: [Roles.Administrator]}},
         {path: '/manage/students', component: components.manage.students.List, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdviser, Roles.Administrator]}},
         {path: '/manage/students/import', component: components.manage.students.Import, meta: {requiresAuth: true, requiresRole: Roles.Administrator}},
         {path: '/manage/students/:id', component: components.manage.students.View, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdviser, Roles.Administrator]}},
