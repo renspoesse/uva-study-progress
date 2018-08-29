@@ -437,7 +437,7 @@
 
                             labels: [
 
-                                'Me (' + (this.student.program_satisfaction_b1 || 'N/A') + ')',
+                                'Me (' + (this.student.program_satisfaction || 'N/A') + ')',
                                 'Peer group (' + (average || 'N/A') + ')'
                             ],
                             datasets: [{
@@ -455,7 +455,7 @@
                                 borderWidth: 1,
                                 data: [
 
-                                    this.student.program_satisfaction_b1,
+                                    this.student.program_satisfaction,
                                     average,
                                 ]
                             }]
