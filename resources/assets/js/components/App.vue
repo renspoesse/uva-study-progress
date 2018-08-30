@@ -33,7 +33,7 @@
 
             isManageRoute() {
 
-                return this.$route.path.startsWith('/manage/');
+                return this.$route.path.indexOf('/manage/') > -1;
             }
         }
     }
