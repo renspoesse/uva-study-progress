@@ -135,11 +135,11 @@ const getByParameters = function(params) {
     });
 };
 
-const getCreditsAverage = function() {
+const getCreditsAverage = function({cohort, program_code, year}) {
 
     return new Promise((resolve, reject) => {
 
-        Vue.http.get('students/creditsaverage').then((response) => {
+        Vue.http.get(`students/creditsaverage?program_code=${program_code}&cohort=${cohort}&year=${year}`).then((response) => {
 
                 response.json().then((obj) => {
 

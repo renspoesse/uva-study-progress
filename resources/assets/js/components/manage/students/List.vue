@@ -85,9 +85,9 @@
                         <td>{{ item.year }}</td>
                         <td>{{ (item.year === 1) ? item.first_year_credits_goal : item.second_year_credits_goal }}</td>
                         <td>
-                            <i class="fa fa-circle" style="color: green;" title=">= 54 EC expected" v-if="item.second_year_credits_expected >= 54"></i>
-                            <i class="fa fa-circle" style="color: yellow;" title=">= 30 EC expected" v-else-if="item.second_year_credits_expected >= 30"></i>
-                            <i class="fa fa-circle" style="color: red;" title="< 30 EC expected" v-else></i>
+                            <i class="fa fa-circle" style="color: green;" title=">= 54 EC expected" v-if="item.year === 2 && item.second_year_credits_expected >= 54"></i>
+                            <i class="fa fa-circle" style="color: yellow;" title=">= 30 EC expected" v-else-if="item.year === 2 && item.second_year_credits_expected >= 30"></i>
+                            <i class="fa fa-circle" style="color: red;" title="< 30 EC expected" v-else-if="item.year === 2"></i>
                         </td>
                         <td>
                             <i class="fa fa-check" v-if="item.is_published"></i>

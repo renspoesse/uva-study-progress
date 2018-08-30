@@ -2,7 +2,7 @@
 
     <div class="app">
 
-        <div class="container-fluid">
+        <div :class="isManageRoute ? 'container-fluid' : 'container'">
             <div class="row">
 
                 <div class="col-sm-3">
@@ -24,3 +24,18 @@
     </div>
 
 </template>
+
+<script>
+
+    export default {
+
+        computed: {
+
+            isManageRoute() {
+
+                return this.$route.path.startsWith('/manage/');
+            }
+        }
+    }
+
+</script>

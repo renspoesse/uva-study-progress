@@ -280,26 +280,38 @@ class StudentController extends BaseController
             return response(Student::where('id', $id)->firstOrFail());
     }
 
-    public function getCreditsAverage()
+    public function getCreditsAverage(Request $request)
     {
         // TODO RENS: cachen.
 
-        $record = DB::table('students')->select(
+        $this->validate($request, [
 
-            DB::raw('AVG(first_year_b1_credits) AS first_year_b1_credits_average'),
-            DB::raw('AVG(first_year_b2_credits) AS first_year_b2_credits_average'),
-            DB::raw('AVG(first_year_b3_credits) AS first_year_b3_credits_average'),
-            DB::raw('AVG(first_year_b4_credits) AS first_year_b4_credits_average'),
-            DB::raw('AVG(first_year_b5_credits) AS first_year_b5_credits_average'),
-            DB::raw('AVG(first_year_b6_credits) AS first_year_b6_credits_average'),
-            DB::raw('AVG(second_year_b1_credits) AS second_year_b1_credits_average'),
-            DB::raw('AVG(second_year_b2_credits) AS second_year_b2_credits_average'),
-            DB::raw('AVG(second_year_b3_credits) AS second_year_b3_credits_average'),
-            DB::raw('AVG(second_year_b4_credits) AS second_year_b4_credits_average'),
-            DB::raw('AVG(second_year_b5_credits) AS second_year_b5_credits_average'),
-            DB::raw('AVG(second_year_b6_credits) AS second_year_b6_credits_average')
+            'cohort'       => 'required|integer',
+            'program_code' => 'required|integer',
+            'year'         => 'required|integer'
+        ]);
 
-        )->first();
+        $record = DB::table('students')
+            ->groupBy('cohort', 'program_code', 'year')
+            ->having('cohort', $request->input('cohort'))
+            ->having('program_code', $request->input('program_code'))
+            ->having('year', $request->input('year'))
+            ->select(
+
+                DB::raw('AVG(first_year_b1_credits) AS first_year_b1_credits_average'),
+                DB::raw('AVG(first_year_b2_credits) AS first_year_b2_credits_average'),
+                DB::raw('AVG(first_year_b3_credits) AS first_year_b3_credits_average'),
+                DB::raw('AVG(first_year_b4_credits) AS first_year_b4_credits_average'),
+                DB::raw('AVG(first_year_b5_credits) AS first_year_b5_credits_average'),
+                DB::raw('AVG(first_year_b6_credits) AS first_year_b6_credits_average'),
+                DB::raw('AVG(second_year_b1_credits) AS second_year_b1_credits_average'),
+                DB::raw('AVG(second_year_b2_credits) AS second_year_b2_credits_average'),
+                DB::raw('AVG(second_year_b3_credits) AS second_year_b3_credits_average'),
+                DB::raw('AVG(second_year_b4_credits) AS second_year_b4_credits_average'),
+                DB::raw('AVG(second_year_b5_credits) AS second_year_b5_credits_average'),
+                DB::raw('AVG(second_year_b6_credits) AS second_year_b6_credits_average')
+            )
+            ->first();
 
         $record->first_year_b1_credits_average  = is_null($record->first_year_b1_credits_average) ? null : (int)round((double)$record->first_year_b1_credits_average);
         $record->first_year_b2_credits_average  = is_null($record->first_year_b2_credits_average) ? null : (int)round((double)$record->first_year_b2_credits_average);
