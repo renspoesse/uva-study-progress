@@ -371,7 +371,7 @@
                     }
                 });
 
-                students.getCreditsAverage().then((result) => result.item).then((average) => {
+                students.getCreditsAverage(this.student).then((result) => result.item).then((average) => {
 
                     const chart2 = new Chart(this.$refs.chartCreditsOverTime, {
 
