@@ -52,6 +52,27 @@
                         <table class="table" data-sort="table">
                             <thead>
                             <tr>
+                                <th class="header w-50">General</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr>
+                                <td>Program</td>
+                                <td>{{ student.program_name }}</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="table-full">
+                    <div class="table-responsive">
+                        <table class="table" data-sort="table">
+                            <thead>
+                            <tr>
                                 <th class="header w-50">Overall indicators</th>
                                 <th></th>
                             </tr>

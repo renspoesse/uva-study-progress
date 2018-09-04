@@ -41,7 +41,7 @@
         <div class="row">
             <div class="col-md-12">
 
-                <div class="table-full" v-if="student.first_year_mentor !== null">
+                <div class="table-full">
                     <div class="table-responsive">
                         <table class="table" data-sort="table">
                             <thead>
@@ -52,6 +52,10 @@
                             </thead>
                             <tbody>
 
+                            <tr>
+                                <td>Program</td>
+                                <td>{{ student.program_name }}</td>
+                            </tr>
                             <tr>
                                 <td>Student Coach</td>
                                 <td>{{ student.first_year_mentor }}</td>
