@@ -426,7 +426,7 @@
                             },
                             tooltips: {
 
-                                enabled: false
+                                // enabled: false
                             }
                         }
                     });
@@ -476,7 +476,7 @@
                                     color1Border
                                 ],
                                 fill: false,
-                                label: 'You',
+                                label: 'Satisfaction',
                                 lineTension: 0,
                                 pointBackgroundColor: [
 
@@ -522,7 +522,7 @@
                         },
                         tooltips: {
 
-                            enabled: false
+                            // enabled: false
                         }
                     }
                 });

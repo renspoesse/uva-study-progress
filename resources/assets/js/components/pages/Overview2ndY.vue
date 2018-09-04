@@ -537,7 +537,7 @@
                             },
                             tooltips: {
 
-                                enabled: false
+                                // enabled: false
                             }
                         }
                     });
