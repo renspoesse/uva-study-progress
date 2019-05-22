@@ -16,11 +16,9 @@ class LtiHelpers
         // We use the record id to retrieve additional database information, if available.
 
         if ($recordId) {
-
             $user = User::fromRecordId($recordId, $connector);
 
             return array_merge($request->session()->get('user'), [
-
                 'userId' => $user->getId()
             ]);
         }

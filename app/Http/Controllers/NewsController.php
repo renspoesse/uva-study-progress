@@ -8,6 +8,7 @@ use App\Helpers\RoleHelpers;
 use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Exception;
 
 class NewsController extends Controller
 {
@@ -18,11 +19,10 @@ class NewsController extends Controller
         DB::beginTransaction();
 
         try {
-
             $news = new News();
 
-            $news->title        = $request->input('title');
-            $news->text         = $request->input('text');
+            $news->title = $request->input('title');
+            $news->text = $request->input('text');
             $news->is_published = $request->input('is_published');
 
             $news->save();
@@ -30,9 +30,7 @@ class NewsController extends Controller
             DB::commit();
 
             return response(News::find($news->id), 201);
-        }
-        catch (\Exception $ex) {
-
+        } catch (Exception $ex) {
             DB::rollBack();
             throw $ex;
         }
@@ -51,33 +49,32 @@ class NewsController extends Controller
     public function index(Request $request)
     {
         $this->validate($request, [
-
-            'order'         => 'string|nullable',
+            'order' => 'string|nullable',
             'publishedOnly' => 'nullable',
-            'query'         => 'string|nullable'
+            'query' => 'string|nullable'
         ]);
 
         $query = News::query();
 
-        if (filter_var($request->input('publishedOnly'), FILTER_VALIDATE_BOOLEAN) === true || !RoleHelpers::hasAnyRole($request, [Roles::StudyAdviser, Roles::Administrator]))
+        if (filter_var($request->input('publishedOnly'),
+                FILTER_VALIDATE_BOOLEAN) === true || !RoleHelpers::hasAnyRole($request,
+                [Roles::StudyAdviser, Roles::Administrator])) {
             $query = $query->where('is_published', true);
+        }
 
         if ($request->filled('query')) {
-
             $query = $query->where('title', 'LIKE', '%' . $request->input('query') . '%');
             $query = $query->orWhere('text', 'LIKE', '%' . $request->input('query') . '%');
         }
 
-        $orderBy        = 'updated_at';
+        $orderBy = 'updated_at';
         $orderDirection = 'desc';
 
         if ($request->filled('order')) {
-
             list($field, $direction) = explode('|', $request->input('order'));
 
             if (!empty($field)) {
-
-                $orderBy        = $field;
+                $orderBy = $field;
                 $orderDirection = !empty($direction) ? $direction : 'asc';
             }
         }
@@ -97,10 +94,15 @@ class NewsController extends Controller
         $news = News::findOrFail($id);
 
         DB::transaction(function () use ($id, $request, $news) {
-
-            if ($request->exists('title')) $news->title = $request->input('title');
-            if ($request->exists('text')) $news->text = $request->input('text');
-            if ($request->exists('is_published')) $news->is_published = $request->input('is_published');
+            if ($request->exists('title')) {
+                $news->title = $request->input('title');
+            }
+            if ($request->exists('text')) {
+                $news->text = $request->input('text');
+            }
+            if ($request->exists('is_published')) {
+                $news->is_published = $request->input('is_published');
+            }
 
             $news->save();
         });
@@ -111,9 +113,8 @@ class NewsController extends Controller
     protected function getValidatorComplete(Request $request)
     {
         return [
-
-            'title'        => 'required|string|max:128|filled',
-            'text'         => 'required|string',
+            'title' => 'required|string|max:128|filled',
+            'text' => 'required|string',
             'is_published' => 'required|boolean'
         ];
     }
@@ -121,9 +122,8 @@ class NewsController extends Controller
     protected function getValidatorPartial(Request $request)
     {
         return [
-
-            'title'        => 'string|max:128|filled',
-            'text'         => 'string',
+            'title' => 'string|max:128|filled',
+            'text' => 'string',
             'is_published' => 'boolean'
         ];
     }

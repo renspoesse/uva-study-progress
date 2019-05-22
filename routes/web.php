@@ -15,7 +15,6 @@
 Route::post('/lti/launch', 'LtiController@index');
 
 // Route::get('/test', function (Request $request) {
-//
 //     \Illuminate\Support\Facades\Log::info('Request method: ' . $request->method());
 //     \Illuminate\Support\Facades\Log::info('Request URL: ' . $request->fullUrl());
 //
@@ -35,7 +34,6 @@ Route::post('/lti/launch', 'LtiController@index');
 // });
 //
 // Route::get('/test2', function (Request $request) {
-//
 //     \Illuminate\Support\Facades\Log::info('Request method: ' . $request->method());
 //     \Illuminate\Support\Facades\Log::info('Request URL: ' . $request->fullUrl());
 //     \Illuminate\Support\Facades\Log::info('Session id (test2): ' . $request->session()->getId());
@@ -44,27 +42,24 @@ Route::post('/lti/launch', 'LtiController@index');
 // });
 
 Route::get('/js/lang.js', function () {
-
     //$strings = \Illuminate\Support\Facades\Cache::rememberForever('lang.js', function () {
 
-    $lang     = config('app.locale');
+    $lang = config('app.locale');
     $fallback = config('app.fallback_locale');
 
-    $files   = glob(resource_path('lang/' . $lang . '/*.php'));
+    $files = glob(resource_path('lang/' . $lang . '/*.php'));
     $strings = [];
 
     foreach ($files as $file) {
-
-        $name           = basename($file, '.php');
+        $name = basename($file, '.php');
         $strings[$name] = require $file;
     }
 
-    $fallbackFiles   = glob(resource_path('lang/' . $fallback . '/*.php'));
+    $fallbackFiles = glob(resource_path('lang/' . $fallback . '/*.php'));
     $fallbackStrings = [];
 
     foreach ($fallbackFiles as $file) {
-
-        $name                   = basename($file, '.php');
+        $name = basename($file, '.php');
         $fallbackStrings[$name] = require $file;
     }
 
@@ -75,13 +70,15 @@ Route::get('/js/lang.js', function () {
 
     header('Content-Type: text/javascript');
     echo('window.i18n = ' . json_encode($strings) . ';');
+
     exit();
 });
 
 Route::group(['middleware' => ['csrf']], function () {
-
     /**
      * Catch all route to enable HTML5 history mode in VueRouter.
      */
-    Route::any('{all}', function () { return view('index'); })->where('all', '[\/\w\.-]*');
+    Route::any('{all}', function () {
+        return view('index');
+    })->where('all', '[\/\w\.-]*');
 });

@@ -17,16 +17,14 @@ class RoleHelpers
         $userRoles = RoleHelpers::getRoles($request);
 
         if (is_array($roles)) {
-
             foreach ($roles as $role) {
-
-                if (in_array($role, $userRoles))
+                if (in_array($role, $userRoles)) {
                     return true;
+                }
             }
-
             return false;
-        }
-        else
+        } else {
             return in_array($roles, $userRoles);
+        }
     }
 }

@@ -35,13 +35,11 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             //\App\Http\Middleware\VerifyCsrfToken::class,
             //\Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\SetLanguage::class,
         ],
 
         'api' => [
             'throttle:120,1', // Max attempts: 120. Decay minutes: 1. Per request, route and IP address.
             //'bindings',
-            \App\Http\Middleware\SetLanguage::class,
         ],
 
         'csrf' => [

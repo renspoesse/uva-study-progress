@@ -10,16 +10,17 @@ class CheckRole
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure                 $next
-     * @param  array                    $roles
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
+     * @param array $roles
      *
      * @return mixed
      */
     public function handle($request, Closure $next, ...$roles)
     {
-        if (!RoleHelpers::hasAnyRole($request, $roles))
+        if (!RoleHelpers::hasAnyRole($request, $roles)) {
             abort(403, 'User has insufficient permissions.');
+        }
 
         return $next($request);
     }

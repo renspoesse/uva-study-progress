@@ -14,7 +14,6 @@ class SettingsTableSeeder extends Seeder
     public function run()
     {
         DB::table('settings')->insert([
-
             'active_block' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()

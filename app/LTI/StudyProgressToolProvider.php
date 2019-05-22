@@ -30,19 +30,19 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
         $request = request();
 
         if ($request->filled('custom_role_membership')) {
-
-            $this->user->roles = array_merge($this->user->roles, explode(',', $request->input('custom_role_membership')));
-        }
-        else if ($request->filled('custom_custom_role_membership')) {
-
-            $this->user->roles = array_merge($this->user->roles, explode(',', $request->input('custom_custom_role_membership')));
+            $this->user->roles = array_merge($this->user->roles,
+                explode(',', $request->input('custom_role_membership')));
+        } else {
+            if ($request->filled('custom_custom_role_membership')) {
+                $this->user->roles = array_merge($this->user->roles,
+                    explode(',', $request->input('custom_custom_role_membership')));
+            }
         }
 
         $this->user->roles = str_replace('rens_1', 'feb_dashboard_admin', $this->user->roles);
         $this->user->roles = str_replace('rens_2', 'feb_dashboard_studyadviser', $this->user->roles);
 
         $allowed = [
-
             'firstname',
             'lastname',
             'fullname',
@@ -56,13 +56,10 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
         ];
 
         $userInfo = array_filter((array)$this->user, function ($key) use ($allowed) {
-
             return in_array($key, $allowed);
-
         }, ARRAY_FILTER_USE_KEY);
 
         if ($request->filled('custom_student_number')) {
-
             $userInfo['custom_student_number'] = $request->get('custom_student_number');
         }
 
@@ -84,7 +81,6 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
         // Therefore we have to simulate this session cookie to ensure the current session can be identified on subsequent requests.
 
         $cookie = new Cookie(
-
             $request->session()->getName(),
             config('session.encrypt') ? encrypt($request->session()->getId()) : $request->session()->getId(),
             config('session.expire_on_close') ? 0 : Carbon::now()->addMinutes(config('session.lifetime')),

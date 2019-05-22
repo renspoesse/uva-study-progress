@@ -12,8 +12,8 @@ class RequireAuthenticated
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure                 $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
      *
      * @return mixed
      */
@@ -24,23 +24,20 @@ class RequireAuthenticated
         Log::info('Session id (middleware): ' . $request->session()->getId());
 
         if (App::environment('local') && !$request->session()->get('authenticated')) {
-
             $request->session()->put('user', [
-
-                'firstname'             => 'Developer',
-                'lastname'              => '',
-                'fullname'              => 'Developer',
-                'email'                 => 'email@example.com',
-                'image'                 => '',
-                'roles'                 => [Roles::Student, Roles::Administrator],
-                'groups'                => [],
+                'firstname' => 'Developer',
+                'lastname' => '',
+                'fullname' => 'Developer',
+                'email' => 'email@example.com',
+                'image' => '',
+                'roles' => [Roles::Student, Roles::Administrator],
+                'groups' => [],
                 'custom_student_number' => '00000000'
             ]);
             $request->session()->put('authenticated', true);
         }
 
         if (!$request->session()->get('authenticated')) {
-
             Log::error('No authenticated session.');
             abort(401, 'No authenticated session.');
         }

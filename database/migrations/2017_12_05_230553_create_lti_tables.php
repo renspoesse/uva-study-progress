@@ -14,7 +14,6 @@ class CreateLtiTables extends Migration
     public function up()
     {
         Schema::create('lti2_consumer', function (Blueprint $table) {
-
             $table->increments('consumer_pk');
             $table->string('name', 50);
             $table->string('consumer_key256', 256);
@@ -39,7 +38,6 @@ class CreateLtiTables extends Migration
         });
 
         Schema::create('lti2_tool_proxy', function (Blueprint $table) {
-
             $table->increments('tool_proxy_pk');
             $table->string('tool_proxy_id', 32);
             $table->integer('consumer_pk');
@@ -53,7 +51,6 @@ class CreateLtiTables extends Migration
         });
 
         Schema::create('lti2_nonce', function (Blueprint $table) {
-
             $table->integer('consumer_pk');
             $table->string('value', 64);
             $table->dateTime('expires');
@@ -63,7 +60,6 @@ class CreateLtiTables extends Migration
         });
 
         Schema::create('lti2_context', function (Blueprint $table) {
-
             $table->increments('context_pk');
             $table->integer('consumer_pk');
             $table->string('lti_context_id', 255);
@@ -76,7 +72,6 @@ class CreateLtiTables extends Migration
         });
 
         Schema::create('lti2_resource_link', function (Blueprint $table) {
-
             $table->increments('resource_link_pk');
             $table->integer('context_pk')->nullable();
             $table->integer('consumer_pk')->nullable();
@@ -94,7 +89,6 @@ class CreateLtiTables extends Migration
         });
 
         Schema::create('lti2_user_result', function (Blueprint $table) {
-
             $table->increments('user_pk');
             $table->integer('resource_link_pk');
             $table->string('lti_user_id', 255);
@@ -107,7 +101,6 @@ class CreateLtiTables extends Migration
         });
 
         Schema::create('lti2_share_key', function (Blueprint $table) {
-
             $table->string('share_key_id', 32);
             $table->integer('resource_link_pk');
             $table->boolean('auto_approve');

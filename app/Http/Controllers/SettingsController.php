@@ -20,8 +20,9 @@ class SettingsController extends Controller
         $settings = Settings::firstOrFail();
 
         DB::transaction(function () use ($request, $settings) {
-
-            if ($request->exists('active_block')) $settings->active_block = $request->input('active_block');
+            if ($request->exists('active_block')) {
+                $settings->active_block = $request->input('active_block');
+            }
 
             $settings->save();
         });
@@ -32,7 +33,6 @@ class SettingsController extends Controller
     protected function getValidatorComplete(Request $request)
     {
         return [
-
             'active_block' => 'required|integer|in:1,2,3,4,5,6'
         ];
     }
@@ -40,7 +40,6 @@ class SettingsController extends Controller
     protected function getValidatorPartial(Request $request)
     {
         return [
-
             'active_block' => 'required|integer|in:1,2,3,4,5,6'
         ];
     }
