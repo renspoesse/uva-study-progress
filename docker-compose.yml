@@ -1,0 +1,46 @@
+version: "3"
+
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: app
+
+  fpm:
+    image: renspoesse/uva-study-progress:latest
+    depends_on:
+      - db
+    volumes:
+      - ./:/usr/share/nginx/html:ro
+      - ./bootstrap/cache:/usr/share/nginx/html/bootstrap/cache
+      - ./storage:/usr/share/nginx/html/storage
+    env_file:
+      - ./.env
+      - ./.env.development
+      - ./.env.local
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - db
+    ports:
+      - "8889:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: example
+
+  web:
+    image: renspoesse/uva-study-progress-web:latest
+    depends_on:
+      - fpm
+    ports:
+      - "8888:80"
+    volumes:
+      - ./public:/usr/share/nginx/html/public:ro
+
+volumes:
+  data:
