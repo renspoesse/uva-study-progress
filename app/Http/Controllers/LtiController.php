@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use IMSGlobal\LTI\ToolProvider\DataConnector;
 
-class LtiController extends BaseController
+class LtiController extends Controller
 {
     public function index(Request $request)
     {

@@ -9,7 +9,7 @@ use App\Models\Advice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class AdviceController extends BaseController
+class AdviceController extends Controller
 {
     public function create(Request $request)
     {

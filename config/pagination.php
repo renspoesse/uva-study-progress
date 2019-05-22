@@ -10,5 +10,6 @@ return [
     */
 
     'maxRecordsPerPage' => 50,
-    'recordsPerPage'    => 20
+    'recordsPerPage'    => 20,
+
 ];

@@ -1,5 +1,5 @@
-let mix = require('laravel-mix');
-let path = require('path');
+const mix = require('laravel-mix');
+const path = require('path');
 
 /*
  |--------------------------------------------------------------------------
@@ -66,7 +66,5 @@ if (mix.config.inProduction) {
 
     mix.version();
 }
-else {
-
+else
     mix.sourceMaps();
-}

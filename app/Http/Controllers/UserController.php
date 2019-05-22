@@ -6,7 +6,7 @@ use App\Helpers\LtiHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class UserController extends BaseController
+class UserController extends Controller
 {
     public function getByAuthenticated(Request $request)
     {

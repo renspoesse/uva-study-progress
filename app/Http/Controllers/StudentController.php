@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 use League\Csv\Reader;
 use League\Csv\Writer;
 
-class StudentController extends BaseController
+class StudentController extends Controller
 {
     public function createByImport(Request $request)
     {
