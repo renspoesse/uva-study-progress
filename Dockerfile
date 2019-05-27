@@ -31,6 +31,7 @@ RUN docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd && \
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 COPY ./php.ini $PHP_INI_DIR/conf.d/local.ini
+COPY ./php-fpm.conf /usr/local/etc/php-fpm.d/zzz-docker-overrides.conf
 
 WORKDIR /usr/share/nginx/html
 
