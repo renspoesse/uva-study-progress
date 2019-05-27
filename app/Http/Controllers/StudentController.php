@@ -181,7 +181,8 @@ class StudentController extends Controller
             'GESLACHT',
             'NATIONALITEIT',
             'EMAILADRES',
-            'vooropleidng'
+            'vooropleidng',
+            'Laatst gewijzigd'
         ];
 
         $records = Student::all()->map(function ($obj) {
@@ -239,7 +240,8 @@ class StudentController extends Controller
                 $obj->gender === 1 ? 'M' : ($obj->gender === 2 ? 'F' : null),
                 $obj->nationality,
                 $obj->email_address,
-                $obj->vooropleiding
+                $obj->vooropleiding,
+                $obj->updated_at
             ];
         });
 
