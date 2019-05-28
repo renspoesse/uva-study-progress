@@ -69,18 +69,13 @@
 
 <script>
 
-    import * as _ from 'lodash'
-    import {mapGetters, mapState} from 'vuex'
-
-    import Roles from '../../enums/Roles'
-
-    import backgroundProcesses from '../../mixins/background_processes'
-    import errorAlerts from '../../mixins/error_alerts'
-    import loadingOverlay from '../../mixins/loading_overlay'
-
-    import * as images from '../../helpers/images'
-    import * as roles from '../../helpers/roles'
-    import * as students from '../../services/students'
+    import * as _ from 'lodash';
+    import {mapGetters, mapState} from 'vuex';
+    import backgroundProcesses from '../../mixins/background_processes';
+    import errorAlerts from '../../mixins/error_alerts';
+    import loadingOverlay from '../../mixins/loading_overlay';
+    import * as roles from '../../helpers/roles';
+    import * as students from '../../services/students';
 
     export default {
 
@@ -89,19 +84,17 @@
             ...mapGetters({
 
                 displayName: 'auth/displayName',
-                userRoles: 'auth/roles'
+                userRoles: 'auth/roles',
             }),
             ...mapState({
 
                 user: (state) => state.auth.user,
-                viewAs: (state) => state.auth.viewAs
+                viewAs: (state) => state.auth.viewAs,
             }),
-            roles() { return Roles; },
-
             canEdit: function() {
 
                 return (!this.viewAs || this.hasAnyRole(this.user, [this.roles.Administrator]));
-            }
+            },
         },
         created() {
 
@@ -111,8 +104,8 @@
 
             return {
 
-                student: {}
-            }
+                student: {},
+            };
         },
         methods: {
 
@@ -122,20 +115,16 @@
 
                 if (this.viewAs) {
 
-                    students.getById(this.viewAs.id)
-                        .then((result) => {
-
-                            this.student = result.item;
-                        });
+                    students.getById(this.viewAs.id).then(result => this.student = result.item);
                 }
                 else {
 
                     students.getByAuthenticated()
-                        .then((result) => {
+                        .then(result => {
 
                             this.student = result.item;
                         })
-                        .catch((ex) => {
+                        .catch(() => {
 
                             // When changing from view-as-student to view-as-yourself, there might be no student data available anymore.
                             // We should reflect this in the view instead of keeping the old data.
@@ -156,38 +145,40 @@
 
                 let promise;
 
-                if (this.viewAs)
+                if (this.viewAs) {
+
                     promise = students.updateByIds(payload.id, payload);
+                }
                 else
                     promise = students.updateByAuthenticated(payload, payload);
 
-                promise.then((result) => {
+                promise.then(result => {
 
-                        this.student = _.defaultsDeep(result.item, {});
-                        this.displaySuccess(true);
+                    this.student = _.defaultsDeep(result.item, {});
+                    this.displaySuccess(true);
 
-                        // By request: redirect to the dashboard page. This should probably be removed once more settings can be edited on this page:
+                    // By request: redirect to the dashboard page. This should probably be removed once more settings can be edited on this page:
 
-                        this.$router.push({path: '/'});
-                    })
-                    .catch((ex) => {this.displayErrorsSpecific(true, ex.errors);});
+                    this.$router.push({path: '/'});
+                })
+                    .catch(customError => {this.displayErrorsSpecific(true, customError.errors);});
 
                 return promise;
-            }
+            },
         },
         mixins: [
 
             backgroundProcesses,
             errorAlerts,
-            loadingOverlay
+            loadingOverlay,
         ],
         watch: {
 
-            viewAs: function(newValue) {
+            viewAs: function() {
 
                 this.fetchStudent();
-            }
-        }
-    }
+            },
+        },
+    };
 
 </script>

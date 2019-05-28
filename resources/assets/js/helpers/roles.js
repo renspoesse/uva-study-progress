@@ -1,4 +1,4 @@
-import * as _ from 'lodash'
+import * as _ from 'lodash';
 
 const hasAnyRole = function(user, roles) {
 
@@ -20,5 +20,5 @@ const hasAnyRole = function(user, roles) {
 
 export {
 
-    hasAnyRole
-}
+    hasAnyRole,
+};

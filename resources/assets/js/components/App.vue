@@ -34,8 +34,8 @@
             isManageRoute() {
 
                 return this.$route.path.indexOf('/manage/') > -1;
-            }
-        }
-    }
+            },
+        },
+    };
 
 </script>

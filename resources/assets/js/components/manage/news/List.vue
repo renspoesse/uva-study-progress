@@ -74,23 +74,14 @@
 
 <script>
 
-    import * as _ from 'lodash'
-    import moment from 'moment'
-
-    import errorAlerts from '../../../mixins/error_alerts'
-    import listActions from '../../../mixins/list_actions'
-    import loadingOverlay from '../../../mixins/loading_overlay'
-
-    import * as images from '../../../helpers/images'
-    import * as news from '../../../services/news'
+    import * as _ from 'lodash';
+    import errorAlerts from '../../../mixins/error_alerts';
+    import listActions from '../../../mixins/list_actions';
+    import loadingOverlay from '../../../mixins/loading_overlay';
+    import * as news from '../../../services/news';
 
     export default {
 
-        computed: {
-
-            _() { return _; },
-            moment() { return moment; }
-        },
         methods: {
 
             fetchData: function(page) {
@@ -105,18 +96,18 @@
                         limit: this.limit,
                         order: this.order.field + '|' + this.order.direction,
                         page: page,
-                        query: this.query.trim()
+                        query: this.query.trim(),
                     })
-                    .then((result) => {
+                    .then(result => {
 
                         this.items = result.items;
                         this.pagination = result.meta.pagination;
 
                         this.showLoading(false);
                     })
-                    .catch((ex) => {
+                    .catch(customError => {
 
-                        this.displayErrors(true, ex.message);
+                        this.displayErrors(true, customError.message);
                         this.showLoading(false);
                     });
             },
@@ -124,19 +115,19 @@
 
                 this.displayErrors(false);
 
-                // TODO RENS: confirmation.
+                // TODO: confirmation.
 
                 news.deleteByIds(_.map(this.getSelectedItems(), 'id'))
                     .then(() => {this.fetchData(this.pagination.currentPage);})
-                    .catch((ex) => {this.addError(ex.message);});
-            }
+                    .catch(customError => {this.addError(customError.message);});
+            },
         },
         mixins: [
 
             errorAlerts,
             listActions,
-            loadingOverlay
-        ]
-    }
+            loadingOverlay,
+        ],
+    };
 
 </script>

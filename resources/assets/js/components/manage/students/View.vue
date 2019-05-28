@@ -62,17 +62,12 @@
 
 <script>
 
-    import * as _ from 'lodash'
-    import {mapState} from 'vuex'
-
-    import Roles from '../../../enums/Roles'
-
-    import errorAlerts from '../../../mixins/error_alerts'
-    import loadingOverlay from '../../../mixins/loading_overlay'
-
-    import * as images from '../../../helpers/images'
-    import * as roles from '../../../helpers/roles'
-    import * as students from '../../../services/students'
+    import {mapState} from 'vuex';
+    import Roles from '../../../enums/Roles';
+    import errorAlerts from '../../../mixins/error_alerts';
+    import loadingOverlay from '../../../mixins/loading_overlay';
+    import * as roles from '../../../helpers/roles';
+    import * as students from '../../../services/students';
 
     export default {
 
@@ -80,10 +75,8 @@
 
             ...mapState({
 
-                user: (state) => state.auth.user
+                user: (state) => state.auth.user,
             }),
-            _() { return _; },
-            roles() { return Roles; }
         },
         created: function() {
 
@@ -94,8 +87,8 @@
 
             return {
 
-                student: {}
-            }
+                student: {},
+            };
         },
         methods: {
 
@@ -105,14 +98,14 @@
                 this.displayErrors(false);
 
                 students.getById(id)
-                    .then((result) => {
+                    .then(result => {
 
                         this.student = result.item;
                         this.showLoading(false);
                     })
-                    .catch((ex) => {
+                    .catch(customError => {
 
-                        this.displayErrors(true, ex.message);
+                        this.displayErrors(true, customError.message);
                         this.showLoading(false);
                     });
             },
@@ -122,14 +115,14 @@
                 this.displayErrors(false);
 
                 students.updateByIds(this.student.id, {is_published: true})
-                    .then((result) => {
+                    .then(result => {
 
                         this.student = result.item;
                         this.showLoading(false);
                     })
-                    .catch((ex) => {
+                    .catch(customError => {
 
-                        this.displayErrors(true, ex.message);
+                        this.displayErrors(true, customError.message);
                         this.showLoading(false);
                     });
             },
@@ -139,14 +132,14 @@
                 this.displayErrors(false);
 
                 students.updateByIds(this.student.id, {is_published: false})
-                    .then((result) => {
+                    .then(result => {
 
                         this.student = result.item;
                         this.showLoading(false);
                     })
-                    .catch((ex) => {
+                    .catch(customError => {
 
-                        this.displayErrors(true, ex.message);
+                        this.displayErrors(true, customError.message);
                         this.showLoading(false);
                     });
             },
@@ -156,26 +149,26 @@
 
                     fullname: this.student.display_name,
                     id: this.student.id,
-                    roles: [Roles.Student]
+                    roles: [Roles.Student],
                 });
 
                 this.$router.push({path: '/', query: {viewAs: this.student.id}});
             },
-            hasAnyRole: roles.hasAnyRole
+            hasAnyRole: roles.hasAnyRole,
         },
         mixins: [
 
             errorAlerts,
-            loadingOverlay
+            loadingOverlay,
         ],
         watch: {
 
-            '$route' (to, from) {
+            $route: function() {
 
                 if (this.$route.params.id)
                     this.fetchData(this.$route.params.id);
-            }
-        }
-    }
+            },
+        },
+    };
 
 </script>

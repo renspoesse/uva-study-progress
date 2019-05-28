@@ -11,7 +11,7 @@ export default {
 
         return {
 
-            backgroundProcesses: 0
-        }
-    }
-}
+            backgroundProcesses: 0,
+        };
+    },
+};

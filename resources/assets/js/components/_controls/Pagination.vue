@@ -22,7 +22,7 @@
 
 <script>
 
-    import * as _ from 'lodash'
+    import * as _ from 'lodash';
 
     export default {
 
@@ -39,25 +39,25 @@
                 const last = Math.min(first + this.pagesToShow, Math.max(this.pagination.totalPages, 1) + 1);
 
                 return _.range(first, last);
-            }
+            },
         },
         data: function() {
 
             return {
 
-                pagesToShow: 5
+                pagesToShow: 5,
             };
         },
         methods: {
 
             raiseGoTo: function(page) {this.$emit('goToPage', {page: page});},
             raiseNext: function() {this.$emit('goToPage', {page: this.pagination.currentPage + 1});},
-            raisePrevious: function() {this.$emit('goToPage', {page: this.pagination.currentPage - 1});}
+            raisePrevious: function() {this.$emit('goToPage', {page: this.pagination.currentPage - 1});},
         },
         props: [
 
-            'pagination'
-        ]
-    }
+            'pagination',
+        ],
+    };
 
 </script>

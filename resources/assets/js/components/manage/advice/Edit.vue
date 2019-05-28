@@ -64,15 +64,12 @@
 
 <script>
 
-    import * as _ from 'lodash'
-    import MediumEditor from 'medium-editor'
-
-    import backgroundProcesses from '../../../mixins/background_processes'
-    import errorAlerts from '../../../mixins/error_alerts'
-    import loadingOverlay from '../../../mixins/loading_overlay'
-
-    import * as advice from '../../../services/advice'
-    import * as images from '../../../helpers/images'
+    import * as _ from 'lodash';
+    import MediumEditor from 'medium-editor';
+    import backgroundProcesses from '../../../mixins/background_processes';
+    import errorAlerts from '../../../mixins/error_alerts';
+    import loadingOverlay from '../../../mixins/loading_overlay';
+    import * as advice from '../../../services/advice';
 
     export default {
 
@@ -95,9 +92,9 @@
 
                 advice: {
 
-                    is_published: true
-                }
-            }
+                    is_published: true,
+                },
+            };
         },
         methods: {
 
@@ -107,7 +104,7 @@
                 this.displayErrors(false);
 
                 advice.getById(id)
-                    .then((result) => {
+                    .then(result => {
 
                         this.advice = _.defaultsDeep(result.item, {
 
@@ -116,9 +113,9 @@
 
                         this.showLoading(false);
                     })
-                    .catch((ex) => {
+                    .catch(customError => {
 
-                        this.displayErrors(true, ex.message);
+                        this.displayErrors(true, customError.message);
                         this.showLoading(false);
                     });
             },
@@ -126,12 +123,11 @@
 
                 advice.deleteByIds(this.advice.id)
                     .then(() => {this.$router.push({path: '/manage/advice'});})
-                    .catch((ex) => {this.displayErrors(true, ex.message);});
+                    .catch(customError => {this.displayErrors(true, customError.message);});
             },
             handleSubmit: function() {
 
                 this.advice.text = this.editor.getContent();
-
                 this.saveOrUpdate(this.advice);
             },
             saveOrUpdate: function(payload) {
@@ -141,9 +137,8 @@
 
                 const wasNew = payload.id;
 
-                const promise = advice.saveOrUpdate(payload);
-
-                promise.then((result) => {
+                advice.saveOrUpdate(payload)
+                    .then(result => {
 
                         this.advice = _.defaultsDeep(result.item, {
 
@@ -155,16 +150,17 @@
 
                         this.displaySuccess(true);
                     })
-                    .catch((ex) => {this.displayErrors(true, ex.message, ex.errors);});
+                    .catch(customError => {
 
-                return promise;
+                        this.displayErrors(true, customError.message, customError.errors);
+                    });
             }
         },
         mixins: [
 
             backgroundProcesses,
             errorAlerts,
-            loadingOverlay
+            loadingOverlay,
         ],
         mounted() {
 
@@ -172,10 +168,10 @@
 
                 linkValidation: true,
                 placeholder: false,
-                targetBlank: true
+                targetBlank: true,
             });
-        }
-    }
+        },
+    };
 
 </script>
 

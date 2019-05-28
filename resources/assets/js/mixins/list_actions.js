@@ -1,4 +1,4 @@
-import * as _ from 'lodash'
+import * as _ from 'lodash';
 
 export default {
 
@@ -29,14 +29,14 @@ export default {
             limit: 15,
             order: {field: '', direction: ''},
             pagination: {currentPage: 1, totalPages: 1},
-            query: ''
+            query: '',
         };
     },
     methods: {
 
         getSelectedItems: function() {
 
-            // TODO RENS: dit kan meer reactive.
+            // TODO: make reactive.
 
             const items = [];
 
@@ -93,13 +93,13 @@ export default {
 
                 query: _.omitBy(_.extend(_.clone(this.$route.query), {
 
-                    limit: this.limit,
-                    order: this.order.field ? this.order.field + '|' + this.order.direction : '',
-                    page: page > 1 ? page : '',
-                    query: this.query.trim()
-
-                }), (value) => {return _.isEmpty(value) && !_.isNumber(value);})
+                        limit: this.limit,
+                        order: this.order.field ? this.order.field + '|' + this.order.direction : '',
+                        page: page > 1 ? page : '',
+                        query: this.query.trim(),
+                    }),
+                    (value) => {return _.isEmpty(value) && !_.isNumber(value);})
             });
-        }
-    }
-}
+        },
+    },
+};

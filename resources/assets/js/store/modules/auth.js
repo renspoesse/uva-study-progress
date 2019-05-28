@@ -1,16 +1,15 @@
-import Vue from 'vue'
-
-import * as json from '../../helpers/json'
+import axios from 'axios';
+import * as json from '../../helpers/json';
 
 const state = {
 
     user: null,
-    viewAs: null
+    viewAs: null,
 };
 
 const getters = {
 
-    avatarUrl: (state) => {
+    avatarUrl: state => {
 
         if (state.viewAs) {
 
@@ -19,7 +18,7 @@ const getters = {
 
         return _.get(state, 'user.image');
     },
-    displayName: (state) => {
+    displayName: state => {
 
         if (state.viewAs) {
 
@@ -28,15 +27,15 @@ const getters = {
 
         return _.get(state, 'user.fullname');
     },
-    isAuthenticated: (state) => {
+    isAuthenticated: state => {
 
         return !!state.user;
     },
-    permissions: (state) => {
+    permissions: () => {
 
         return [];
     },
-    roles: (state) => {
+    roles: state => {
 
         if (state.viewAs) {
 
@@ -44,74 +43,47 @@ const getters = {
         }
 
         return _.get(state, 'user.roles', []);
-    }
+    },
 };
 
 const mutations = {
 
-    SET_USER (state, payload) {state.user = payload;},
-    SET_VIEW_AS (state, payload) {state.viewAs = payload;},
-    UNSET_USER (state) {state.user = null;},
-    UNSET_VIEW_AS (state) {state.viewAs = null;}
+    SET_USER(state, payload) {state.user = payload;},
+    SET_VIEW_AS(state, payload) {state.viewAs = payload;},
+    UNSET_USER(state) {state.user = null;},
+    UNSET_VIEW_AS(state) {state.viewAs = null;},
 };
 
 const actions = {
 
-    getSession ({commit}) {
+    getSession({commit}) {
 
-        return new Promise((resolve, reject) => {
+        return axios.get('me')
+            .then(response => {
 
-            Vue.http.get('me').then((response) => {
+                commit('SET_USER', json.removeDataWrappers(response.data));
+            })
+            .catch(() => {
 
-                    response.json().then((obj) => {
-
-                            obj = json.removeDataWrappers(obj);
-
-                            commit('SET_USER', obj);
-                            resolve();
-                        })
-                        .catch((parseError) => {
-
-                            console.log(parseError);
-
-                            commit('UNSET_USER');
-                            commit('UNSET_VIEW_AS');
-                            resolve();
-                        });
-                })
-                .catch(() => {
-
-                    commit('UNSET_USER');
-                    commit('UNSET_VIEW_AS');
-                    resolve();
-                });
-        });
+                commit('UNSET_USER');
+                commit('UNSET_VIEW_AS');
+            });
     },
-    logout ({commit}) {
+    logout({commit}) {
 
-        return new Promise((resolve, reject) => {
+        return axios.post('logout').then(() => {
 
-            Vue.http.post('logout').then(() => {
-
-                    commit('UNSET_USER');
-                    commit('UNSET_VIEW_AS');
-                    resolve();
-                })
-                .catch((response) => {
-
-                    console.log(response);
-                    reject({});
-                });
+            commit('UNSET_USER');
+            commit('UNSET_VIEW_AS');
         });
     }
 };
 
 export default {
 
-    namespaced: true,
-
-    state,
+    actions,
     getters,
     mutations,
-    actions
-}
+    namespaced: true,
+    state,
+};

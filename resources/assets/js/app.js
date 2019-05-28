@@ -1,11 +1,5 @@
-import Vue from 'vue'
-import VueAnalytics from 'vue-analytics'
-
-import App from './components/App.vue'
-import router from './router'
-import store from './store'
-
-window.debug = false;
+import Vue from 'vue';
+import VueAnalytics from 'vue-analytics';
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -16,35 +10,39 @@ window.debug = false;
 require('./bootstrap');
 
 /**
+ * The following block of code may be used to automatically register your
+ * Vue components. It will recursively scan this directory for the Vue
+ * components and automatically register them with their "basename".
+ *
+ * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
+ */
+
+// const files = require.context('./', true, /\.vue$/i);
+// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
+
+Vue.component('alert', require('./components/_controls/Alert.vue').default);
+Vue.component('loading-overlay', require('./components/_controls/LoadingOverlay.vue').default);
+Vue.component('overview-1sty', require('./components/pages/Overview1stY.vue').default);
+Vue.component('overview-2ndy', require('./components/pages/Overview2ndY.vue').default);
+Vue.component('pagination', require('./components/_controls/Pagination.vue').default);
+Vue.component('sidebar-nav', require('./components/SidebarNav.vue').default);
+
+/**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// Register app components.
-
-Vue.component('alert', require('./components/_controls/Alert.vue'));
-Vue.component('loading-overlay', require('./components/_controls/LoadingOverlay.vue'));
-Vue.component('overview-1sty', require('./components/pages/Overview1stY.vue'));
-Vue.component('overview-2ndy', require('./components/pages/Overview2ndY.vue'));
-Vue.component('pagination', require('./components/_controls/Pagination.vue'));
-
-Vue.component('sidebar-nav', require('./components/SidebarNav.vue'));
-
-// Create a global event bus.
-
-const eventBus = new Vue();
+const router = require('./router').default;
+const store = require('./store').default;
 
 // Enable Google Analytics.
 
 Vue.use(VueAnalytics, {
 
     id: 'UA-110515281-1',
-    router
+    router,
 });
-
-// Try using an existing session on the server. The getSession action guarantees a resolved promise,
-// so the app is created whether there's a session or not.
 
 let app;
 
@@ -52,17 +50,21 @@ store.dispatch('auth/getSession').then(() => {
 
     // Create the app.
 
-    window.app = app = new Vue(Vue.util.extend({
+    app = new Vue(Vue.util.extend({
 
-        el: '#app',
-        router: router,
-        store: store
-
-    }, App));
+            el: '#app',
+            router: router,
+            store: store,
+        },
+        require('./components/App.vue').default));
 });
+
+// Create a global event bus.
+
+const eventBus = new Vue();
 
 export {
 
     app,
-    eventBus
-}
+    eventBus,
+};

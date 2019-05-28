@@ -1,4 +1,4 @@
-import $ from 'jquery'
+import $ from 'jquery';
 
 /**
  * Register any vendor dependencies to the window object that need to be available

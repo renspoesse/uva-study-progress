@@ -53,11 +53,10 @@
 
 <script>
 
-    import backgroundProcesses from '../../../mixins/background_processes'
-    import errorAlerts from '../../../mixins/error_alerts'
-    import loadingOverlay from '../../../mixins/loading_overlay'
-
-    import * as settings from '../../../services/settings'
+    import backgroundProcesses from '../../../mixins/background_processes';
+    import errorAlerts from '../../../mixins/error_alerts';
+    import loadingOverlay from '../../../mixins/loading_overlay';
+    import * as settings from '../../../services/settings';
 
     export default {
 
@@ -69,7 +68,7 @@
 
             return {
 
-                settings: {}
+                settings: {},
             };
         },
         methods: {
@@ -78,7 +77,7 @@
 
                 this.displayErrors(false);
 
-                settings.get().then((result) => {
+                settings.get().then(result => {
 
                     this.settings = result.item;
                 });
@@ -92,20 +91,21 @@
                 this.displayErrors(false);
                 this.displaySuccess(false);
 
-                return settings.update(payload).then((result) => {
+                return settings.update(payload)
+                    .then(result => {
 
                         this.settings = _.defaultsDeep(result.item, {});
                         this.displaySuccess(true);
                     })
-                    .catch((ex) => {this.displayErrorsSpecific(true, ex.errors);});
-            }
+                    .catch(customError => {this.displayErrorsSpecific(true, customError.errors);});
+            },
         },
         mixins: [
 
             backgroundProcesses,
             errorAlerts,
-            loadingOverlay
-        ]
-    }
+            loadingOverlay,
+        ],
+    };
 
 </script>

@@ -1,5 +1,5 @@
-import * as _ from 'lodash'
-import $ from 'jquery'
+import * as _ from 'lodash';
+import $ from 'jquery';
 
 const fadeWhenLoaded = function(selector) {
 
@@ -66,5 +66,5 @@ export {
     getMediaImageFocusOrOriginalUrl,
     getMediaImageOriginalUrl,
     getMediaImageType,
-    isEmpty
-}
+    isEmpty,
+};

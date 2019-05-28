@@ -94,13 +94,8 @@
 
 <script>
 
-    import * as _ from 'lodash'
-    import {mapGetters, mapState} from 'vuex'
-
-    import Roles from '../enums/Roles'
-
-    import * as roles from '../helpers/roles'
-    import * as students from '../services/students'
+    import {mapGetters, mapState} from 'vuex';
+    import * as roles from '../helpers/roles';
 
     export default {
 
@@ -110,87 +105,23 @@
 
                 avatarUrl: 'auth/avatarUrl',
                 displayName: 'auth/displayName',
-                isAuthenticated: 'auth/isAuthenticated'
+                isAuthenticated: 'auth/isAuthenticated',
             }),
             ...mapState({
 
                 user: (state) => state.auth.user,
-                viewAs: (state) => { return state.auth.viewAs ? state.auth.viewAs : state.auth.user; }
+                viewAs: (state) => { return state.auth.viewAs ? state.auth.viewAs : state.auth.user; },
             }),
-            roles() { return Roles; }
         },
-        /*
-         created() {
-
-         this.fetchData();
-         },
-         data: function() {
-
-         return {
-
-         viewAsId: '',
-         viewAsStudents: []
-         }
-         },
-         */
         methods: {
 
-            /*
-             fetchData: function() {
-
-             students.getByParameters({
-
-             limit: 5,
-             publishedOnly: true
-             })
-             .then((result) => {
-
-             this.viewAsStudents = result.items;
-             });
-             },
-             */
             handleViewAsYourself: function() {
 
                 this.$store.commit('auth/UNSET_VIEW_AS');
-
-                //this.$router.replace({
-                //
-                //    query: _.omit(this.$route.query, ['viewAs'])
-                //});
-
                 this.$router.push({path: '/manage/students'});
             },
-            hasAnyRole: roles.hasAnyRole
-        }
-        /*
-         watch: {
-
-         viewAsId: function(newValue) {
-
-         if (!_.isEmpty(newValue)) {
-
-         const student = _.find(this.viewAsStudents, (obj) => {
-
-         return obj.student_number === newValue;
-         });
-
-         if (student) {
-
-         this.$store.commit('auth/SET_VIEW_AS', {
-
-         fullname: student.display_name,
-         id: student.id,
-         roles: [Roles.Student]
-         });
-
-         this.$router.push({path: '/', query: {viewAs: student.id}});
-         }
-         }
-         else
-         this.$store.commit('auth/UNSET_VIEW_AS');
-         }
-         }
-         */
-    }
+            hasAnyRole: roles.hasAnyRole,
+        },
+    };
 
 </script>

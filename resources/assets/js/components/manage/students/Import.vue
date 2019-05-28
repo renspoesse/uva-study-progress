@@ -111,7 +111,7 @@
             </ol>
             <p>
                 <strong>Recommendation:</strong> verify the .csv file before uploading by opening it in a plain text editor such as Notepad or TextMate.
-                                                 Pay special attention to the delimiting character (;) and date formats (dd-mm-yyyy).
+                Pay special attention to the delimiting character (;) and date formats (dd-mm-yyyy).
             </p>
         </div>
 
@@ -121,19 +121,13 @@
 
 <script>
 
-    import * as _ from 'lodash'
-    import backgroundProcesses from '../../../mixins/background_processes'
-    import errorAlerts from '../../../mixins/error_alerts'
-    import loadingOverlay from '../../../mixins/loading_overlay'
-
-    import * as students from '../../../services/students'
+    import backgroundProcesses from '../../../mixins/background_processes';
+    import errorAlerts from '../../../mixins/error_alerts';
+    import loadingOverlay from '../../../mixins/loading_overlay';
+    import * as students from '../../../services/students';
 
     export default {
 
-        computed: {
-
-            _() { return _; }
-        },
         methods: {
 
             handleSubmit: function() {
@@ -144,12 +138,14 @@
                 this.backgroundProcesses++;
 
                 students.importFromFile({}, this.$refs.fileInput.files[0])
-                    .then((result) => {
+                    .then(() => {
+
                         this.displaySuccess(true, 'The data was imported successfully.');
                         this.backgroundProcesses--;
                     })
-                    .catch((ex) => {
-                        this.displayErrors(true, ex.message, ex.errors);
+                    .catch(customError => {
+
+                        this.displayErrors(true, customError.message, customError.errors);
                         this.backgroundProcesses--;
                     });
             }
@@ -158,8 +154,8 @@
 
             backgroundProcesses,
             errorAlerts,
-            loadingOverlay
-        ]
-    }
+            loadingOverlay,
+        ],
+    };
 
 </script>

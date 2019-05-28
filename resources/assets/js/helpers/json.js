@@ -1,10 +1,10 @@
-import * as _ from 'lodash'
+import * as _ from 'lodash';
 
 const getDefaultParameters = function(params) {
 
     return _.defaults(params, {
 
-        limit: 15
+        limit: 15,
     });
 };
 
@@ -168,5 +168,5 @@ export {
     getFormData,
     removeDataWrappers,
     removeEmptyObjects,
-    zipMetaData
-}
+    zipMetaData,
+};

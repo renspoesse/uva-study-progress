@@ -20,22 +20,22 @@
             alertClass: function() {
 
                 return 'alert-' + this.type;
-            }
+            },
         },
         methods: {
 
             handleClose: function() {
 
                 this.$emit('close');
-            }
+            },
         },
         props: {
 
             closeable: {default: true},
             message: {},
             show: {},
-            type: {}
-        }
-    }
+            type: {},
+        },
+    };
 
 </script>

@@ -4,14 +4,14 @@ export default {
 
         return {
 
-            loading: false
-        }
+            loading: false,
+        };
     },
     methods: {
 
         showLoading: function(show) {
 
             this.loading = show;
-        }
-    }
-}
+        },
+    },
+};

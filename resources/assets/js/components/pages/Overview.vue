@@ -26,14 +26,10 @@
 
 <script>
 
-    import {mapState} from 'vuex'
-
-    import errorAlerts from '../../mixins/error_alerts'
-
-    import Roles from '../../enums/Roles'
-
-    import * as roles from '../../helpers/roles'
-    import * as students from '../../services/students'
+    import {mapState} from 'vuex';
+    import errorAlerts from '../../mixins/error_alerts';
+    import * as roles from '../../helpers/roles';
+    import * as students from '../../services/students';
 
     export default {
 
@@ -42,9 +38,8 @@
             ...mapState({
 
                 user: (state) => state.auth.user,
-                viewAs: (state) => state.auth.viewAs
+                viewAs: (state) => state.auth.viewAs,
             }),
-            roles() { return Roles; }
         },
         created() {
 
@@ -54,7 +49,7 @@
 
             return {
 
-                student: {}
+                student: {},
             };
         },
         methods: {
@@ -66,45 +61,45 @@
                 if (this.viewAs) {
 
                     students.getById(this.viewAs.id)
-                        .then((result) => {
+                        .then(result => {
 
                             this.student = result.item;
                         })
-                        .catch((ex) => {
+                        .catch(customError => {
 
-                            this.displayErrors(true, ex.message);
+                            this.displayErrors(true, customError.message);
                         });
                 }
                 else {
 
                     students.getByAuthenticated()
-                        .then((result) => {
+                        .then(result => {
 
                             this.student = result.item;
                         })
-                        .catch((ex) => {
+                        .catch(customError => {
 
                             // When changing from view-as-student to view-as-yourself, there might be no student data available anymore.
                             // We should reflect this in the view instead of keeping the old data.
 
                             this.student = {};
-                            this.displayErrors(true, ex.message);
+                            this.displayErrors(true, customError.message);
                         });
                 }
             },
-            hasAnyRole: roles.hasAnyRole
+            hasAnyRole: roles.hasAnyRole,
         },
         mixins: [
 
-            errorAlerts
+            errorAlerts,
         ],
         watch: {
 
-            viewAs: function(newValue) {
+            viewAs: function() {
 
                 this.fetchStudent();
-            }
-        }
-    }
+            },
+        },
+    };
 
 </script>

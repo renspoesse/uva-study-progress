@@ -26,21 +26,12 @@
 
 <script>
 
-    import * as _ from 'lodash'
-    import moment from 'moment'
-
-    import errorAlerts from '../../mixins/error_alerts'
-    import loadingOverlay from '../../mixins/loading_overlay'
-
-    import * as news from '../../services/news'
+    import errorAlerts from '../../mixins/error_alerts';
+    import loadingOverlay from '../../mixins/loading_overlay';
+    import * as news from '../../services/news';
 
     export default {
 
-        computed: {
-
-            _() { return _; },
-            moment() { return moment; }
-        },
         created() {
 
             this.fetchData();
@@ -49,8 +40,8 @@
 
             return {
 
-                items: []
-            }
+                items: [],
+            };
         },
         methods: {
 
@@ -61,26 +52,26 @@
 
                 news.getByParameters({
 
-                        order: 'updated_at|desc',
-                        publishedOnly: true
-                    })
-                    .then((result) => {
+                    order: 'updated_at|desc',
+                    publishedOnly: true,
+                })
+                    .then(result => {
 
                         this.items = result.items;
                         this.showLoading(false);
                     })
-                    .catch((ex) => {
+                    .catch(customError => {
 
-                        this.displayErrors(true, ex.message);
+                        this.displayErrors(true, customError.message);
                         this.showLoading(false);
                     });
-            }
+            },
         },
         mixins: [
 
             errorAlerts,
-            loadingOverlay
-        ]
-    }
+            loadingOverlay,
+        ],
+    };
 
 </script>

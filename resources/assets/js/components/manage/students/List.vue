@@ -112,19 +112,14 @@
 
 <script>
 
-    import * as _ from 'lodash'
-    import moment from 'moment'
-    import {mapState} from 'vuex'
-
-    import Roles from '../../../enums/Roles'
-
-    import errorAlerts from '../../../mixins/error_alerts'
-    import listActions from '../../../mixins/list_actions'
-    import loadingOverlay from '../../../mixins/loading_overlay'
-
-    import * as images from '../../../helpers/images'
-    import * as roles from '../../../helpers/roles'
-    import * as students from '../../../services/students'
+    import * as _ from 'lodash';
+    import {mapState} from 'vuex';
+    import Roles from '../../../enums/Roles';
+    import errorAlerts from '../../../mixins/error_alerts';
+    import listActions from '../../../mixins/list_actions';
+    import loadingOverlay from '../../../mixins/loading_overlay';
+    import * as roles from '../../../helpers/roles';
+    import * as students from '../../../services/students';
 
     export default {
 
@@ -132,17 +127,14 @@
 
             ...mapState({
 
-                user: (state) => state.auth.user
+                user: (state) => state.auth.user,
             }),
-            _() { return _; },
-            moment() { return moment; },
-            roles() { return Roles; }
         },
         data: function() {
 
             return {
 
-                actionMode: 1
+                actionMode: 1,
             };
         },
         methods: {
@@ -159,18 +151,18 @@
                         limit: this.limit,
                         order: this.order.field + '|' + this.order.direction,
                         page: page,
-                        query: this.query.trim()
+                        query: this.query.trim(),
                     })
-                    .then((result) => {
+                    .then(result => {
 
                         this.items = result.items;
                         this.pagination = result.meta.pagination;
 
                         this.showLoading(false);
                     })
-                    .catch((ex) => {
+                    .catch(customError => {
 
-                        this.displayErrors(true, ex.message);
+                        this.displayErrors(true, customError.message);
                         this.showLoading(false);
                     });
             },
@@ -195,19 +187,19 @@
 
                 this.displayErrors(false);
 
-                // TODO RENS: confirmation.
+                // TODO: confirmation.
 
                 if (this.actionMode === 1) {
 
                     students.deleteByIds(_.map(this.getSelectedItems(), 'id'))
                         .then(() => {this.fetchData(this.pagination.currentPage);})
-                        .catch((ex) => {this.addError(ex.message);});
+                        .catch(customError => {this.addError(customError.message);});
                 }
                 else if (this.actionMode === 2) {
 
                     students.deleteByParameters({query: this.query.trim()})
                         .then(() => {this.fetchData(this.pagination.currentPage);})
-                        .catch((ex) => {this.addError(ex.message);});
+                        .catch(customError => {this.addError(customError.message);});
                 }
             },
             handleUnpublish: function() {
@@ -218,13 +210,13 @@
 
                     students.updateByIds(_.map(this.getSelectedItems(), 'id'), {is_published: false})
                         .then(() => {this.fetchData(this.pagination.currentPage);})
-                        .catch((ex) => {this.addError(ex.message);});
+                        .catch(customError => {this.addError(customError.message);});
                 }
                 else if (this.actionMode === 2) {
 
                     students.updateByParameters({query: this.query.trim()}, {is_published: false})
                         .then(() => {this.fetchData(this.pagination.currentPage);})
-                        .catch((ex) => {this.addError(ex.message);});
+                        .catch(customError => {this.addError(customError.message);});
                 }
             },
             handleViewAs: function(item) {
@@ -233,19 +225,19 @@
 
                     fullname: item.display_name,
                     id: item.id,
-                    roles: [Roles.Student]
+                    roles: [Roles.Student],
                 });
 
                 this.$router.push({path: '/', query: {viewAs: item.id}});
             },
-            hasAnyRole: roles.hasAnyRole
+            hasAnyRole: roles.hasAnyRole,
         },
         mixins: [
 
             errorAlerts,
             listActions,
-            loadingOverlay
-        ]
-    }
+            loadingOverlay,
+        ],
+    };
 
 </script>

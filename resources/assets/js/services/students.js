@@ -1,270 +1,115 @@
-import Vue from 'vue'
-import * as _ from 'lodash'
-
-import * as json from '../helpers/json'
+import axios from 'axios';
+import * as _ from 'lodash';
+import * as json from '../helpers/json';
 
 const deleteByIds = function(ids) {
 
     if (_.isArray(ids))
         ids = ids.join(',');
 
-    return new Promise((resolve, reject) => {
-
-        Vue.http.delete('students/' + ids).then((response) => {
-
-                resolve({});
-            })
-            .catch((response) => {
-
-                console.log(response);
-                reject({message: 'Oops. Something went wrong.'});
-            });
-    });
+    return axios.delete('students/' + ids);
 };
 
 const deleteByParameters = function(params) {
 
-    return new Promise((resolve, reject) => {
-
-        Vue.http.delete('students', {
-
-            params: params
-
-        }).then((response) => {
-
-                resolve({});
-            })
-            .catch((response) => {
-
-                console.log(response);
-                reject({message: 'Oops. Something went wrong.'});
-            });
-    });
+    return axios.delete('students', {params});
 };
 
 const getByAuthenticated = function() {
 
-    return new Promise((resolve, reject) => {
-
-        Vue.http.get('me/student').then((response) => {
-
-                response.json().then((obj) => {
-
-                        obj = json.removeDataWrappers(obj);
-                        resolve({item: obj});
-                    })
-                    .catch((parseError) => {
-
-                        console.log(parseError);
-                        reject({message: 'Failed to parse student.'});
-                    });
-            })
-            .catch((response) => {
-
-                console.log(response);
-                reject({message: 'Oops. Something went wrong.'});
-            });
-    });
+    return axios.get('me/student')
+        .then(response => response.data)
+        .then(obj => ({item: json.removeDataWrappers(obj)}));
 };
 
 const getById = function(id) {
 
-    return new Promise((resolve, reject) => {
-
-        Vue.http.get('students/' + id).then((response) => {
-
-                response.json().then((obj) => {
-
-                        obj = json.removeDataWrappers(obj);
-                        resolve({item: obj});
-                    })
-                    .catch((parseError) => {
-
-                        console.log(parseError);
-                        reject({message: 'Failed to parse student.'});
-                    });
-            })
-            .catch((response) => {
-
-                console.log(response);
-                reject({message: 'Oops. Something went wrong.'});
-            });
-    });
+    return axios.get('students/' + id)
+        .then(response => response.data)
+        .then(obj => ({item: json.removeDataWrappers(obj)}));
 };
 
 const getByParameters = function(params) {
 
-    return new Promise((resolve, reject) => {
+    return axios.get('students', {params})
+        .then(response => response.data)
+        .then(obj => {
 
-        Vue.http.get('students', {
+            const meta = _.clone(obj);
+            delete meta.data;
 
-            params: params
+            obj = json.removeDataWrappers(obj.data);
 
-        }).then((response) => {
+            return {
 
-                response.json().then((obj) => {
+                items: obj,
+                meta: {
 
-                        const meta = _.clone(obj);
-                        delete meta.data;
+                    pagination: {
 
-                        obj = json.removeDataWrappers(obj.data);
-
-                        resolve({
-
-                            items: obj, meta: {
-
-                                pagination: {
-
-                                    currentPage: meta.current_page,
-                                    totalPages: meta.last_page
-                                }
-                            }
-                        });
-                    })
-                    .catch((parseError) => {
-
-                        console.log(parseError);
-                        reject({message: 'Failed to parse students.'});
-                    });
-            })
-            .catch((response) => {
-
-                console.log(response);
-                reject({message: 'Oops. Something went wrong.'});
-            });
-    });
+                        currentPage: meta.current_page,
+                        totalPages: meta.last_page,
+                    },
+                },
+            };
+        });
 };
 
 const getCreditsAverage = function({cohort, program_code, year}) {
 
-    return new Promise((resolve, reject) => {
-
-        Vue.http.get(`students/creditsaverage?program_code=${program_code}&cohort=${cohort}&year=${year}`).then((response) => {
-
-                response.json().then((obj) => {
-
-                        obj = json.removeDataWrappers(obj);
-                        resolve({item: obj});
-                    })
-                    .catch((parseError) => {
-
-                        console.log(parseError);
-                        reject({message: 'Failed to parse result.'});
-                    });
-            })
-            .catch((response) => {
-
-                console.log(response);
-                reject({message: 'Oops. Something went wrong.'});
-            });
-    });
+    return axios.get(`students/creditsaverage?program_code=${program_code}&cohort=${cohort}&year=${year}`)
+        .then(response => response.data)
+        .then(obj => ({item: json.removeDataWrappers(obj)}));
 };
 
 const getProgramSatisfactionAverage = function({cohort, program_code, year}) {
 
-    return new Promise((resolve, reject) => {
-
-        Vue.http.get(`students/programsatisfactionaverage?program_code=${program_code}&cohort=${cohort}&year=${year}`).then((response) => {
-
-                response.json().then((obj) => {
-
-                        obj = json.removeDataWrappers(obj);
-                        resolve({item: obj});
-                    })
-                    .catch((parseError) => {
-
-                        console.log(parseError);
-                        reject({message: 'Failed to parse result.'});
-                    });
-            })
-            .catch((response) => {
-
-                console.log(response);
-                reject({message: 'Oops. Something went wrong.'});
-            });
-    });
+    return axios.get(`students/programsatisfactionaverage?program_code=${program_code}&cohort=${cohort}&year=${year}`)
+        .then(response => response.data)
+        .then(obj => ({item: json.removeDataWrappers(obj)}));
 };
 
 const importFromFile = function(payload, file) {
 
-    return new Promise((resolve, reject) => {
+    payload = json.removeEmptyObjects(_.clone(payload));
+    const data = json.getFormData(payload, file);
 
-        payload = json.removeEmptyObjects(_.clone(payload));
-        const data = json.getFormData(payload, file);
+    return axios.post('import/students', data)
+        .catch(error => {
 
-        Vue.http.post('import/students', data).then((response) => {
+            if (error.response && error.response.status === 422) {
 
-                resolve({});
-            })
-            .catch((response) => {
+                throw {
 
-                console.log(response);
-
-                if (response.status === 422) {
-
-                    response.json().then((obj) => {
-
-                            reject({
-
-                                message: "It seems like you didn't provide a valid file.",
-                                errors: obj
-                            });
-                        })
-                        .catch((parseError) => {
-
-                            console.log(parseError);
-                            reject({message: 'Failed to parse error data.'});
-                        });
-                }
-                else
-                    reject({message: 'Oops. Something went wrong.'});
-            });
-    });
+                    message: 'It seems like you didn\'t provide a valid file.',
+                    errors: error.response.data,
+                };
+            }
+            else
+                throw {message: 'Oops. Something went wrong.'};
+        });
 };
 
 const updateByAuthenticated = function(payload) {
 
-    return new Promise((resolve, reject) => {
+    payload = json.removeEmptyObjects(_.clone(payload));
 
-        payload = json.removeEmptyObjects(_.clone(payload));
+    return axios.patch('me/student', payload)
+        .then(response => response.data)
+        .then(obj => ({item: json.removeDataWrappers(obj)}))
+        .catch(error => {
 
-        Vue.http.patch('me/student', payload).then((response) => {
+            if (error.response && error.response.status === 422) {
 
-                response.json().then((obj) => {
+                throw {
 
-                        obj = json.removeDataWrappers(obj);
-                        resolve({item: obj});
-                    })
-                    .catch((parseError) => {
-
-                        console.log(parseError);
-                        reject({message: 'Failed to parse student data.'});
-                    });
-            })
-            .catch((response) => {
-
-                console.log(response);
-
-                if (response.status === 422) {
-
-                    response.json().then((obj) => {
-
-                            reject({
-
-                                message: "It seems like you didn't provide a valid student.",
-                                errors: obj.errors
-                            });
-                        })
-                        .catch((parseError) => {
-
-                            console.log(parseError);
-                            reject({message: 'Failed to parse error data.'});
-                        });
-                }
-                else
-                    reject({message: 'Oops. Something went wrong.'});
-            });
-    });
+                    message: 'It seems like you didn\'t provide a valid student.',
+                    errors: error.response.data.errors,
+                };
+            }
+            else
+                throw {message: 'Oops. Something went wrong.'};
+        });
 };
 
 const updateByIds = function(ids, payload) {
@@ -272,96 +117,46 @@ const updateByIds = function(ids, payload) {
     if (_.isArray(ids))
         ids = ids.join(',');
 
-    return new Promise((resolve, reject) => {
+    payload = json.removeEmptyObjects(_.clone(payload));
 
-        payload = json.removeEmptyObjects(_.clone(payload));
+    return axios.patch('students/' + ids, payload)
+        .then(response => response.data)
+        .then(obj => ({item: json.removeDataWrappers(obj)}))
+        .catch(error => {
 
-        Vue.http.patch('students/' + ids, payload).then((response) => {
+            if (error.response && error.response.status === 422) {
 
-                response.json().then((obj) => {
+                throw {
 
-                        obj = json.removeDataWrappers(obj);
-                        resolve({item: obj});
-                    })
-                    .catch((parseError) => {
-
-                        console.log(parseError);
-                        reject({message: 'Failed to parse student data.'});
-                    });
-            })
-            .catch((response) => {
-
-                console.log(response);
-
-                if (response.status === 422) {
-
-                    response.json().then((obj) => {
-
-                            reject({
-
-                                message: "It seems like you didn't provide a valid student.",
-                                errors: obj.errors
-                            });
-                        })
-                        .catch((parseError) => {
-
-                            console.log(parseError);
-                            reject({message: 'Failed to parse error data.'});
-                        });
-                }
-                else
-                    reject({message: 'Oops. Something went wrong.'});
-            });
-    });
+                    message: 'It seems like you didn\'t provide a valid student.',
+                    errors: error.response.data.errors,
+                };
+            }
+            else
+                throw {message: 'Oops. Something went wrong.'};
+        });
 };
 
 const updateByParameters = function(params, payload) {
 
-    return new Promise((resolve, reject) => {
+    payload = json.removeEmptyObjects(_.clone(payload));
 
-        payload = json.removeEmptyObjects(_.clone(payload));
+    return axios.patch('students', payload, {params})
+        .then(response => response.data)
+        .then(obj => ({items: json.removeDataWrappers(obj)}))
+        .catch(error => {
 
-        Vue.http.patch('students', payload, {
+            if (error.response && error.response.status === 422) {
 
-            params: params
+                throw {
 
-        }).then((response) => {
-
-                response.json().then((obj) => {
-
-                        obj = json.removeDataWrappers(obj);
-                        resolve({items: obj});
-                    })
-                    .catch((parseError) => {
-
-                        console.log(parseError);
-                        reject({message: 'Failed to parse students.'});
-                    });
-            })
-            .catch((response) => {
-
-                console.log(response);
-
-                if (response.status === 422) {
-
-                    response.json().then((obj) => {
-
-                            reject({
-
-                                message: "It seems like you didn't provide a valid student.",
-                                errors: obj.errors
-                            });
-                        })
-                        .catch((parseError) => {
-
-                            console.log(parseError);
-                            reject({message: 'Failed to parse error data.'});
-                        });
-                }
-                else
-                    reject({message: 'Oops. Something went wrong.'});
-            });
-    });
+                    message: 'It seems like you didn\'t provide a valid student.',
+                    errors: error.response.data.errors,
+                };
+            }
+            else
+                throw {message: 'Oops. Something went wrong.'};
+        });
 };
 
 export {
@@ -376,5 +171,5 @@ export {
     importFromFile,
     updateByAuthenticated,
     updateByIds,
-    updateByParameters
-}
+    updateByParameters,
+};

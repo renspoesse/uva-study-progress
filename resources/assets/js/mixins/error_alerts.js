@@ -8,14 +8,14 @@ export default {
 
             errorMessage: '',
             errors: [],
-            successMessage: ''
-        }
+            successMessage: '',
+        };
     },
     methods: {
 
         addError: function(message) {
 
-            this.errorMessage = message; // TODO RENS: allow multiple errors.
+            this.errorMessage = message; // TODO: allow multiple errors.
         },
         displayErrors: function(show, message, errors) {
 
@@ -48,7 +48,7 @@ export default {
                 _.each(field, (value) => {
 
                     result = result.concat(_.get(this.errors, value, []));
-                })
+                });
             }
             else
                 result = result.concat(_.get(this.errors, field, []));
@@ -68,6 +68,6 @@ export default {
 
                 return (key === field || key.startsWith(field + '.'));
             });
-        }
-    }
-}
+        },
+    },
+};

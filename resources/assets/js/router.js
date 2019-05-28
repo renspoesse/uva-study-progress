@@ -1,13 +1,7 @@
-import * as _ from 'lodash'
-import {sync} from 'vuex-router-sync'
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-
-import Roles from './enums/Roles'
-
-import store from './store'
-
-Vue.use(VueRouter);
+import * as _ from 'lodash';
+import VueRouter from 'vue-router';
+import Roles from './enums/Roles';
+import store from './store';
 
 const components = {
 
@@ -15,34 +9,34 @@ const components = {
 
         advice: {
 
-            Edit: require('./components/manage/advice/Edit.vue'),
-            List: require('./components/manage/advice/List.vue')
+            Edit: require('./components/manage/advice/Edit.vue').default,
+            List: require('./components/manage/advice/List.vue').default,
         },
         news: {
 
-            Edit: require('./components/manage/news/Edit.vue'),
-            List: require('./components/manage/news/List.vue')
+            Edit: require('./components/manage/news/Edit.vue').default,
+            List: require('./components/manage/news/List.vue').default,
         },
         settings: {
 
-            Index: require('./components/manage/settings/Index.vue'),
+            Index: require('./components/manage/settings/Index.vue').default,
         },
         students: {
 
-            Import: require('./components/manage/students/Import.vue'),
-            List: require('./components/manage/students/List.vue'),
-            View: require('./components/manage/students/View.vue')
-        }
+            Import: require('./components/manage/students/Import.vue').default,
+            List: require('./components/manage/students/List.vue').default,
+            View: require('./components/manage/students/View.vue').default,
+        },
     },
     pages: {
 
-        Advice: require('./components/pages/Advice.vue'),
-        Login: require('./components/pages/Login.vue'),
-        Me: require('./components/pages/Me.vue'),
-        News: require('./components/pages/News.vue'),
-        NotFound: require('./components/pages/NotFound.vue'),
-        Overview: require('./components/pages/Overview.vue')
-    }
+        Advice: require('./components/pages/Advice.vue').default,
+        Login: require('./components/pages/Login.vue').default,
+        Me: require('./components/pages/Me.vue').default,
+        News: require('./components/pages/News.vue').default,
+        NotFound: require('./components/pages/NotFound.vue').default,
+        Overview: require('./components/pages/Overview.vue').default,
+    },
 };
 
 const router = new VueRouter({
@@ -52,27 +46,17 @@ const router = new VueRouter({
     routes: [
 
         {path: '/login', component: components.pages.Login, meta: {guestsOnly: true}},
-
         {
             path: '/logout',
             beforeEnter: (to, from, next) => {
 
-                store.dispatch('auth/logout').then(() => {
-
-                        next('/login');
-                    })
-                    .catch((ex) => {
-
-                        next(false);
-                    });
-            }
+                store.dispatch('auth/logout').then(() => next('/login')).catch(() => next(false));
+            },
         },
-
         {path: '/', component: components.pages.Overview, meta: {requiresAuth: true}},
         {path: '/advice', component: components.pages.Advice, meta: {requiresAuth: true}},
         {path: '/me', component: components.pages.Me, meta: {requiresAuth: true}},
         {path: '/news', component: components.pages.News, meta: {requiresAuth: true}},
-
         {path: '/manage/advice', component: components.manage.advice.List, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdviser, Roles.Administrator]}},
         {path: '/manage/advice/new', component: components.manage.advice.Edit, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdviser, Roles.Administrator]}},
         {path: '/manage/advice/:id/edit', component: components.manage.advice.Edit, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdviser, Roles.Administrator]}},
@@ -83,10 +67,9 @@ const router = new VueRouter({
         {path: '/manage/students', component: components.manage.students.List, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdviser, Roles.Administrator]}},
         {path: '/manage/students/import', component: components.manage.students.Import, meta: {requiresAuth: true, requiresRole: Roles.Administrator}},
         {path: '/manage/students/:id', component: components.manage.students.View, meta: {requiresAuth: true, requiresRole: [Roles.StudyAdviser, Roles.Administrator]}},
-
-        {path: '*', component: components.pages.NotFound}
+        {path: '*', component: components.pages.NotFound},
     ],
-    scrollBehavior (to, from, savedPosition) {
+    scrollBehavior(to, from, savedPosition) {
 
         if (savedPosition)
             return savedPosition;
@@ -103,11 +86,7 @@ router.afterEach((to, from) => {
 
         router.replace({
 
-            query: _.extend({
-
-                viewAs: viewAs.id
-
-            }, to.query)
+            query: _.extend({viewAs: viewAs.id}, to.query)
         });
     }
 });
@@ -123,7 +102,7 @@ router.beforeEach((to, from, next) => {
 
             fullname: 'ID ' + viewAsId,
             id: viewAsId,
-            roles: [Roles.Student]
+            roles: [Roles.Student],
         });
     }
 
@@ -134,7 +113,7 @@ router.beforeEach((to, from, next) => {
             next({
 
                 path: '/login',
-                query: {redirect: to.fullPath}
+                query: {redirect: to.fullPath},
             });
         }
         else {
@@ -165,14 +144,7 @@ router.beforeEach((to, from, next) => {
 
             // Logout before continuing navigation.
 
-            store.dispatch('auth/logout').then(() => {
-
-                    next();
-                })
-                .catch((ex) => {
-
-                    next(false);
-                });
+            store.dispatch('auth/logout').then(() => next()).catch(() => next(false));
         }
         else
             next(); // Continue navigation - we're already logged out.
@@ -181,6 +153,4 @@ router.beforeEach((to, from, next) => {
         next();
 });
 
-sync(store, router); // Sync the current route with the store.
-
-export default router
+export default router;
