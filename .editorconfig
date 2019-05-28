@@ -8,7 +8,7 @@ indent_style = space
 indent_size = 4
 trim_trailing_whitespace = true
 
-[*.{babelrc,modernizrrc,yml, yaml}]
+[*.{babelrc,yml, yaml}]
 indent_size = 2
 
 [package.json]

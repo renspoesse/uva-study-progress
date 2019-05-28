@@ -1,8 +1,0 @@
-{
-  "minify": true,
-  "classPrefix": "mod_",
-  "options": [
-    "setClasses"
-  ],
-  "feature-detects": []
-}

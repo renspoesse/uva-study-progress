@@ -1,3 +1,17 @@
+FROM node:lts-alpine AS build
+
+WORKDIR /app
+
+COPY package.json ./
+COPY package-lock.json ./
+
+RUN npm ci
+
+COPY ./resources/assets ./resources/assets
+COPY ./webpack.mix.js ./
+
+RUN npm run prod
+
 FROM composer:latest AS vendor
 
 WORKDIR /app
@@ -36,6 +50,7 @@ COPY ./php-fpm.conf /usr/local/etc/php-fpm.d/zzz-docker-overrides.conf
 WORKDIR /usr/share/nginx/html
 
 COPY --chown=www-data:www-data . ./
+COPY --chown=www-data:www-data --from=build /app/public ./public
 COPY --chown=www-data:www-data --from=vendor /app/vendor ./vendor
 
 RUN find * -type d -exec chmod 755 {} \; && \

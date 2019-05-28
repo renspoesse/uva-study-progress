@@ -11,7 +11,8 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
+mix.setPublicPath('public')
+    .js('resources/assets/js/app.js', 'public/js')
     .js('resources/assets/js/vendor.js', 'public/js/vendor-load.js')
     .extract([
 
@@ -34,7 +35,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .less('resources/assets/toolkit/toolkit-light.less', 'public/css/toolkit.css');
 
-if (mix.config.inProduction) {
+if (mix.inProduction()) {
 
     mix.version();
 }
