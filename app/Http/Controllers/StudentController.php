@@ -182,6 +182,7 @@ class StudentController extends Controller
             'NATIONALITEIT',
             'EMAILADRES',
             'vooropleidng',
+            'Laatst gezien',
             'Laatst gewijzigd'
         ];
 
@@ -241,6 +242,7 @@ class StudentController extends Controller
                 $obj->nationality,
                 $obj->email_address,
                 $obj->vooropleiding,
+                $obj->last_seen,
                 $obj->updated_at
             ];
         });
