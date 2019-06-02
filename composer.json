@@ -61,14 +61,14 @@
             "@php artisan key:generate --ansi"
         ],
         "docker-build": [
-          "docker build -t renspoesse/uva-study-progress --target app .",
-          "docker build -t renspoesse/uva-study-progress-web --target web ."
+            "docker build -t renspoesse/uva-study-progress --target app .",
+            "docker build -t renspoesse/uva-study-progress-web --target web ."
         ],
         "docker-migrate": [
-          "docker exec uva-study-progress_fpm_1 sh -c \"php artisan migrate\""
+            "docker exec uva-study-progress_fpm_1 sh -c \"php artisan migrate\""
         ],
         "docker-seed": [
-          "docker exec uva-study-progress_fpm_1 sh -c \"php artisan db:seed\""
+            "docker exec uva-study-progress_fpm_1 sh -c \"php artisan db:seed\""
         ]
     }
 }
