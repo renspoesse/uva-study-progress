@@ -5,7 +5,6 @@ namespace App\LTI;
 use Carbon\Carbon;
 use IMSGlobal\LTI\ToolProvider;
 use IMSGlobal\LTI\ToolProvider\DataConnector\DataConnector;
-use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Cookie;
 
 class StudyProgressToolProvider extends ToolProvider\ToolProvider
@@ -24,8 +23,6 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
         // Insert code here to handle incoming connections - use the user,
         // context and resourceLink properties of the class instance
         // to access the current user, context and resource link.
-
-        Log::info('Processing LTI launch request.');
 
         $request = request();
 
@@ -72,9 +69,6 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
 
         $request->session()->save();
 
-        Log::info('Session id: ' . $request->session()->getId());
-        Log::info('Saved LTI information to session: authenticated.');
-
         // Normally Laravel will sent a cookie with the session ID along with a response object (addCookieToResponse).
         // This cookie is used to identify the session on subsequent requests.
         // In our case however, a response object is never sent (a Location header is sent instead and script execution is stopped).
@@ -115,7 +109,5 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
         // the user, context and resourceLink properties to be populated but check the reason
         // property for the cause of the error.  Return TRUE if the error was fully
         // handled by this method.
-
-        Log::error('LTI request rejected. Reason: ' . $this->reason);
     }
 }
