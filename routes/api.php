@@ -14,8 +14,9 @@ use App\Enums\Roles;
 |
 */
 
+// Enable session state etc. for certain API routes.
 Route::group(['middleware' => ['web', 'auth', 'csrf', 'last.seen']],
-    function () { // Enable session state etc. for certain API routes.
+    function () {
         Route::any('/logout', 'UserController@logout');
 
         Route::get('/me', 'UserController@getByAuthenticated');
@@ -26,9 +27,8 @@ Route::group(['middleware' => ['web', 'auth', 'csrf', 'last.seen']],
         Route::get('/students/creditsaverage', 'StudentController@getCreditsAverage');
         // Route::get('/students/programsatisfactionaverage', 'StudentController@getProgramSatisfactionAverage');
 
+        // These routes are only available to students, as they would fail to return anything for other roles.
         Route::group(['middleware' => 'role:' . Roles::Student], function () {
-            // These routes are only available to students, as they would fail to return anything for other roles.
-
             Route::get('/me/student', 'StudentController@getByAuthenticated');
             Route::patch('/me/student', 'StudentController@updatePartialByAuthenticated');
         });
