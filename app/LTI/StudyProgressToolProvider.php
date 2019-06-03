@@ -64,31 +64,11 @@ class StudyProgressToolProvider extends ToolProvider\ToolProvider
         $request->session()->put('authenticated', true);
         $request->session()->put('record_id', $this->user->getRecordId());
 
-        // After completing the onLaunch() method, the LTI library will perform a redirect. The redirect is performed by sending a Location header and stopping script execution.
-        // We have to manually save the session here because Laravel's session handling will not be executed when the script is terminated.
+        // After completing the onLaunch() method, the LTI library will perform a redirect. The redirect is performed
+        // by sending a Location header and stopping script execution. We have to manually save the session here because
+        // Laravel's session handling will not be executed when the script is terminated.
 
         $request->session()->save();
-
-        // Normally Laravel will sent a cookie with the session ID along with a response object (addCookieToResponse).
-        // This cookie is used to identify the session on subsequent requests.
-        // In our case however, a response object is never sent (a Location header is sent instead and script execution is stopped).
-        // Therefore we have to simulate this session cookie to ensure the current session can be identified on subsequent requests.
-
-        $cookie = new Cookie(
-            $request->session()->getName(),
-            config('session.encrypt') ? encrypt($request->session()->getId()) : $request->session()->getId(),
-            config('session.expire_on_close') ? 0 : Carbon::now()->addMinutes(config('session.lifetime')),
-            config('session.path'),
-            config('session.domain'),
-            config('session.secure') ?? false,
-            config('session.http_only') ?? true,
-            false,
-            config('session.same_site') ?? null
-        );
-
-        header('Set-Cookie: ' . $cookie);
-
-        // The LTI library will now perform the redirect and stop script execution.
     }
 
     function onContentItem()
