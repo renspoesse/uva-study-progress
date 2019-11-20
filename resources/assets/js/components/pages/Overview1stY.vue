@@ -41,6 +41,7 @@
         <div class="row">
             <div class="col-md-12">
 
+                <em class="d-block m-b">No rights may be derived from the information provided.</em>
                 <div class="table-full">
                     <div class="table-responsive">
                         <table class="table" data-sort="table">
