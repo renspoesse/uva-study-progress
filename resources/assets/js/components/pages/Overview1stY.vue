@@ -77,16 +77,16 @@
                             </thead>
                             <tbody>
 
-                            <tr>
-                                <td>1st intermediate advice (November)</td>
+                            <tr v-if="student.wa1 !== null">
+                                <td>Intermediate advice (November)</td>
                                 <td>{{ getStudentBsaText(student.wa1) }}<i class="fa fa-check m-l-s" v-if="isStudentBsaPositive(student.wa1)"></i></td>
                             </tr>
-                            <tr>
-                                <td>2nd intermediate advice (January)</td>
+                            <tr v-if="student.wa2 !== null">
+                                <td>Intermediate advice (January)</td>
                                 <td>{{ getStudentBsaText(student.wa2) }}<i class="fa fa-check m-l-s" v-if="isStudentBsaPositive(student.wa2)"></i></td>
                             </tr>
-                            <tr>
-                                <td>3rd intermediate advice (April)</td>
+                            <tr v-if="student.wa3 !== null">
+                                <td>Intermediate advice (April)</td>
                                 <td>{{ getStudentBsaText(student.wa3) }}<i class="fa fa-check m-l-s" v-if="isStudentBsaPositive(student.wa3)"></i></td>
                             </tr>
                             <tr v-if="student.bsa !== null">
