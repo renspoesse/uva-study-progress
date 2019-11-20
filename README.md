@@ -12,6 +12,7 @@ StudyProgress Dashboard for the University of Amsterdam, 2ndYD
 
 By default, the following services are accessible from your browser:
 
+- `http://localhost:8888`
 - `http://localhost:8888/api`
 - `http://localhost:8889`, phpMyAdmin
 
