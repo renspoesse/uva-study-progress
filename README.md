@@ -9,6 +9,7 @@ StudyProgress Dashboard for the University of Amsterdam, 2ndYD
 3. Run `composer run docker-build` to build the local Docker images.
 4. Start the development environment with the `docker-compose up` command.
 5. Optionally, run `composer run docker-migrate` and `composer run docker-seed` to prepare your database.
+6. Build the browser bundle: `npm run watch`.
 
 By default, the following services are accessible from your browser:
 
@@ -17,6 +18,14 @@ By default, the following services are accessible from your browser:
 - `http://localhost:8889`, phpMyAdmin
 
 `docker-compose down` will stop the services. Next time, you'll only have to run `docker-compose up` again to start developing.
+
+## Deploy to production
+
+1. Check out a copy of the repository.
+2. Build the browser bundle: `npm run prod`.
+3. Build the Docker images: `composer run docker-build`.
+4. Deploy the production stack: `docker stack deploy --compose-file docker-stack.yml uva-study-progress`.
+5. If necessary, run migrate and seed scripts on an `fpm` container.
 
 ## Roles
 
